@@ -1,10 +1,10 @@
 import { Avatar, Button, Grid, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 // import { getLogIn } from "../firebase/firebaseConfig";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { LogoSignIn } from "../component/LogoSignIn";
+import Image from "next/image";
 // import { UseUserDataContext } from "../contexts/UserDataContext";
 // import { UseIsSignInContext } from "../contexts/IsSignInContext";
 const margintop = {
@@ -44,7 +44,7 @@ const Login = () => {
         item
         xs={8}
         sx={{
-          backgroundColor: "#000723",
+          // backgroundColor: "#000723",
         }}
       >
         <Box
@@ -55,10 +55,12 @@ const Login = () => {
             alignItems: "center",
           }}
         >
-          <LogoSignIn />
+          <Image src={"/logo.png"} alt="Picture of the author"
+          width={500}
+          height={200}/>
         </Box>
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={4} backgroundColor='#dddd'>
         <Box
           sx={{
             my: 20,

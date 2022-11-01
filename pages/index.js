@@ -1,13 +1,21 @@
 import { Box, Button, Grid, Typography } from "@mui/material"
-import RememberMeIcon from '@mui/icons-material/RememberMe';
+import Image from "next/image"
+// import { LogoSignIn } from "../component/LogoSignIn"
+
 export default function Home() {
+
   return (
     <>
       <Grid container spacing={3} sx={{ height: '100vh' }}>
-        <Grid item xs={6} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#ddd' }}>
-          <RememberMeIcon />
+        <Grid item xs={6} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center',  }}>
+        <Image
+          src="/logo.png"
+          alt="Picture of the author"
+          width={500}
+          height={200}
+        />
         </Grid>
-        <Grid item xs={6} gap={8} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+        <Grid item xs={6} gap={8} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', backgroundColor: '#ddd' }}>
           <Typography variant="h5">Great Your
             Pet’s Profile</Typography>
           <Typography>
