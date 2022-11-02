@@ -1,19 +1,24 @@
 import { Box, Button, Grid, Typography } from "@mui/material"
 import Image from "next/image"
+import { ButtonComp } from "../component/buttunComp"
+import { LogoSignIn } from "../component/LogoSignIn"
+import { getFirebaseFoods } from "../firebase/firebaseConfig"
 // import { LogoSignIn } from "../component/LogoSignIn"
 
 export default function Home() {
+ 
 
   return (
     <>
       <Grid container spacing={3} sx={{ height: '100vh' }}>
         <Grid item xs={6} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center',  }}>
-        <Image
+        {/* <Image
           src="/logo.png"
           alt="Picture of the author"
           width={500}
           height={200}
-        />
+        /> */}
+        <LogoSignIn/>
         </Grid>
         <Grid item xs={6} gap={8} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', backgroundColor: '#ddd' }}>
           <Typography variant="h5">Great Your
@@ -23,7 +28,7 @@ export default function Home() {
             incididunt ut labore et dolore magna
             aliqua.
           </Typography>
-          <Button variant="contained">Get start</Button>
+          <Button variant="contained" href="/signin">Get start</Button>
         </Grid>
 
       </Grid>

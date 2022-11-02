@@ -1,10 +1,11 @@
-import { Avatar, Button, Grid, TextField, Typography } from "@mui/material";
+import { Avatar, Button, Grid, InputBase, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useRef, useState } from "react";
 // import { getLogIn } from "../firebase/firebaseConfig";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { LogoSignIn } from "../component/LogoSignIn";
 import Image from "next/image";
+import Link from "next/link";
 // import { UseUserDataContext } from "../contexts/UserDataContext";
 // import { UseIsSignInContext } from "../contexts/IsSignInContext";
 const margintop = {
@@ -55,9 +56,10 @@ const Login = () => {
             alignItems: "center",
           }}
         >
-          <Image src={"/logo.png"} alt="Picture of the author"
+          {/* <Image src={"/logo.png"} alt="Picture of the author"
           width={500}
-          height={200}/>
+          height={200}/> */}
+          <LogoSignIn/>
         </Box>
       </Grid>
       <Grid item xs={4} backgroundColor='#dddd'>
@@ -74,30 +76,26 @@ const Login = () => {
           </Avatar>
           <Typography variant="h5">Sign In</Typography>
           <Box sx={{ width: "80%" }}>
-            <Typography sx={{ ...margintop }}>Email</Typography>
-            <TextField
-              margin="normal"
-              variant="filled"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              inputRef={emailRef}
-            />
-            <Typography sx={{ ...margintop }}>Password</Typography>
-            <TextField
-              sx={{}}
-              margin="normal"
-              variant="filled"
-              required
-              fullWidth
-              label="Password"
-              type="password"
-              id="password"
-              inputRef={passwordRef}
-            />
+        <Box sx={{display:'flex', gap:2, height:"8vh", alignItems:'center'}}>
+          <InputBase
+                  fullWidth="true"
+                  placeholder="Username"
+                  required
+                  inputRef={emailRef}
+                  sx={{borderRadius:'40px', height:"5vh", padding:2, backgroundColor:'#EEEBEB', color:'#000'}}
+                />
+        </Box>
+
+        <Box sx={{display:'flex', gap:2, height:"8vh", alignItems:'center'}}>
+          <InputBase
+                  fullWidth="true"
+                  placeholder="Password"
+                  required
+                  inputRef={emailRef}
+                  sx={{borderRadius:'40px', height:"5vh", padding:2, backgroundColor:'#EEEBEB', color:'#000'}}
+                />
+        </Box>
+
             <Button
               sx={{ ...margintop, backgroundColor: "buttonColor.main" }}
               fullWidth
@@ -109,7 +107,7 @@ const Login = () => {
             </Button>
           </Box>
           <Typography sx={{ textAlign: "center", marginTop: 2 }}>
-            Need an account? 
+            Need an account? <Link href="/signup">SignUp</Link>
           </Typography>
         </Box>
       </Grid>
