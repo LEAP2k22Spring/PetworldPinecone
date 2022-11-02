@@ -78,7 +78,7 @@ const Login = () => {
           <Box sx={{ width: "80%" }}>
         <Box sx={{display:'flex', gap:2, height:"8vh", alignItems:'center'}}>
           <InputBase
-                  fullWidth="true"
+                  fullWidth
                   placeholder="Username"
                   required
                   inputRef={emailRef}
@@ -88,7 +88,7 @@ const Login = () => {
 
         <Box sx={{display:'flex', gap:2, height:"8vh", alignItems:'center'}}>
           <InputBase
-                  fullWidth="true"
+                  fullWidth
                   placeholder="Password"
                   required
                   inputRef={emailRef}

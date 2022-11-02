@@ -1,41 +1,41 @@
 import { initializeApp } from "firebase/app";
-import {addDoc, arrayUnion, collection, getDocs, getFirestore} from 'firebase/firestore'
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendSignInLinkToEmail } from "firebase/auth";
 import { firebaseConfig } from "./firebaseKeyAdminPage";
-
+import { addDoc, arrayUnion, collection, getDocs, getFirestore } from 'firebase/firestore'
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, sendSignInLinkToEmail, getAuth } from "firebase/auth";
 const app = initializeApp(firebaseConfig);
-{console.log("firebaseConfig", firebaseConfig)}
-
-export const auth = getAuth();
 const db = getFirestore()
-const colRef = collection(db, 'Foods')
-{console.log("data", getDocs(colRef))}
-
+const colRef = collection(db, "Users");
+export const auth = getAuth(app);
 export default app
-// export const addFirebaseFoods = async (foodName, foodImage, foodPrice, foodDescription, foodType, recipeAddArr)=>{
-//     console.log(recipeAddArr);
-//     await addDoc(colRef, {
-//         name:foodName,
-//         image:foodImage,
-//         price:foodPrice,
-//         description:foodDescription,
-//         type:foodType,
-//         recipe:arrayUnion(...recipeAddArr)
-//         // portion:foodPortion,
-//         // recipe:[...foodRecipe]
-//         })
-//     }
-    
-export const getFirebaseFoods = async () =>{
-    console.log("start....");
+export const addFirebaseUser = async (userId, firstname, lastname, gender, email, dateofbirth, age, phone, city)=>{
+
+    await addDoc(colRef, {
+        userId: userId,
+        firstname: firstname,
+        lastname:lastname,
+        gender:gender,
+        email:email,
+        dateofbirth:dateofbirth,
+        age:age,
+        phone:phone,
+        city:city,
+        })
+    }
+
+export const getFirebaseUsers = async () => {
+    // const {foodsData, setFoodsData} = UseFoodsDataContext();
     const docData = await collection(db, "Users");
-        let queryData = await getDocs(docData);
-        console.log("queryData", queryData);
-    return queryData;
+    let queryData = await getDocs(docData);
+    const item = [];
+    if (queryData) {
+        queryData.docs.forEach((doc) => {
+            item.push(doc.data())
+        })
+        // setFoodsData(item)
+    }
+
+    return item;
 }
-
-
-
 
 export const getSignUp = (email, password) => {
     const actionCodesettings = {

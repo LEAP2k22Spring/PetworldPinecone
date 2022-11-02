@@ -6,8 +6,6 @@ import { getFirebaseFoods } from "../firebase/firebaseConfig"
 // import { LogoSignIn } from "../component/LogoSignIn"
 
 export default function Home() {
- 
-
   return (
     <>
       <Grid container spacing={3} sx={{ height: '100vh' }}>

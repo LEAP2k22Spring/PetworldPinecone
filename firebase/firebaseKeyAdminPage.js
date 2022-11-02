@@ -1,9 +1,9 @@
 export const firebaseConfig = {
-    apiKey: "AIzaSyBQYnHzsDMaDtR7GmP5Pl6XCyfMUgVZFEA",
-    authDomain: "foody-d5be8.firebaseapp.com",
-    projectId: "foody-d5be8",
-    storageBucket: "foody-d5be8.appspot.com",
-    messagingSenderId: "976444991941",
-    appId: "1:976444991941:web:48708ac22633e9cfeb43ac",
-    measurementId: "G-FN44WR9WEQ"
-  };
+  apiKey: process.env.NEXT_PUBLIC_APIKEY,
+  authDomain: process.env.NEXT_PUBLIC_AUTHDOMAIN,
+  projectId: process.env.NEXT_PUBLIC_PROJECTID,
+  storageBucket: process.env.NEXT_PUBLIC_STORAGEBUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_MESSAGINGSENDERID,
+  appId: process.env.NEXT_PUBLIC_APPID,
+  measurementId: process.env.NEXT_PUBLIC_MEASUREMENTID
+};
