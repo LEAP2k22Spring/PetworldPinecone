@@ -1,52 +1,366 @@
+import { Box, Button, FormControlLabel, FormLabel, Radio, RadioGroup, Step, StepLabel, Stepper, TextField, Typography } from "@mui/material";
+import React, { useState } from "react";
 import {
-  Button,
-  InputBase,
-  Step,
-  StepLabel,
-  Stepper,
-  Typography,
-} from "@mui/material";
-import { Box } from "@mui/system";
-import { useRef, useState } from "react";
-import { getFirebaseUsers, getSignUp } from "../firebase/firebaseConfig";
-import { getStepContent } from "../component/stepper";
-const margintop = {
-  marginTop: "10px",
-};
+  useForm,
+  Controller,
+  FormProvider,
+  useFormContext,
+} from "react-hook-form";
+import { getSignUp } from "../firebase/firebaseConfig";
 
-const SignUp = () => {
-  const [error, setError] = useState("");
-  const emailRef = useRef();
-  const lastnameRef = useRef();
-  const firstnameRef = useRef();
-  const passwordRef = useRef();
-  const passwordConfirmRef = useRef();
-  const steps = [
+function getSteps() {
+  return [
     "Basic information",
     "Contact Information",
     "Pet Information",
   ];
+}
+const BasicForm = () => {
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext();
+  console.log(errors);
+  return (
+    <Box>
+      <Controller
+        control={control}
+        name="firstName"
+        rules={{ required: "this field is required." }}
+        render={({ field }) => (
+          <TextField
+            id="first-name"
+            label="First Name"
+            variant="outlined"
+            placeholder="Enter Your First Name"
+            fullWidth
+            margin="normal"
+            {...field}
+            error={Boolean(errors?.firstName)}
+            helperText={errors.firstName?.message}
+          />
+        )}
+      />
+      <Controller
+        control={control}
+        name="lastName"
+        rules={{ required: "this field is required." }}
+        render={({ field }) => (
+          <TextField
+            id="last-name"
+            label="Last Name"
+            variant="outlined"
+            placeholder="Enter Your Last Name"
+            fullWidth
+            margin="normal"
+            {...field}
+            error={Boolean(errors?.lastName)}
+            helperText={errors.lastName?.message}
+          />
+        )}
+      />
+
+      <Controller
+        control={control}
+        name="emailAddress"
+        rules={{ required: "this field is required." }}
+        render={({ field }) => (
+          <TextField
+            id="emailAddress"
+            label="Email Address"
+            variant="outlined"
+            placeholder="Enter Your Last Name"
+            fullWidth
+            margin="normal"
+            {...field}
+            error={Boolean(errors?.emailAddress)}
+            helperText={errors.emailAddress?.message}
+          />
+        )}
+      /> 
+        <Controller
+          control={control}
+          name="password"
+          rules={{ required: "this field is required." }}
+          render={({ field }) => (
+            <TextField
+              id="password"
+              label="Password"
+              variant="outlined"
+              placeholder="Enter Your Password"
+              fullWidth
+              margin="normal"
+              {...field}
+              error={Boolean(errors?.password)}
+              helperText={errors.password?.message}
+            />
+          )}
+        /> 
+        <Controller
+          control={control}
+          name="passwordConfirm"
+          rules={{ required: "this field is required." }}
+          render={({ field }) => (
+            <TextField
+              id="passwordConfirm"
+              label="Password-confirm"
+              variant="outlined"
+              placeholder="Enter Your Password-confirm"
+              fullWidth
+              margin="normal"
+              {...field}
+              error={Boolean(errors?.passwordConfirm)}
+              helperText={errors.passwordConfirm?.message}
+            />
+          )}
+        /> 
+      </Box>
+      
+  );
+};
+const ContactForm = () => {
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext();
+  return (
+    <>
+      <Controller
+        control={control}
+        name="dateOfBirth"
+        rules={{ required: "this field is required." }}
+        render={({ field }) => (
+          <TextField
+            id="date-of-birth"
+            // label="Date Of Birth"
+            type='date'
+            variant="outlined"
+            placeholder="Enter Your Date Of Birth"
+            fullWidth
+            margin="normal"
+            {...field}
+            error={Boolean(errors?.passwordConfirm)}
+            helperText={errors.passwordConfirm?.message}
+          />
+        )}
+      />
+      <Controller
+        control={control}
+        name="phoneNumber"
+        rules={{ required: "this field is required." }}
+        render={({ field }) => (
+          <TextField
+            id="phone-number"
+            // label="Date Of Birth"
+            type='number'
+            variant="outlined"
+            placeholder="Enter Your Phone Number"
+            fullWidth
+            margin="normal"
+            {...field}
+            error={Boolean(errors?.phoneNumber)}
+            helperText={errors.phoneNumber?.message}
+          />
+        )}
+      />
+      <Controller
+        control={control}
+        name="gender"
+        rules={{ required: "this field is required." }}
+        render={({ field }) => (
+          <>
+            <FormLabel id="demo-row-radio-buttons-group-label">Gender</FormLabel>
+            <RadioGroup
+              row
+              aria-labelledby="demo-row-radio-buttons-group-label"
+              name="row-radio-buttons-group"
+              {...field}
+            >
+              <FormControlLabel value="female" control={<Radio />} label="Female" />
+              <FormControlLabel value="male" control={<Radio />} label="Male" />
+              <FormControlLabel value="other" control={<Radio />} label="Other" />
+            </RadioGroup>
+          </>
+        )}
+      />
+      <Controller
+        control={control}
+        name="cityName"
+        rules={{ required: "this field is required." }}
+        render={({ field }) => (
+          <TextField
+            id="city-name"
+            // label="Date Of Birth"
+            type='cityName'
+            variant="outlined"
+            placeholder="Enter Your City Name"
+            fullWidth
+            margin="normal"
+            {...field}
+            error={Boolean(errors?.cityName)}
+            helperText={errors.cityName?.message}
+          />
+        )}
+      />
+    </>
+  );
+};
+const PersonalForm = () => {
+  const { control } = useFormContext();
+  return (
+    <>
+      <Controller
+        control={control}
+        name="petName"
+        render={({ field }) => (
+          <TextField
+            id="petname"
+            label="Pet Name"
+            variant="outlined"
+            placeholder="Enter Your Pet Name"
+            fullWidth
+            margin="normal"
+            {...field}
+          />
+        )}
+      />
+      <Controller
+        control={control}
+        name="petAge"
+        render={({ field }) => (
+          <TextField
+            id="petage"
+            label="Pet Age"
+            variant="outlined"
+            placeholder="Enter Your Pet Age"
+            fullWidth
+            margin="normal"
+            {...field}
+          />
+        )}
+      />
+      <Controller
+        control={control}
+        name="breed"
+        render={({ field }) => (
+          <TextField
+            id="breed"
+            label="Breed"
+            variant="outlined"
+            placeholder="Enter Your Breed"
+            fullWidth
+            margin="normal"
+            {...field}
+          />
+        )}
+      />
+      <Controller
+        control={control}
+        name="petgender"
+        rules={{ required: "this field is required." }}
+        render={({ field }) => (
+          <>
+            <FormLabel id="demo-row-radio-buttons-group-label">Gender</FormLabel>
+            <RadioGroup
+              row
+              aria-labelledby="demo-row-radio-buttons-group-label"
+              name="row-radio-buttons-group"
+              {...field}
+            >
+              <FormControlLabel value="female" control={<Radio />} label="Female" />
+              <FormControlLabel value="male" control={<Radio />} label="Male" />
+            </RadioGroup>
+          </>
+        )}
+      />
+      <Controller
+        control={control}
+        name="vaccined"
+        rules={{ required: "this field is required." }}
+        render={({ field }) => (
+          <>
+            <FormLabel id="demo-row-radio-buttons-group-label">Vaccined</FormLabel>
+            <RadioGroup
+              row
+              aria-labelledby="demo-row-radio-buttons-group-label"
+              name="row-radio-buttons-group"
+              {...field}
+            >
+              <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
+              <FormControlLabel value="No" control={<Radio />} label="No" />
+            </RadioGroup>
+          </>
+        )}
+      />
+      
+    </>
+  );
+};
+
+function getStepContent(step) {
+  switch (step) {
+    case 0:
+      return <BasicForm />;
+    case 1:
+      return <ContactForm />;
+    case 2:
+      return <PersonalForm />;
+    default:
+      return "unknown step";
+  }
+}
+const SignUp = () => {
+  const methods = useForm({
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      emailAddress: "",
+      password: "",
+      passwordConfirm: "",
+      dateOfBirth: "",
+      phoneNumber: "",
+      gender: "",
+      cityName: "",
+      petName: "",
+      petAge: "",
+      breed: "",
+      petgender: "",
+      vaccined: "",
+    },
+  });
   const [activeStep, setActiveStep] = useState(0);
   const [skippedSteps, setSkippedSteps] = useState([]);
+  const [userData, setUserData] = useState({});
 
-  const handleSignUp = (e) => {
-    e.preventDefault();
-    if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-      return setError("Password do not match");
-    }
-    setError("");
-    getSignUp(emailRef.current.value, passwordRef.current.value);
-  };
+  const steps = getSteps();
   const isStepOptional = (step) => {
     return step === 1 || step === 2;
+  };
+  const isStepFalied = () => {
+    return Boolean(Object.keys(methods.formState.errors).length);
   };
   const isStepSkipped = (step) => {
     return skippedSteps.includes(step);
   };
 
-  const handleNext = () => {
-    setActiveStep(activeStep + 1);
-    setSkippedSteps(skippedSteps.filter((skipItem) => skipItem !== activeStep));
+  const handleNext = (data) => {
+    console.log("data", data);
+    if (activeStep == steps.length - 1) {
+      // fetch("https://jsonplaceholder.typicode.com/comments")
+      //   .then((data) => data.json())
+      //   .then((res) => {
+      //     console.log(res);
+      //   });
+        setUserData({...data})
+        getSignUp({...data})
+        setActiveStep(activeStep + 1);
+
+    } else {
+      setActiveStep(activeStep + 1);
+      setSkippedSteps(
+        skippedSteps.filter((skipItem) => skipItem !== activeStep)
+      );
+    }
   };
 
   const handleBack = () => {
@@ -59,14 +373,12 @@ const SignUp = () => {
     }
     setActiveStep(activeStep + 1);
   };
+
+  // const onSubmit = (data) => {
+  //   console.log(data);
+  // };
   return (
-    <Box
-      sx={{
-        marginTop: 8,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-      }}>
+    <Box width="30%" m='auto'>
       <Stepper alternativeLabel activeStep={activeStep}>
         {steps.map((step, index) => {
           const labelProps = {};
@@ -82,6 +394,9 @@ const SignUp = () => {
               </Typography>
             );
           }
+          if (isStepFalied() && activeStep == index) {
+            labelProps.error = true;
+          }
           if (isStepSkipped(index)) {
             stepProps.completed = false;
           }
@@ -92,57 +407,45 @@ const SignUp = () => {
           );
         })}
       </Stepper>
+
       {activeStep === steps.length ? (
         <Typography variant="h3" align="center">
           Thank You
+          {console.log("userData", userData)}
         </Typography>
       ) : (
         <>
-          <form>{getStepContent(activeStep)}</form>
-          <Box sx={{width:'30%' ,display: 'flex', justifyContent: 'space-between' }}>
-            <Button
-              // className={classes.button}
-              disabled={activeStep === 0}
-              onClick={handleBack}
-            >
-              back
-            </Button>
-            {isStepOptional(activeStep) && (
+          <FormProvider {...methods}>
+            <form onSubmit={methods.handleSubmit(handleNext)}>
+              {getStepContent(activeStep)}
+
               <Button
-                // className={classes.button}
+                disabled={activeStep === 0}
+                onClick={handleBack}
+              >
+                back
+              </Button>
+              {isStepOptional(activeStep) && (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleSkip}
+                >
+                  skip
+                </Button>
+              )}
+              <Button
                 variant="contained"
                 color="primary"
-                onClick={handleSkip}
+                // onClick={handleNext}
+                type="submit"
               >
-                skip
+                {activeStep === steps.length - 1 ? "Finish" : "Next"}
               </Button>
-            )}
-            <Button
-              // className={classes.button}
-              variant="contained"
-              color="primary"
-              onClick={handleNext}
-            >
-              {activeStep === steps.length - 1 ? "Finish" : "Next"}
-            </Button>
-          </Box>
+            </form>
+          </FormProvider>
         </>
       )}
-      <Box sx={{ width: '30%' }}>
-
-
-        {/* <Button
-              sx={{...margintop, backgroundColor:'#428730', height:"5vh", borderRadius:"40px" }}
-              fullWidth
-              variant="contained"
-              onClick={handleSignUp}
-            >
-              Sign Up
-            </Button>
-              <Typography sx={{ textAlign: "center", marginTop: 2 }}>
-                Already have an account? <Link href="/signin" legacyBehavior><a>Sign In</a></Link>
-              </Typography> */}
-      </Box>
     </Box>
   );
 };

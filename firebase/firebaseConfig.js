@@ -37,18 +37,19 @@ export const getFirebaseUsers = async () => {
     return item;
 }
 
-export const getSignUp = (email, password) => {
+export const getSignUp = (data) => {
+    console.log('Firebase',data);
     const actionCodesettings = {
         url: 'http://localhost:3000/signup',
         handleCodeInApp: true,
     }
     try {
-        sendSignInLinkToEmail(auth, email, actionCodesettings);
+        // sendSignInLinkToEmail(auth, email, actionCodesettings);
         alert("Sign Up Successfully")
     } catch (error) {
         // console.log(error);
     }
-    return createUserWithEmailAndPassword(auth, email, password)
+    // return createUserWithEmailAndPassword(auth, email, password)
 }
 export const getLogIn = async (email, password) => {
     return signInWithEmailAndPassword(auth, email, password)

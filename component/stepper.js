@@ -3,33 +3,14 @@ import { Box } from "@mui/system";
 import { useRef } from "react";
 
 export const getStepContent = (step) => {
-  // const userFirstName = useRef()
   switch (step) {
     case 0:
       return (
         <>
-          <Box
-            sx={{
-              display: "flex",
-              gap: 2,
-              height: "8vh",
-              alignItems: "center",
-            }}
-          >
-            <InputBase
-              fullWidth
-              placeholder="First Name"
-              required
-              sx={{
-                borderRadius: "40px",
-                height: "5vh",
-                padding: 2,
-                backgroundColor: "#EEEBEB",
-                color: "#000",
-              }}
-            />
-            <InputBase
-              fullWidth
+          <Box sx={{ display: "flex", gap: 2, height: "8vh", alignItems: "center", }} >
+            <InputBase fullWidth placeholder="First Name"  required 
+            sx={{ borderRadius: "40px", height: "5vh", padding: 2, backgroundColor: "#EEEBEB", color: "#000", }}/>
+            <InputBase fullWidth
               placeholder="Last Name"
               required
               sx={{
@@ -303,6 +284,7 @@ export const getStepContent = (step) => {
               <FormControlLabel value="No" control={<Radio />} label="No" />
             </RadioGroup>
           </Box>
+          {getUserData}
         </>
       );
     default:
