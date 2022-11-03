@@ -1,5 +1,5 @@
 import { Box, Button, FormControlLabel, FormLabel, Radio, RadioGroup, Step, StepLabel, Stepper, TextField, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   useForm,
   Controller,
@@ -123,6 +123,8 @@ const ContactForm = () => {
     control,
     formState: { errors },
   } = useFormContext();
+  const dateRef = useRef("");
+  console.log("dateRef",dateRef.current.value);
   return (
     <>
       <Controller
@@ -132,18 +134,33 @@ const ContactForm = () => {
         render={({ field }) => (
           <TextField
             id="date-of-birth"
-            // label="Date Of Birth"
             type='date'
             variant="outlined"
             placeholder="Enter Your Date Of Birth"
             fullWidth
             margin="normal"
+            inputRef={dateRef}
             {...field}
             error={Boolean(errors?.passwordConfirm)}
             helperText={errors.passwordConfirm?.message}
           />
         )}
       />
+      {/* <Controller
+        control={control}
+        name="age"
+        rules={{ required: "this field is required." }}
+        render={({ field }) => (
+          <TextField
+            id="age"
+            type='number'
+            variant="outlined"
+            placeholder="Enter Your Age"
+            fullWidth
+            margin="normal"
+          />
+        )}
+      /> */}
       <Controller
         control={control}
         name="phoneNumber"
@@ -151,7 +168,6 @@ const ContactForm = () => {
         render={({ field }) => (
           <TextField
             id="phone-number"
-            // label="Date Of Birth"
             type='number'
             variant="outlined"
             placeholder="Enter Your Phone Number"
@@ -190,7 +206,6 @@ const ContactForm = () => {
         render={({ field }) => (
           <TextField
             id="city-name"
-            // label="Date Of Birth"
             type='cityName'
             variant="outlined"
             placeholder="Enter Your City Name"
@@ -344,7 +359,6 @@ const SignUp = () => {
   };
 
   const handleNext = (data) => {
-    console.log("data", data);
     if (activeStep == steps.length - 1) {
       // fetch("https://jsonplaceholder.typicode.com/comments")
       //   .then((data) => data.json())
@@ -411,7 +425,6 @@ const SignUp = () => {
       {activeStep === steps.length ? (
         <Typography variant="h3" align="center">
           Thank You
-          {console.log("userData", userData)}
         </Typography>
       ) : (
         <>

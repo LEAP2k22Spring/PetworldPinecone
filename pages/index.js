@@ -3,9 +3,12 @@ import Image from "next/image"
 import { ButtonComp } from "../component/buttunComp"
 import { LogoSignIn } from "../component/LogoSignIn"
 import { getFirebaseFoods } from "../firebase/firebaseConfig"
+import useCollection from "../firebase/firebaseHook"
 // import { LogoSignIn } from "../component/LogoSignIn"
 
 export default function Home() {
+useCollection("Pets");
+
   return (
     <>
       <Grid container spacing={3} sx={{ height: '100vh' }}>
