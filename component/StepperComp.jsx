@@ -1,0 +1,342 @@
+import { FormControlLabel, FormLabel, Radio, RadioGroup, TextField } from "@mui/material";
+import { Box } from "@mui/system";
+import { useRef } from "react";
+import { Controller, useForm, useFormContext } from "react-hook-form";
+
+const StepperComp = () =>{
+    function getSteps() {
+        return [
+          "Basic information",
+          "Contact Information",
+          "Pet Information",
+        ];
+      }
+      const BasicForm = () => {
+        const {
+          control,
+          formState: { errors },
+        } = useFormContext();
+        return (
+          <Box>
+            <Controller
+              control={control}
+              name="firstName"
+              rules={{ required: "this field is required." }}
+              render={({ field }) => (
+                <TextField
+                  id="first-name"
+                  label="First Name"
+                  variant="outlined"
+                  placeholder="Enter Your First Name"
+                  fullWidth
+                  margin="normal"
+                  {...field}
+                  error={Boolean(errors?.firstName)}
+                  helperText={errors.firstName?.message}
+                />
+              )}
+            />
+            <Controller
+              control={control}
+              name="lastName"
+              rules={{ required: "this field is required." }}
+              render={({ field }) => (
+                <TextField
+                  id="last-name"
+                  label="Last Name"
+                  variant="outlined"
+                  placeholder="Enter Your Last Name"
+                  fullWidth
+                  margin="normal"
+                  {...field}
+                  error={Boolean(errors?.lastName)}
+                  helperText={errors.lastName?.message}
+                />
+              )}
+            />
+            <Controller
+              control={control}
+              name="emailAddress"
+              rules={{ required: "this field is required." }}
+              render={({ field }) => (
+                <TextField
+                  id="emailAddress"
+                  label="Email Address"
+                  variant="outlined"
+                  placeholder="Enter Your Last Name"
+                  fullWidth
+                  margin="normal"
+                  {...field}
+                  error={Boolean(errors?.emailAddress)}
+                  helperText={errors.emailAddress?.message}
+                />
+              )}
+            />
+            <Controller
+              control={control}
+              name="password"
+              rules={{ required: "this field is required." }}
+              render={({ field }) => (
+                <TextField
+                  id="password"
+                  label="Password"
+                  variant="outlined"
+                  placeholder="Enter Your Password"
+                  fullWidth
+                  margin="normal"
+                  {...field}
+                  error={Boolean(errors?.password)}
+                  helperText={errors.password?.message}
+                />
+              )}
+            />
+            <Controller
+              control={control}
+              name="passwordConfirm"
+              rules={{ required: "this field is required." }}
+              render={({ field }) => (
+                <TextField
+                  id="passwordConfirm"
+                  label="Password-confirm"
+                  variant="outlined"
+                  placeholder="Enter Your Password-confirm"
+                  fullWidth
+                  margin="normal"
+                  {...field}
+                  error={Boolean(errors?.passwordConfirm)}
+                  helperText={errors.passwordConfirm?.message}
+                />
+              )}
+            />
+          </Box>
+      
+        );
+      };
+      const ContactForm = () => {
+        const {
+          control,
+          formState: { errors },
+        } = useFormContext();
+        const dateRef = useRef("");
+        return (
+          <>
+            <Controller
+              control={control}
+              name="dateOfBirth"
+              render={({ field }) => (
+                <TextField
+                  id="date-of-birth"
+                  type='date'
+                  variant="outlined"
+                  placeholder="Enter Your Date Of Birth"
+                  fullWidth
+                  margin="normal"
+                  inputRef={dateRef}
+                  {...field}
+                />
+              )}
+            />
+
+            <Controller
+              control={control}
+              name="phoneNumber"
+              render={({ field }) => (
+                <TextField
+                  id="phone-number"
+                  type='number'
+                  variant="outlined"
+                  placeholder="Enter Your Phone Number"
+                  fullWidth
+                  margin="normal"
+                  {...field}
+
+                />
+              )}
+            />
+            <Controller
+              control={control}
+              name="gender"
+              rules={{ required: "this field is required." }}
+              render={({ field }) => (
+                <>
+                  <FormLabel id="demo-row-radio-buttons-group-label">Gender</FormLabel>
+                  <RadioGroup
+                    row
+                    aria-labelledby="demo-row-radio-buttons-group-label"
+                    name="row-radio-buttons-group"
+                    {...field}
+                  >
+                    <FormControlLabel value="female" control={<Radio />} label="Female" />
+                    <FormControlLabel value="male" control={<Radio />} label="Male" />
+                    <FormControlLabel value="other" control={<Radio />} label="Other" />
+                  </RadioGroup>
+                </>
+              )}
+            />
+            <Controller
+              control={control}
+              name="cityName"
+              render={({ field }) => (
+                <TextField
+                  id="city-name"
+                  type='cityName'
+                  variant="outlined"
+                  placeholder="Enter Your City Name"
+                  fullWidth
+                  margin="normal"
+                  {...field}
+                />
+              )}
+            />
+          </>
+        );
+      };
+      const PetForm = () => {
+        const {
+          control,
+          formState: { errors },
+        } = useFormContext();
+        return (
+          <>
+            <Controller
+              control={control}
+              name="category"
+              render={({ field }) => (
+                <>
+                  <FormLabel id="demo-row-radio-buttons-group-label">Category</FormLabel>
+                  <RadioGroup
+                    row
+                    aria-labelledby="demo-row-radio-buttons-group-label"
+                    name="row-radio-buttons-group"
+                    {...field}
+                  >
+                    <FormControlLabel value="dog" control={<Radio />} label="Dog" />
+                    <FormControlLabel value="cat" control={<Radio />} label="Cat" />
+                    <FormControlLabel value="other" control={<Radio />} label="Other" />
+                  </RadioGroup>
+                </>
+              )}
+            />
+            <Controller
+              control={control}
+              name="petName"
+              render={({ field }) => (
+                <TextField
+                  id="petname"
+                  label="Pet Name"
+                  variant="outlined"
+                  placeholder="Enter Your Pet Name"
+                  fullWidth
+                  margin="normal"
+                  {...field}
+                />
+              )}
+            />
+            <Controller
+              control={control}
+              name="petAge"
+              render={({ field }) => (
+                <TextField
+                  id="petage"
+                  label="Pet Age"
+                  variant="outlined"
+                  placeholder="Enter Your Pet Age"
+                  fullWidth
+                  margin="normal"
+                  {...field}
+                />
+              )}
+            />
+            <Controller
+              control={control}
+              name="breed"
+              render={({ field }) => (
+                <TextField
+                  id="breed"
+                  label="Breed"
+                  variant="outlined"
+                  placeholder="Enter Your Breed"
+                  fullWidth
+                  margin="normal"
+                  {...field}
+                />
+              )}
+            />
+            <Controller
+              control={control}
+              name="petgender"
+              render={({ field }) => (
+                <>
+                  <FormLabel id="demo-row-radio-buttons-group-label">Gender</FormLabel>
+                  <RadioGroup
+                    row
+                    aria-labelledby="demo-row-radio-buttons-group-label"
+                    name="row-radio-buttons-group"
+                    {...field}
+                  >
+                    <FormControlLabel value="female" control={<Radio />} label="Female" />
+                    <FormControlLabel value="male" control={<Radio />} label="Male" />
+                  </RadioGroup>
+                </>
+              )}
+            />
+            <Controller
+              control={control}
+              name="vaccined"
+              render={({ field }) => (
+                <>
+                  <FormLabel id="demo-row-radio-buttons-group-label">Vaccined</FormLabel>
+                  <RadioGroup
+                    row
+                    aria-labelledby="demo-row-radio-buttons-group-label"
+                    name="row-radio-buttons-group"
+                    {...field}
+                  >
+                    <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
+                    <FormControlLabel value="No" control={<Radio />} label="No" />
+                  </RadioGroup>
+                </>
+              )}
+            />
+          </>
+        );
+      };
+      
+      function getStepContent(step) {
+        switch (step) {
+          case 0:
+            return <BasicForm />;
+          case 1:
+            return <ContactForm />;
+          case 2:
+            return <PetForm />;
+          default:
+            return "unknown step";
+        }
+      }
+      const userInputData = useForm({
+        defaultValues: {
+          firstName: "",
+          lastName: "",
+          emailAddress: "",
+          password: "",
+          passwordConfirm: "",
+          dateOfBirth: "",
+          phoneNumber: "",
+          gender: "",
+          cityName: "",
+        },
+      });
+      const petrInputData = useForm({
+        defaultValues: {
+          category: "",
+          petName: "",
+          petAge: "",
+          breed: "",
+          petgender: "",
+          vaccined: "",
+        },
+      });
+      return {getStepContent, getSteps, userInputData, petrInputData}
+}
+  export default StepperComp
