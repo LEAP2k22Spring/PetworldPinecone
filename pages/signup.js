@@ -14,12 +14,12 @@ import { useCollection } from "../firebase/useFirebase";
 const SignUp = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [skippedSteps, setSkippedSteps] = useState([]);
-  const { getUsersData, createUserData, getSignUp } = useCollection("Users");
-  const { getStepContent, getSteps, userInputData, petrInputData } = StepperComp();
+  const { getUsersData, createUserData, getSignUp, createPetData } = useCollection("Users");
+  const { getStepContent, getSteps, userInputData, petInputData } = StepperComp();
   const steps = getSteps();
 
   const isStepOptional = (step) => {
-    return step === 1 || step === 2;
+    return step === 2;
   };
   const isStepFalied = () => {
     return Boolean(Object.keys(userInputData.formState.errors).length);
@@ -27,12 +27,48 @@ const SignUp = () => {
   const isStepSkipped = (step) => {
     return skippedSteps.includes(step);
   };
-
+  const userInputDataDefaultValue = {
+    firstName: "",
+    lastName: "",
+    emailAddress: "",
+    password: "",
+    passwordConfirm: "",
+    dateOfBirth: "",
+    phoneNumber: "",
+    gender: "",
+    cityName: "",
+  }
+  const petInputDataDefaultValue = {
+    category: "",
+    petName: "",
+    petAge: "",
+    breed: "",
+    petgender: "",
+    vaccined: "",
+  }
   const handleNext = async (data) => {
     if (activeStep == steps.length - 1) {
-      const userId = await getSignUp(data);
+
+      let tempUserData = {};
+      for (const [key, value] of Object.entries(userInputDataDefaultValue)) {
+        tempUserData[key] = data[key];
+      }
+      const userId = await getSignUp(tempUserData);
       console.log("SignUp", userId);
-      await createUserData(data, userId);
+
+
+      await createUserData(tempUserData, userId);
+
+      let tempPetData = {};
+      for (const [key, value] of Object.entries(petInputDataDefaultValue)) {
+        tempPetData[key] = data[key] == undefined ? '' : data[key];
+      }
+      tempPetData.OwnerId = userId;
+      // tempPetData[OwnerId] = userId;
+      console.log("petData", tempPetData);
+
+      await createPetData(tempPetData);
+
     } else {
       setSkippedSteps(
         skippedSteps.filter((skipItem) => skipItem !== activeStep)

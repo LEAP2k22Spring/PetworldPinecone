@@ -1,10 +1,12 @@
 import { initializeApp } from "firebase/app";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { addDoc, collection, getDocs, doc, setDoc, getFirestore } from "firebase/firestore";
+import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import { addDoc, collection, getDocs, getFirestore, doc, setDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { firebaseConfig } from "./firebaseKeyAdminPage";
 const app = initializeApp(firebaseConfig);
-const db = getFirestore()
+const db = getFirestore(app)
+export const auth = getAuth();
+
 // export default app
 
 export const useCollection = (path) => {
@@ -37,8 +39,8 @@ export const useCollection = (path) => {
         const item = [];
         if (result) {
             if (result) {
-                result.docs.forEach((doc) => {
-                    item.push(doc.data())
+                result.docs.forEach((data) => {
+                    item.push(data.data())
                 })
             }
             setUserData(item)
@@ -49,8 +51,19 @@ export const useCollection = (path) => {
 
     const createUserData = async (data, userId) => {
         console.log("irlee", userId)
-        const userRef = doc(db, path, userId)
-        await setDoc(userRef, data)
+        console.log("data", data)
+        try {
+            await setDoc(doc(db, path, userId), data)
+        } catch (error) {
+            console.log("error", error)
+        }
+    }
+    const createPetData = async (data) => {
+        try {
+            await addDoc(collection(db, "Pets"), data)
+        } catch (error) {
+            console.log("error", error)
+        }
     }
 
     const getSignUp = async (data) => {
@@ -59,7 +72,6 @@ export const useCollection = (path) => {
         try {
             const user = await createUserWithEmailAndPassword(auth, emailAddress, password)
             userId = user.user.uid
-            console.log("GetSignUp", user.user.uid)
             alert("Sign Up Successfully")
         } catch (error) {
         }
@@ -74,5 +86,5 @@ export const useCollection = (path) => {
     // const updateData = () => updateDoc
     // const deleteData = () => deleteDoc
 
-    return { userData, loading, getUsersData, createUserData, getSignUp }
+    return { userData, loading, getUsersData, createUserData, getSignUp, createPetData }
 }
