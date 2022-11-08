@@ -2,7 +2,6 @@ import { Box, Button, Grid, Typography } from "@mui/material"
 import Image from "next/image"
 import { ButtonComp } from "../component/buttunComp"
 import { LogoSignIn } from "../component/LogoSignIn"
-import { getFirebaseFoods } from "../firebase/firebaseConfig"
 import useCollection from "../firebase/useFirebase"
 // import { LogoSignIn } from "../component/LogoSignIn"
 
