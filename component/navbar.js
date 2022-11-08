@@ -1,6 +1,12 @@
+import Box from '@mui/material/Box';
 import { useRouter } from 'next/router';
 import styles from '../styles/Home.module.css';
-import Box from '@mui/material/Box';
+import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
+import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
+import QueueRoundedIcon from '@mui/icons-material/QueueRounded';
+import ExploreRoundedIcon from '@mui/icons-material/ExploreRounded';
+import ContactSupportIcon from '@mui/icons-material/ContactSupport';
+import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 
 function Navbar() {
     const router = useRouter();
@@ -11,24 +17,36 @@ function Navbar() {
                     onClick={() => router.push("/")}>
                 </b>
                 <Box className={styles.menu} sx={{cursor:'pointer'}}>
-                    <span onClick={() => router.push("/homepage")}>
+                  <li className={styles.list_item}>
+                    <span className={styles.list_item_name} onClick={() => router.push("/homepage")}>
                       Home
                     </span>
-                    <span onClick={() => router.push("/explore")}>
+                    <HomeRoundedIcon className={styles.icon}/>
+                  </li>
+                  <li className={styles.list_item}>
+                    <span className={styles.list_item_name} onClick={() => router.push("/explore")}>
                       Explore
                     </span>
-                    <span onClick={() => router.push("/services")}>
+                    <ExploreRoundedIcon className={styles.icon}/>
+                  </li>
+                  <li className={styles.list_item}>
+                    <span className={styles.list_item_name} onClick={() => router.push("/services")}>
                       Pet Care
                     </span>
-                    <span onClick={() => router.push("/contact")}>
+                    <QueueRoundedIcon className={styles.icon}/>
+                  </li>
+                  <li className={styles.list_item}>
+                    <span className={styles.list_item_name} onClick={() => router.push("/inbox")}>
                       Inbox
                     </span>
-                    <span onClick={() => router.push("/sign-in")}>
+                    <EmailRoundedIcon className={styles.icon}/>
+                  </li>
+                  <li className={styles.list_item}> 
+                    <span className={styles.list_item_name} onClick={() => router.push("/profile")}>
                         Profile
                     </span>
-                    <span onClick={() => router.push("/profile")}>
-                        Contact
-                    </span>
+                    <AccountCircleRoundedIcon className={styles.icon}/>
+                  </li> 
                 </Box>
             </Box>
         </Box>
