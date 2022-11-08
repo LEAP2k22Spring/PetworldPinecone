@@ -1,7 +1,6 @@
 import { Avatar, Button, Grid, InputBase, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useRef, useState } from "react";
-// import { getLogIn } from "../firebase/firebaseConfig";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { LogoSignIn } from "../component/LogoSignIn";
 import Image from "next/image";
