@@ -11,6 +11,8 @@ import { FormProvider } from "react-hook-form";
 import StepperComp from "../component/StepperComp";
 import { useCollection } from "../firebase/useFirebase";
 
+
+//Sign Up Component
 const SignUp = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [skippedSteps, setSkippedSteps] = useState([]);
@@ -18,6 +20,7 @@ const SignUp = () => {
   const { getStepContent, getSteps, userInputData, petInputData } = StepperComp();
   const steps = getSteps();
 
+  
   const isStepOptional = (step) => {
     return step === 2;
   };

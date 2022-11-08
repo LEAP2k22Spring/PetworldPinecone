@@ -1,14 +1,20 @@
 import {
+  FormControl,
   FormControlLabel,
+  FormHelperText,
   FormLabel,
+  InputLabel,
+  MenuItem,
   Radio,
   RadioGroup,
+  Select,
   TextField,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { useRef } from "react";
 import { Controller, useForm, useFormContext } from "react-hook-form";
-
+let cityname = ["Архангай", "Баян-Өлгий", "Баянхонгор", "Булган", "Говь-Алтай", "Говьсүмбэр", "Дархан-Уул", "Дорноговь", "Дорнод", "Дундговь", "Завхан"]
+//StepperComp
 const StepperComp = () => {
   function getSteps() {
     return [
@@ -18,6 +24,8 @@ const StepperComp = () => {
       "Finish",
     ];
   }
+
+  //User sign up information
   const BasicForm = () => {
     const {
       control,
@@ -91,6 +99,7 @@ const StepperComp = () => {
               placeholder="Enter Your Password"
               fullWidth
               margin="normal"
+              type="password"
               {...field}
               error={Boolean(errors?.password)}
               helperText={errors.password?.message}
@@ -109,6 +118,7 @@ const StepperComp = () => {
               placeholder="Enter Your Password-confirm"
               fullWidth
               margin="normal"
+              type="password"
               {...field}
               error={Boolean(errors?.passwordConfirm)}
               helperText={errors.passwordConfirm?.message}
@@ -118,17 +128,18 @@ const StepperComp = () => {
       </Box>
     );
   };
+  //User sign up contact form
   const ContactForm = () => {
     const {
       control,
       formState: { errors },
     } = useFormContext();
-    const dateRef = useRef("");
     return (
       <>
         <Controller
           control={control}
           name="dateOfBirth"
+          rules={{ required: "this field is required." }}
           render={({ field }) => (
             <TextField
               id="date-of-birth"
@@ -137,8 +148,9 @@ const StepperComp = () => {
               placeholder="Enter Your Date Of Birth"
               fullWidth
               margin="normal"
-              inputRef={dateRef}
               {...field}
+              error={Boolean(errors?.dateOfBirth)}
+              helperText={errors.dateOfBirth?.message}
             />
           )}
         />
@@ -146,6 +158,8 @@ const StepperComp = () => {
         <Controller
           control={control}
           name="phoneNumber"
+          rules={{ required: "this field is required." }}
+
           render={({ field }) => (
             <TextField
               id="phone-number"
@@ -155,13 +169,14 @@ const StepperComp = () => {
               fullWidth
               margin="normal"
               {...field}
+              error={Boolean(errors?.phoneNumber)}
+              helperText={errors.phoneNumber?.message}
             />
           )}
         />
         <Controller
           control={control}
           name="gender"
-          rules={{ required: "this field is required." }}
           render={({ field }) => (
             <>
               <FormLabel id="demo-row-radio-buttons-group-label">
@@ -192,24 +207,54 @@ const StepperComp = () => {
             </>
           )}
         />
-        <Controller
+        {/* <Controller
           control={control}
           name="cityName"
           render={({ field }) => (
-            <TextField
-              id="city-name"
-              type="cityName"
-              variant="outlined"
-              placeholder="Enter Your City Name"
-              fullWidth
-              margin="normal"
-              {...field}
-            />
+            // <TextField
+            //   id="city-name"
+            //   type="cityName"
+            //   variant="outlined"
+            //   placeholder="Enter Your City Name"
+            //   fullWidth
+            //   margin="normal"
+            //   {...field}
+            // />
           )}
+        /> */}
+        <Controller
+          name="cityName"
+          rules={{ required: 'Please select a city' }}
+          control={control}
+          render={({ field, fieldState }) => {
+            return (
+              <FormControl fullWidth>
+                <InputLabel id="city-label">City</InputLabel>
+                <Select
+                  id="city-select"
+                  label="City"
+                  labelId="city-id"
+                  error={!!fieldState.error}
+                  {...field}
+                >
+                {cityname.map((i)=> (<MenuItem value={i ?? ''} key={i}>
+                        {i}
+                </MenuItem>))}
+                </Select>
+                {fieldState.error ? (
+                  <FormHelperText error>
+                    {fieldState.error?.message}
+                  </FormHelperText>
+                ) : null}
+              </FormControl>
+            );
+          }}
         />
       </>
     );
   };
+
+  //Pet sign up form
   const PetForm = () => {
     const {
       control,
@@ -341,6 +386,7 @@ const StepperComp = () => {
     );
   };
 
+  //User form change event
   function getStepContent(step) {
     switch (step) {
       case 0:
