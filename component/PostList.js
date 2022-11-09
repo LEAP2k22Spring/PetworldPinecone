@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import * as React from 'react';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
@@ -5,7 +6,7 @@ import ImageListItemBar from '@mui/material/ImageListItemBar';
 
 export default function TitlebarBelowImageList() {
   return (
-    <ImageList cols={4}>
+    <ImageList cols={3} gap={20}>
       {itemData.map((item) => (
         <ImageListItem key={item.img}>
           <img

@@ -17,32 +17,32 @@ function Navbar() {
                     onClick={() => router.push("/")}>
                 </b>
                 <Box className={styles.menu} sx={{cursor:'pointer'}}>
-                  <li className={styles.list_item}>
-                    <span className={styles.list_item_name} onClick={() => router.push("/homepage")}>
+                  <li className={styles.list_item} onClick={() => router.push("/homepage")}>
+                    <span className={styles.list_item_name} >
                       Home
                     </span>
                     <HomeRoundedIcon className={styles.icon}/>
                   </li>
-                  <li className={styles.list_item}>
-                    <span className={styles.list_item_name} onClick={() => router.push("/explore")}>
+                  <li className={styles.list_item} onClick={() => router.push("/explore")}>
+                    <span className={styles.list_item_name} >
                       Explore
                     </span>
                     <ExploreRoundedIcon className={styles.icon}/>
                   </li>
-                  <li className={styles.list_item}>
-                    <span className={styles.list_item_name} onClick={() => router.push("/services")}>
+                  <li className={styles.list_item} onClick={() => router.push("/services")}>
+                    <span className={styles.list_item_name} >
                       Pet Care
                     </span>
                     <QueueRoundedIcon className={styles.icon}/>
                   </li>
-                  <li className={styles.list_item}>
-                    <span className={styles.list_item_name} onClick={() => router.push("/inbox")}>
+                  <li className={styles.list_item} onClick={() => router.push("/inbox")}>
+                    <span className={styles.list_item_name} >
                       Inbox
                     </span>
                     <EmailRoundedIcon className={styles.icon}/>
                   </li>
-                  <li className={styles.list_item}> 
-                    <span className={styles.list_item_name} onClick={() => router.push("/profile")}>
+                  <li className={styles.list_item} onClick={() => router.push("/profile")}> 
+                    <span className={styles.list_item_name} >
                         Profile
                     </span>
                     <AccountCircleRoundedIcon className={styles.icon}/>

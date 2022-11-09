@@ -4,8 +4,14 @@
   width: 100%;
   display: flex;
   justify-content: center;
+  height: 100px;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px,
+  rgba(0, 0, 0, 0.15) -1.95px -1.95px 2.6px;
+  z-index: 9;
 }
 .nav {
+  z-index: 10;
   margin-top: 20px;
   width: 80%;
   display: flex;
@@ -51,8 +57,8 @@
   background-image: url(../public/Logo-1.png);
   background-size: contain;
   background-repeat: no-repeat  ;
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 50px;
 }
 /* ================= Home Page ============= */
 .home_wrapp {
@@ -76,6 +82,10 @@
 @media (max-width: 650px) {
   .logo {
     display: none;
+  }
+  .nav_wrapp {
+    position: fixed;
+    bottom: 0;
   }
   .nav{
     position: fixed;
