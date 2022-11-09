@@ -16,6 +16,7 @@
     "@mui/material": "^5.10.11",
     "babel": "^6.23.0",
     "firebase": "^9.13.0",
+    "jsonwebtoken": "^8.5.1",
     "next": "^13.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
