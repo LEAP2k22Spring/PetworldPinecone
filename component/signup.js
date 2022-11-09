@@ -8,16 +8,17 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { FormProvider } from "react-hook-form";
-import StepperComp from "../component/StepperComp";
+import StepperComp from "./StepperComp";
 import { useCollection } from "../firebase/useFirebase";
 
 
 //Sign Up Component
 const SignUp = () => {
+
   const [activeStep, setActiveStep] = useState(0);
   const [skippedSteps, setSkippedSteps] = useState([]);
-  const { getUsersData, createUserData, getSignUp, createPetData } = useCollection("Users");
-  const { getStepContent, getSteps, userInputData, petInputData } = StepperComp();
+  const { getUsersData, createUserData, createUser, createPetData } = useCollection("Users");
+  const { getStepContent, getSteps, userInputData } = StepperComp();
   const steps = getSteps();
 
   
@@ -34,8 +35,6 @@ const SignUp = () => {
     firstName: "",
     lastName: "",
     emailAddress: "",
-    password: "",
-    passwordConfirm: "",
     dateOfBirth: "",
     phoneNumber: "",
     gender: "",
@@ -53,24 +52,22 @@ const SignUp = () => {
     if (activeStep == steps.length - 1) {
 
       let tempUserData = {};
-      for (const [key, value] of Object.entries(userInputDataDefaultValue)) {
+      for (const [key] of Object.entries(userInputDataDefaultValue)) {
         tempUserData[key] = data[key];
       }
-      const userId = await getSignUp(tempUserData);
-      console.log("SignUp", userId);
-
-
+      const userId = await createUser(data);
+      console.log(userId)
       await createUserData(tempUserData, userId);
 
-      let tempPetData = {};
-      for (const [key, value] of Object.entries(petInputDataDefaultValue)) {
-        tempPetData[key] = data[key] == undefined ? '' : data[key];
+      if(!skippedSteps.includes(2)){
+        let tempPetData = {};
+        for (const [key, value] of Object.entries(petInputDataDefaultValue)) {
+          tempPetData[key] = data[key] == undefined ? '' : data[key];
+        }
+        tempPetData.OwnerId = userId;
+        await createPetData(tempPetData);
       }
-      tempPetData.OwnerId = userId;
-      // tempPetData[OwnerId] = userId;
-      console.log("petData", tempPetData);
-
-      await createPetData(tempPetData);
+      
 
     } else {
       setSkippedSteps(

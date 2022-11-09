@@ -1,13 +1,11 @@
 import { initializeApp } from "firebase/app";
-import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth,signInWithEmailAndPassword } from "firebase/auth";
 import { addDoc, collection, getDocs, getFirestore, doc, setDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { firebaseConfig } from "./firebaseKeyAdminPage";
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app)
 export const auth = getAuth();
-
-// export default app
 
 export const useCollection = (path) => {
     const [userData, setUserData] = useState([]);
@@ -50,14 +48,13 @@ export const useCollection = (path) => {
 
 
     const createUserData = async (data, userId) => {
-        console.log("irlee", userId)
-        console.log("data", data)
         try {
             await setDoc(doc(db, path, userId), data)
         } catch (error) {
             console.log("error", error)
         }
     }
+
     const createPetData = async (data) => {
         try {
             await addDoc(collection(db, "Pets"), data)
@@ -66,7 +63,7 @@ export const useCollection = (path) => {
         }
     }
 
-    const getSignUp = async (data) => {
+    const createUser = async (data) => {
         const { emailAddress, password } = data
         let userId = ""
         try {
@@ -79,6 +76,16 @@ export const useCollection = (path) => {
         return userId
     }
 
+    const userSignIn = async (email,pass) => {
+        try {
+            const user = await signInWithEmailAndPassword(auth, email, pass)
+            alert("Sign in Success")
+            console.log(user)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
 
 
 
@@ -86,5 +93,5 @@ export const useCollection = (path) => {
     // const updateData = () => updateDoc
     // const deleteData = () => deleteDoc
 
-    return { userData, loading, getUsersData, createUserData, getSignUp, createPetData }
+    return { userData, loading, getUsersData, createUserData, createUser, createPetData,userSignIn }
 }
