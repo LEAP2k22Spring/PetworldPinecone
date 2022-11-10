@@ -17,9 +17,9 @@ function HomePage() {
     return (
         <Box mt={5} className={styles.home_wrapp}>
             <Box display='flex' justifyContent='flex-end' width='80%' zIndex={20}>
-                <LimitTags/>
+                <LimitTags />
             </Box>
-              <Stack direction="row" spacing={2} mt={10} justifyContent="flex-end" display="flex" width="80%">
+            <Stack direction="row" spacing={2} mt={10} justifyContent="flex-end" display="flex" width="80%">
                 <Button variant="contained" startIcon={<PetsIcon />}>
                     Dog
                 </Button>
@@ -32,11 +32,11 @@ function HomePage() {
                 <Button variant="outlined" startIcon={<SetMealIcon />}>
                     Fish
                 </Button>
-              </Stack>
-            <Box mt={2}>
+            </Stack>
+            {/* <Box mt={2}>
                 <TitlebarBelowImageList />
-            </Box>
-            <Box mt={2} sx={{display:'flex', justifyContent:'center', alignItems:'center'}}>
+            </Box> */}
+            <Box mt={2} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <RecipeReviewCard />
             </Box>
         </Box>
