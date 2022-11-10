@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }) => {
     setStartBtnClick(true);
     signOut(auth)
       .then(() => {
-        console.log("succes");
+        console.log("Log-out success");
       })
       .catch((err) => {
         console.log(err);
