@@ -1,8 +1,9 @@
 import { initializeApp } from "firebase/app";
 import { createUserWithEmailAndPassword, getAuth,signInWithEmailAndPassword } from "firebase/auth";
-import { addDoc, collection, getDocs, getFirestore, doc, setDoc } from "firebase/firestore";
+import { addDoc, collection, getDocs, getFirestore, doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { firebaseConfig } from "./firebaseKeyAdminPage";
+import { getStorage, getDownloadURL, uploadBytes, ref } from "firebase/storage";
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app)
 export const auth = getAuth();
@@ -86,12 +87,43 @@ export const useCollection = (path) => {
         }
     }
 
-
+    const createPost = async (data) => {
+        try {
+          await addDoc(collection(db, "Posts"), {
+            ...data,
+            createdAt: serverTimestamp(),
+          });
+          return true;
+        } catch (error) {
+          console.log('error from firebase', error);
+          return false;
+        }
+      };
+    const imageUploadToFirestore = async (imageData) => {
+        let isImageUploaded = '';
+        try {
+          const storage = getStorage(app);
+          const storageRef = ref(storage, 'images/' + imageData.imageName);
+    
+          await uploadBytes(storageRef, imageData.file);
+    
+          const downloadURL = await getDownloadURL(storageRef);
+    
+          isImageUploaded = true;
+          //add new key (URL) to addedFood object.
+    
+          return { uploaded: isImageUploaded, url: downloadURL };
+        } catch (error) {
+          alert(error);
+          console.log('aldaa', error.message);
+          return false;
+        }
+      };
 
 
 
     // const updateData = () => updateDoc
     // const deleteData = () => deleteDoc
 
-    return { userData, loading, getUsersData, createUserData, createUser, createPetData,userSignIn }
+    return { userData, loading, getUsersData, createUserData, createUser, createPetData, userSignIn, createPost, imageUploadToFirestore }
 }
