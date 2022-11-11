@@ -1,10 +1,13 @@
-import { Avatar, Button, Input, TextField } from "@mui/material"
+import { Avatar, Button, Input, TextField, Typography } from "@mui/material"
 import { Box } from "@mui/system"
 import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
 import { useRef, useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
 import { useCollection } from "../firebase/useFirebase";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useRouter } from "next/router";
+
 
 const AddPost = ()=>{
     const { createPost, imageUploadToFirestore } = useCollection("Posts");
@@ -77,9 +80,14 @@ const AddPost = ()=>{
           alert('Post successfully created!');
         }
       };
+      const router = useRouter();
    
     return(
-        <Box>
+        <Box textAlign="center">
+            <ArrowBackIcon fontSize="small" border="1px solid #000" onClick={() => router.push("/explore")}/>
+            <Box width="100%" height="50px" display="flex" justifyContent="center" alignItems="center" sx={{backgroundColor:"#ddd"}}>
+                <Typography>Share post</Typography>
+            </Box>
             <TextField inputRef={descRef}>Description</TextField>
             <UploadImageContainer>
               <div style={{ position: 'relative', margin: ' 10px' }}>
