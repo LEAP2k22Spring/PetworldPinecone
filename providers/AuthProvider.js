@@ -22,6 +22,7 @@ export const AuthProvider = ({ children }) => {
 
     return () => unsubscribe();
   }, []);
+
   const logout = () => {
     setStartBtnClick(true);
     signOut(auth)
