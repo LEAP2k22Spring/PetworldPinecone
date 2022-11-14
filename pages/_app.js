@@ -1,7 +1,7 @@
 import "../styles/globals.css";
 import { useRouter } from "next/router";
 import { AuthProvider } from "../providers/AuthProvider";
-import Layout from "../component/layout";
+import Layout from "../component/layout.js";
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
