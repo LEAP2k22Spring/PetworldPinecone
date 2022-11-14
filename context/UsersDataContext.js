@@ -1,6 +1,6 @@
 import { createContext, useState, useContext } from "react";
 const GetUsersDataContext = createContext()
-export const AddFoodOpenModalProvider = (props)=>{
+export const GetUsersDataProvider = (props)=>{
     const {children} = props;
     const [getUsersData, setGetUsersData] = useState([])
 

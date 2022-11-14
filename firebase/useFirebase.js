@@ -4,6 +4,8 @@ import {
   getAuth,
   signInWithEmailAndPassword,
 } from "firebase/auth";
+import { useGetUsersDataContext } from "../context/UsersDataContext";
+import { useGetPostsDataContext } from "../context/PostsDataContext";
 import { useEffect, useState } from "react";
 import { firebaseConfig } from "./firebaseKeyAdminPage";
 import {
@@ -19,6 +21,7 @@ import {
   getFirestore,
 } from "firebase/firestore";
 import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
+
 // import { db, app } from "../firebase.config";
 
 const app = initializeApp(firebaseConfig);
@@ -118,8 +121,10 @@ export const useFirebase = (path) => {
 };
 
 export const useCollection = (path) => {
-  const [userData, setUserData] = useState([]);
+  const { setPostsData } = useGetPostsDataContext();
+
   const [loading, setLoading] = useState();
+  const { getUsersData, setGetUsersData } = useGetUsersDataContext();
   const colRef = collection(db, path);
 
   useEffect(() => {
@@ -153,6 +158,12 @@ export const useCollection = (path) => {
   //     }
   //     console.log("GETDATA",item);
   //   };
+  const getUsersDatabase = async (Id) => {
+    const docRef = doc(colRef, Id);
+    const docSnap = await getDoc(docRef);
+    const result = docSnap.data();
+    setGetUsersData({ ...result, userId: Id });
+  };
 
   const createUserData = async (data, userId) => {
     try {
@@ -187,25 +198,17 @@ export const useCollection = (path) => {
   };
 
   const userSignIn = async (email, pass) => {
+    let userId = "";
     try {
       const user = await signInWithEmailAndPassword(auth, email, pass);
+      userId = user.user.uid;
+      getUsersDatabase(userId);
       alert("Sign in Success");
     } catch (error) {
       console.log(error);
     }
   };
-  const createPost = async (data) => {
-    try {
-      await addDoc(collection(db, "Posts"), {
-        ...data,
-        createdAt: serverTimestamp(),
-      });
-      return true;
-    } catch (error) {
-      console.log("error from firebase", error);
-      return false;
-    }
-  };
+
   const imageUploadToFirestore = async (imageData) => {
     let isImageUploaded = "";
     try {
@@ -227,11 +230,44 @@ export const useCollection = (path) => {
     }
   };
 
-  // const updateData = () => updateDoc
-  // const deleteData = () => deleteDoc
+  // create Post add Firebase
+  const createPost = async (data) => {
+    try {
+      await addDoc(collection(db, "Posts"), {
+        ownerName: getUsersData.firstName,
+        ownerProfile: getUsersData.avatar,
+        ownerID: getUsersData.userId,
+        ...data,
+        createdAt: serverTimestamp(),
+      });
+      return true;
+    } catch (error) {
+      console.log("error from firebase", error);
+      return false;
+    }
+  };
 
+  //get Post data from Firebase
+  const getFireabasePostsData = async (postPath) => {
+    try {
+      const result = await getDocs(collection(db, "Posts"));
+      const item = [];
+      if (result) {
+        if (result) {
+          result.docs.forEach((doc) => {
+            item.push(doc.data());
+          });
+        }
+        setPostsData(item);
+      }
+      console.log("starting...", item);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  // image upload Component Firebase
   return {
-    userData,
     loading,
     createUserData,
     createUser,
@@ -239,5 +275,8 @@ export const useCollection = (path) => {
     userSignIn,
     createPost,
     imageUploadToFirestore,
+    getFireabasePostsData,
   };
 };
+// const updateData = () => updateDoc
+// const deleteData = () => deleteDoc

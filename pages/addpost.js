@@ -73,7 +73,6 @@ const AddPost = ()=>{
         const successfullyUploaded = await createPost({
           desc:descRef.current.value,
           image: url,
-          ownerID: 'YkrI259vNWXbQuEM6J49zpIDcbJ3',
         });
     
         if (successfullyUploaded) {
