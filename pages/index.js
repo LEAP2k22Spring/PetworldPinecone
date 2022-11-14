@@ -4,12 +4,14 @@ import styles from "../styles/Home.module.css";
 import LimitTags from "../component/SearchAppBar";
 import Stack from "@mui/material/Stack";
 import RecipeReviewCard from "../component/PostCard";
+import Reel from "../component/Reel";
 
 function HomePage() {
   const router = useRouter();
 
   return (
     <Box mt={5} className={styles.home_wrapp}>
+      <Reel />
       <Box display="flex" justifyContent="flex-end" width="80%" zIndex={20}>
         <LimitTags />
       </Box>

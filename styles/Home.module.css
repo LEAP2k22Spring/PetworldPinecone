@@ -83,6 +83,66 @@
   color: white;
   transition: all .2s ease-in-out;
 }
+/* ----------------- Reel ------------------ */
+.team {
+  text-align: center;
+  font-size: 64px;
+  color: #10996d;
+  margin: 0 0 70px;
+}
+.container_1 {
+  display: flex;
+  justify-content: center;
+  width: 90%;
+  max-width: 1040px;
+  margin: 0 auto;
+}
+.profile_1 {
+  position: relative;
+  transition: all 0.3s;
+}
+
+.profile_1:hover {
+  transform: translateY(10px);
+}
+.profile_1 img {
+  max-width: 100%;
+  border-radius: 50%;
+  border: 5px solid #f7f7f7;
+  filter: drop-shadow(-20px 0 10px rgba(0, 0, 0, 0.1));
+  cursor: pointer;
+}
+
+.profile_1:not(:first-child) {
+  margin-left: -10px;
+}
+.profile_1 .name_1 {
+  position: absolute;
+  background-color: #4689FD;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 100px;
+  bottom: -40px; left: 50%;
+  white-space: nowrap;
+  transform: translate(-50%, -50px);
+  letter-spacing: 1px;
+  font-size: 12px;
+  opacity: 0;
+  transition: all 0.3s;
+}
+.profile_1 .name_1::before {
+  content: "";
+  position: absolute;
+  width: 15px; height: 15px;
+  background-color: #4689FD;
+  top: 0; left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.profile_1 img:hover + .name_1 {
+  opacity: 1;
+  transform: translateX(-50%);
+  /* box-shadow: 0 10px 20px rgba(86, 86, 198, 0.3); */
+}
 /* ============== Responsive =============== */
 @media (max-width: 800px) {
   .menu {
@@ -121,7 +181,7 @@
     opacity: 1;
   }
 }
-@media (max-width: 390px) {
+@media (max-width: 406px) {
   .list_item_name {
     font-size: 12px;
   }
