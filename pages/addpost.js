@@ -1,4 +1,4 @@
-import { Avatar, Button, Input, TextField, Typography } from "@mui/material"
+import { Avatar, Button, Fab, Input, TextField, Typography } from "@mui/material"
 import { Box } from "@mui/system"
 import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
 import { useRef, useState } from "react";
@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import { useCollection } from "../firebase/useFirebase";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useRouter } from "next/router";
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 
 
 const AddPost = ()=>{
@@ -16,8 +17,9 @@ const AddPost = ()=>{
         file: '',
         imageName: '',
       });
+    const descRef = useRef();
+    const router = useRouter();
 
-      const descRef = useRef();
     const UploadImageContainer = styled.div`
       display: flex;
       flex-direction: row;
@@ -26,19 +28,17 @@ const AddPost = ()=>{
       margin: 10px;
     `;
     const UserAvatar = styled(Avatar)`
-      width: 100px;
-      height: 100px;
+      width: 50px;
+      height: 50px;
     `;
     
     const Label = styled.label`
-      position: absolute;
-      top: 80px;
-      left: 70px;
-      width: 30px;
-      height: 30px;
-      border: 3px solid #fff;
-      background-color: #f5f5f7;
-      border-radius: 50%;
+
+    `;
+    const Image = styled.img`
+      object-fit:contain;
+      width:100% !important;
+      hieght:unset !important
     `;
       // 2) Image picker handler
       const imgUploadHandler = (e) => {
@@ -71,38 +71,45 @@ const AddPost = ()=>{
       // if image successfully uploaded then save all data to the firebase/firestore
       const saveData = async (url) => {
         const successfullyUploaded = await createPost({
-            desc:descRef.current.value,
+          desc:descRef.current.value,
           image: url,
           ownerID: 'YkrI259vNWXbQuEM6J49zpIDcbJ3',
         });
     
         if (successfullyUploaded) {
+
           alert('Post successfully created!');
+          router.push("/explore")
         }
       };
-      const router = useRouter();
    
     return(
-        <Box textAlign="center">
-            <ArrowBackIcon fontSize="small" border="1px solid #000" onClick={() => router.push("/explore")}/>
-            <Box width="100%" height="50px" display="flex" justifyContent="center" alignItems="center" sx={{backgroundColor:"#ddd"}}>
-                <Typography>Share post</Typography>
+        <Box>
+            <Box display="flex" alignItems="center">
+              <ArrowBackIcon fontSize="large" sx={{ position:"absolute", ml:'20px', border:'1px solid #000', borderRadius:'50%', p:'5px'}} onClick={() => router.push("/explore")}/>
+              <Box width="100%" height="50px" display="flex" justifyContent="center" alignItems="center" sx={{backgroundColor:"#ddd"}}>
+                  <Typography>Share post</Typography>
+              </Box>
             </Box>
-            <TextField inputRef={descRef}>Description</TextField>
-            <UploadImageContainer>
-              <div style={{ position: 'relative', margin: ' 10px' }}>
-                <UserAvatar src={imageData.url} />
+            <TextField sx={{"& fieldset": { border: 'none' },}} inputRef={descRef} placeholder="Таны оройн зай" multiline fullWidth rows={2}>Description</TextField>
+            <Box >
+              <Box>
+                <Image src={imageData.url} sizes="cover"/>
+              </Box>
+              <Box display="flex" alignItems="center" p={2} justifyContent="space-between">
                 <Label>
                   <Input
                     sx={{ display: 'none' }}
                     type='file'
                     onChange={imgUploadHandler}
                   />
-                  <CameraAltOutlinedIcon />
+                  <Fab component="span" size="small">
+                    <AddPhotoAlternateIcon fontSize="small" />
+                  </Fab>
                 </Label>
-              </div>
-            </UploadImageContainer>
-            <Button variant="contained" onClick={onSave}>submit</Button>
+                <Button variant="contained" onClick={onSave}>submit</Button>
+              </Box>
+            </Box>
         </Box>
     )
 }

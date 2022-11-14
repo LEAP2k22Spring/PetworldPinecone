@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { createUserWithEmailAndPassword, getAuth,signInWithEmailAndPassword } from "firebase/auth";
-import { addDoc, collection, getDocs, getFirestore, doc, setDoc } from "firebase/firestore";
+import { addDoc, collection, getDocs, getFirestore, doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { firebaseConfig } from "./firebaseKeyAdminPage";
 import { getStorage, getDownloadURL, uploadBytes, ref } from "firebase/storage";
@@ -13,38 +13,38 @@ export const useCollection = (path) => {
   const [loading, setLoading] = useState();
   const colRef = collection(db, path);
 
-  // useEffect(() => {
-  //     // setLoading
-  //     (async () => {
-  //         try {
-  //             const colRef = createRef(path)
-  //             const result = await getDocs(colRef)
-  //             const item = [];
-  //             if (result) {
-  //                 if (result) {
-  //                     result.docs.forEach((doc) => {
-  //                         item.push(doc.data())
-  //                     })
-  //                 }
-  //                 setUserData(item)
-  //             }
-  //             console.log("data", item);
-  //         } catch (error) {
-  //         }
-  //     })()
-  // }, [])
-  const getUsersData = async () => {
-    const result = await getDocs(colRef);
-    const item = [];
-    if (result) {
-      if (result) {
-        result.docs.forEach((data) => {
-          item.push(data.data());
-        });
-      }
-      setUserData(item);
-    }
-  };
+  useEffect(() => {
+      // setLoading
+      (async () => {
+          try {
+            //   const colRef = createRef(path)
+              const result = await getDocs(colRef)
+              const item = [];
+              if (result) {
+                  if (result) {
+                      result.docs.forEach((doc) => {
+                          item.push(doc.data())
+                      })
+                  }
+                  setUserData(item)
+              }
+          } catch (error) {
+          }
+      })()
+  }, [])
+//   const getUsersData = async () => {
+//     const result = await getDocs(colRef);
+//     const item = [];
+//     if (result) {
+//       if (result) {
+//         result.docs.forEach((data) => {
+//           item.push(data.data());
+//         });
+//       }
+//       setUserData(item);
+//     }
+//     console.log("GETDATA",item);
+//   };
 
   const createUserData = async (data, userId) => {
     try {
@@ -82,7 +82,6 @@ export const useCollection = (path) => {
         try {
             const user = await signInWithEmailAndPassword(auth, email, pass)
             alert("Sign in Success")
-            console.log(user)
         } catch (error) {
             console.log(error)
         }
@@ -127,5 +126,5 @@ export const useCollection = (path) => {
   // const updateData = () => updateDoc
   // const deleteData = () => deleteDoc
 
-    return { userData, loading, getUsersData, createUserData, createUser, createPetData,userSignIn, createPost, imageUploadToFirestore }
+    return { userData, loading, createUserData, createUser, createPetData,userSignIn, createPost, imageUploadToFirestore }
 }
