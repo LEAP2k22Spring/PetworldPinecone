@@ -69,9 +69,11 @@
   align-items: center;
   width: 100%;
 }
+
 /* ----------------- Categories ------------ */
 
 .categories_buttons button{
+  cursor: pointer;
   padding: 10px 20px;
   border: none;
   border-radius: 10px;
