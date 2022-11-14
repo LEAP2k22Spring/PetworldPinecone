@@ -7,6 +7,7 @@ import QueueRoundedIcon from "@mui/icons-material/QueueRounded";
 import ExploreRoundedIcon from "@mui/icons-material/ExploreRounded";
 import ContactSupportIcon from "@mui/icons-material/ContactSupport";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
+import { Avatar } from "@mui/material";
 
 function Navbar() {
   const router = useRouter();
@@ -45,7 +46,18 @@ function Navbar() {
             onClick={() => router.push("/profile")}
           >
             <span className={styles.list_item_name}>Profile</span>
-            <AccountCircleRoundedIcon className={styles.icon} />
+            <Avatar
+              alt="Remy Sharp"
+              src="https://images.unsplash.com/photo-1551963831-b3b1ca40c98e"
+              sx={{
+                width: "22px",
+                height: "22px",
+                marginTop: "1px",
+                fontSize: "12px",
+                border: "1px solid black",
+              }}
+              className={styles.icon}
+            />
           </li>
         </Box>
       </Box>
