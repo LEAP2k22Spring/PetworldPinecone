@@ -5,6 +5,7 @@ import LimitTags from "../component/SearchAppBar";
 import Stack from "@mui/material/Stack";
 import RecipeReviewCard from "../component/PostCard";
 import Reel from "../component/Reel";
+import Banner from "../component/Banner";
 
 function HomePage() {
   const router = useRouter();
@@ -15,6 +16,7 @@ function HomePage() {
       <Box display="flex" justifyContent="flex-end" width="80%" zIndex={20}>
         <LimitTags />
       </Box>
+      <Banner />
       <Stack
         className={styles.categories_buttons}
         direction="row"

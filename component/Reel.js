@@ -18,7 +18,7 @@ const style = {
   };
 
 export default function Reel() {
-const [isPlaying, setIsPlaying] = useState(true);
+const [isPlaying, _setIsPlaying] = useState(true);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
