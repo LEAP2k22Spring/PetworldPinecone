@@ -69,6 +69,20 @@
   align-items: center;
   width: 100%;
 }
+/* ----------------- Categories ------------ */
+.categories_buttons {
+  overflow-y: scroll;
+}
+.categories_buttons button{
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+}
+.categories_buttons button:hover {
+  background: #4689FD;
+  color: white;
+  transition: all .2s ease-in-out;
+}
 /* ============== Responsive =============== */
 @media (max-width: 800px) {
   .menu {
