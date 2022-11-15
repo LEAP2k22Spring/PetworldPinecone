@@ -20,8 +20,8 @@ export default function RecipeReviewCard() {
   return (
     <Box display="flex" justifyContent="center" sx={{ flexGrow: 1, marginBottom: '120px' }}>
       <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '40px', width: '80%' }}>
-        {itemData.map(item => (
-          <Box>
+        {itemData.map((item, i) => (
+          <Box key={i}>
             <Card sx={{ width: '350px', borderRadius: '20px' }}>
               <CardMedia
                 component="img"
@@ -56,8 +56,13 @@ export default function RecipeReviewCard() {
                   <Avatar alt="Trevor Henderson" src="https://i.pinimg.com/564x/ba/12/13/ba1213ba9e3be028a6e03f78cfa05e11.jpg" />
                 </AvatarGroup>
                 <IconButton aria-label="add to favorites" sx={{fontSize:'16px', gap:'5px', borderRadius:'15px', bgcolor:'rgb(96 165 250)', color:'white', '&:hover': {
+<<<<<<< Updated upstream
                   backgroundColor: "rgb(0, 87, 194)"
                  }} }>
+=======
+                backgroundColor: "rgb(0, 87, 194)"
+              }} }>
+>>>>>>> Stashed changes
                   follow
                   <PetsIcon sx={{color:'white'}} />
                 </IconButton>
