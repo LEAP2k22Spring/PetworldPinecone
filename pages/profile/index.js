@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { Avatar, Typography, Stack, Button, Divider } from '@mui/material';
-import { useFirebase } from '../../firebase/useFirebase';
 import { useEffect, useState } from 'react';
 import LoadingSpinner from '../../component/Spinner';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
@@ -10,45 +9,26 @@ import { useGetUsersDataContext } from '../../context/UsersDataContext';
 
 const Profile = () => {
   const router = useRouter();
-  const { getSingleData } = useFirebase('Users');
-  const [userData, setUserData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const { getUsersData } = useGetUsersDataContext();
-
-  useEffect(() => {
-    console.log(getUsersData);
-    setIsLoading(true);
-
-    (async () => {
-      try {
-        const userCollection = await getSingleData(getUsersData.userId);
-        setIsLoading(false);
-        setUserData(userCollection);
-      } catch (error) {}
-    })();
-  }, []);
 
   return (
     <>
       <Container>
         <LoadingSpinner open={isLoading} />
-
         <Header>
           <SettingsIconContainer>
             <SettingsOutlinedIcon fontSize='large' />
           </SettingsIconContainer>
         </Header>
         <AvatarContainer>
-          <UserAvatar
-            alt='Remy Sharp'
-            src='https://images.unsplash.com/photo-1667795016173-3c1c7c86b1fe?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80'
-          />
+          <UserAvatar alt='Remy Sharp' src={getUsersData?.avatar} />
           <Typography
             variant='h6'
             mt={2}
             sx={{ fontSize: '1.5rem', fontWeight: 700, color: '#696969' }}
           >
-            {userData?.firstName}
+            {getUsersData?.firstName}
           </Typography>
         </AvatarContainer>
         <UserProfile>
@@ -80,10 +60,10 @@ const Profile = () => {
             About me
           </Typography>
           <Typography variant='body1' mt={2} mx={3}>
-            Gender: {userData?.gender}
+            Gender: {getUsersData?.gender}
           </Typography>
           <Typography variant='body1' mt={2} mx={3}>
-            Birth date: {userData?.dateOfBirth}
+            Birth date: {getUsersData?.dateOfBirth}
           </Typography>
           <Typography variant='body1' mt={5} mx={3}>
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Velit

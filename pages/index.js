@@ -1,16 +1,3 @@
-<<<<<<< HEAD
-import Box from "@mui/material/Box";
-import { useRouter } from "next/router";
-import styles from "../styles/Home.module.css";
-import LimitTags from "../component/SearchAppBar";
-import Stack from "@mui/material/Stack";
-import RecipeReviewCard from "../component/PostCard";
-import { Button } from "@mui/material";
-import { useAuth } from "../providers/AuthProvider";
-function HomePage() {
-  const router = useRouter();
-  const { logout } = useAuth();
-=======
 import Box from '@mui/material/Box';
 import { useRouter } from 'next/router';
 import styles from '../styles/Home.module.css';
@@ -24,17 +11,12 @@ function HomePage() {
   const router = useRouter();
   const { logout } = useAuth();
 
->>>>>>> 280442a (addpet updated)
   return (
     <Box mt={5} className={styles.home_wrapp}>
       <Box display='flex' justifyContent='flex-end' width='80%' zIndex={20}>
         <LimitTags />
       </Box>
-<<<<<<< HEAD
-      <Button variant="contained" onClick={() => logout()}>
-=======
       <Button variant='contained' onClick={() => logout()}>
->>>>>>> 280442a (addpet updated)
         Sign out
       </Button>
       <Stack
