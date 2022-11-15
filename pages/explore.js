@@ -89,8 +89,7 @@ const ExplorePage = () => {
                 ))}
             </Box>
             </Box>
-            </Box>
-
+        </Box>
     )
 }
 export default ExplorePage

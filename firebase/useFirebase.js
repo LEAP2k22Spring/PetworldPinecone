@@ -222,7 +222,6 @@ export const useCollection = (path) => {
 
   // create Post add Firebase
   const createPost = async (data) => {
-    console.log(getUsersData.firstName, getUsersData.avatar, getUsersData.userId)
     try {
       await addDoc(collection(db, "Posts"), {
         userID: getUsersData.userId,
