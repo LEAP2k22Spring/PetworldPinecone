@@ -14,7 +14,7 @@ export default function Banner() {
             <h1>See Project</h1>
           </div>
         </div>
-        <div class={styles.wrapper_2}>
+        <div className={styles.wrapper_2}>
             <div className={styles.image_wrapper_2}>
             <img className={styles.book_design_image} src="https://img.freepik.com/fotos-premium/accesorios-perros-comida-juguetes-sobre-fondo-morado-endecha-plana-vista-superior_46208-94.jpg?w=1380" /></div>
             <div className={styles.header_wrapper_2}>

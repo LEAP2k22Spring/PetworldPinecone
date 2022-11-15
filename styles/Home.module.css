@@ -206,7 +206,7 @@
   text-transform: uppercase;
   transition: all 200ms ease-in-out;
   -webkit-text-stroke-width: 2px;
-    -webkit-text-stroke-color: #323232;
+  -webkit-text-stroke-color: #323232;
 }
 .header_wrapper_2 h1 {
   position: relative;
@@ -218,7 +218,7 @@
   text-transform: uppercase;
   transition: all 200ms ease-in-out;
   -webkit-text-stroke-width: 2px;
-    -webkit-text-stroke-color: #cab2cb;
+  -webkit-text-stroke-color: #cab2cb;
 }
 
 .wrapper_2:hover img {
