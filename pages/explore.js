@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Avatar, AvatarGroup, Button, Card, CardActions, CardHeader, CardMedia, Divider, IconButton, Typography } from "@mui/material"
 import { Box } from "@mui/system"
 import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
@@ -24,9 +25,6 @@ const ExplorePage = () => {
     useEffect(() => {
         getFireabasePostsData("Posts")
     }, [])
-    console.log("postsData", postsData);
-    // console.log("ftime", moment(postsData[0].createdAt.toDate()).calendar());
-
 
     return (
         <Box display="flex" flexDirection="column" gap={3} pt={6} pb={2}>
@@ -58,7 +56,7 @@ const ExplorePage = () => {
                         </IconButton>
                         }
                         title={el.userName}
-                        subheader={moment(el.createdAt.toDate()).endOf('hour').fromNow()}
+                        subheader={moment(el.createdAt.toDate()).startOf('hour').fromNow()}
                     />
                     <Typography p={2}>{el.desc}</Typography>
                     <CardMedia
@@ -91,31 +89,8 @@ const ExplorePage = () => {
                 ))}
             </Box>
             </Box>
-            {/* {postsData?.map((el, i) => 
-                <Box key={i} sx={{ width: '350px', borderRadius: '20px', backgroundColor:"#ddd"}}>
-                    <Box display="flex" justifyContent="space-between" >
-                        <Box p={1} gap={2} display="flex" alignItems="center">
-                            <Avatar sizes="small" alt="Remy Sharp" src={el.userAvatar} />
-                            <Typography>{el.userName}</Typography>
-                        </Box>
-                        <Box p={1} gap={2} display="flex" alignItems="center">
-                            <Button size="small" variant="contained">Follow</Button>
-                            <MoreHorizIcon />
-                        </Box>
-                    </Box>
-                    
-                    <Box sx={{ width: "100%", height: "auto"}}>
-                        <img height={200} src={el.image}/>
-                    </Box>
-                    <Box width="100%">
-                        <Box display="flex" alignItems="center" p={2} gap={1}>
-                            <FavoriteBorderOutlinedIcon />
-                            <AddCommentOutlinedIcon />
-                            <IosShareOutlinedIcon />
-                        </Box>
-                    </Box>
-                </Box>)} */}
-        </Box>
+            </Box>
+
     )
 }
 export default ExplorePage

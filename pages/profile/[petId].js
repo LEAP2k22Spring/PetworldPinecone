@@ -24,13 +24,10 @@ const Pet = () => {
   }, []);
 
   return (
-    <Layout>
       <div>
         <LoadingSpinner open={isLoading} />
-
         <PetProfile petData={petData} />
       </div>
-    </Layout>
   );
 };
 

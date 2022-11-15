@@ -93,7 +93,7 @@ const AddPost = ()=>{
             <TextField sx={{"& fieldset": { border: 'none' },}} inputRef={descRef} placeholder="Таны оройн зай" multiline fullWidth rows={2}>Description</TextField>
             <Box >
               <Box>
-                <Image src={imageData.url} sizes="cover"/>
+                <Image src={imageData.url} alt="" sizes="cover"/>
               </Box>
               <Box display="flex" alignItems="center" p={2} justifyContent="space-between">
                 <Label>

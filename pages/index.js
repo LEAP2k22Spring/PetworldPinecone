@@ -21,11 +21,11 @@ function HomePage() {
         className={styles.categories_buttons}
         direction="row"
         spacing={1}
-        mt={10}
+        mt={5}
         justifyContent="flex-end"
         display="flex"
         width="80%"
-        overflow="scroll"
+
       >
         <button>Dog</button>
         <button>Cat</button>

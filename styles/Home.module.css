@@ -19,6 +19,7 @@
 }
 
 .menu {
+  
   list-style: none;
   display: flex;
   align-items: center;
@@ -69,9 +70,7 @@
   width: 100%;
 }
 /* ----------------- Categories ------------ */
-.categories_buttons {
-  overflow-y: scroll;
-}
+
 .categories_buttons button{
   padding: 10px 20px;
   border: none;
