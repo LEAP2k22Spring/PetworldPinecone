@@ -19,6 +19,7 @@ import {
   orderBy,
   where,
   getFirestore,
+  setDoc,
 } from "firebase/firestore";
 import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
 
@@ -127,24 +128,24 @@ export const useCollection = (path) => {
   const { getUsersData, setGetUsersData } = useGetUsersDataContext();
   const colRef = collection(db, path);
 
-  useEffect(() => {
-    // setLoading
-    (async () => {
-      try {
-        //   const colRef = createRef(path)
-        const result = await getDocs(colRef);
-        const item = [];
-        if (result) {
-          if (result) {
-            result.docs.forEach((doc) => {
-              item.push(doc.data());
-            });
-          }
-          setUserData(item);
-        }
-      } catch (error) {}
-    })();
-  }, []);
+  // useEffect(() => {
+  //   // setLoading
+  //   (async () => {
+  //     try {
+  //       //   const colRef = createRef(path)
+  //       const result = await getDocs(colRef);
+  //       const item = [];
+  //       if (result) {
+  //         if (result) {
+  //           result.docs.forEach((doc) => {
+  //             item.push(doc.data());
+  //           });
+  //         }
+  //         setUserData(item);
+  //       }
+  //     } catch (error) {}
+  //   })();
+  // }, []);
   //   const getUsersData = async () => {
   //     const result = await getDocs(colRef);
   //     const item = [];
@@ -159,10 +160,17 @@ export const useCollection = (path) => {
   //     console.log("GETDATA",item);
   //   };
   const getUsersDatabase = async (Id) => {
+    console.log("Starting");
+    console.log("Id", Id);
+
     const docRef = doc(colRef, Id);
     const docSnap = await getDoc(docRef);
     const result = docSnap.data();
-    setGetUsersData({ ...result, userId: Id });
+    console.log("result", result);
+    if(result){
+      setGetUsersData({ ...result, userId: Id });
+    }
+    console.log("getUsersData", getUsersData);
   };
 
   const createUserData = async (data, userId) => {
@@ -232,11 +240,12 @@ export const useCollection = (path) => {
 
   // create Post add Firebase
   const createPost = async (data) => {
+    console.log(getUsersData.firstName, getUsersData.avatar, getUsersData.userId)
     try {
       await addDoc(collection(db, "Posts"), {
-        ownerName: getUsersData.firstName,
-        ownerProfile: getUsersData.avatar,
-        ownerID: getUsersData.userId,
+        userName: getUsersData.firstName,
+        userAvatar: getUsersData.avatar,
+        userID: getUsersData.userId,
         ...data,
         createdAt: serverTimestamp(),
       });
