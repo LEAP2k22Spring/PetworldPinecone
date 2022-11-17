@@ -1,21 +1,20 @@
-import { onAuthStateChanged, signOut } from "firebase/auth";
-import { createContext, useContext, useEffect, useState } from "react";
-import { auth, useCollection } from "../firebase/useFirebase";
-import Login from "../component/signin";
-import LandingPage from "../component/landingPage";
-import { useGetUsersDataContext } from "../context/UsersDataContext";
+import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { createContext, useContext, useEffect, useState } from 'react';
+import { auth, useCollection } from '../firebase/useFirebase';
+import Login from '../component/signin';
+import LandingPage from '../component/landingPage';
+import { useGetUsersDataContext } from '../context/UsersDataContext';
 
 const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(false);
   const [checking, setChecking] = useState(true);
   const [startBtnClick, setStartBtnClick] = useState(false);
-  const { getUsersDatabase } = useCollection("Users");
-  console.log("auth");
+  const { getUsersDatabase } = useCollection('Users');
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        let userId = "";
+        let userId = '';
         userId = user.uid;
         setUser(true);
         getUsersDatabase(userId);
@@ -26,14 +25,14 @@ export const AuthProvider = ({ children }) => {
     });
 
     return () => unsubscribe();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const logout = () => {
     setStartBtnClick(true);
     signOut(auth)
       .then(() => {
-        console.log("Log-out success");
+        console.log('Log-out success');
       })
       .catch((err) => {
         console.log(err);
@@ -41,7 +40,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const userSignIn = async (email, pass) => {
-    console.log("starting user sign");
+    console.log('starting user sign');
     try {
       const user = await signInWithEmailAndPassword(auth, email, pass);
       setUser(true);
@@ -55,14 +54,14 @@ export const AuthProvider = ({ children }) => {
       {checking && (
         <h1
           style={{
-            position: "absolute",
-            zIndex: "1300",
-            width: "100%",
-            height: "100vh",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            background: "rgba(0,0,0,0.3)",
+            position: 'absolute',
+            zIndex: '1300',
+            width: '100%',
+            height: '100vh',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            background: 'rgba(0,0,0,0.3)',
           }}
         >
           LOADING...

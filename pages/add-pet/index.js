@@ -49,6 +49,7 @@ const AddPet = () => {
   const petNameRef = useRef(null);
   const breedRef = useRef(null);
   const birthRef = useRef(null);
+  const colorRef = useRef(null);
   const descriptionRef = useRef(null);
   const [petInputData, setPetInputData] = useState({
     category: '',
@@ -67,8 +68,20 @@ const AddPet = () => {
   });
 
   // destructuring some field of petInputData
-  const { category, microchipped, vaccinated, sprayed, sex, weight } =
-    petInputData;
+  const {
+    breed,
+    petName,
+    category,
+    birthDate,
+    description,
+    microchipped,
+    vaccinated,
+    sprayed,
+    sex,
+    weight,
+    height,
+    color,
+  } = petInputData;
 
   // 1) Pet inputs handler
   const handleChange = (event) => {
@@ -113,7 +126,7 @@ const AddPet = () => {
   // 5) SAVE ALL DATA - FINAL STEP
   const onSave = async () => {
     // Validation - 1;
-    if (petInputData.category === '') {
+    if (category === '') {
       alert('Please choose your pet category');
       return;
     }
@@ -126,12 +139,16 @@ const AddPet = () => {
 
     //Validation-3
     if (
-      petInputData.petName === '' ||
-      petInputData.birthDate === '' ||
-      petInputData.breed === '' ||
-      petInputData.description === ''
+      sex === '' ||
+      petName === '' ||
+      birthDate === '' ||
+      breed === '' ||
+      color === '' ||
+      weight === '' ||
+      height === '' ||
+      description === ''
     ) {
-      alert('Please fill the name, breed, birth, description input fields');
+      alert('Please fill all empty input fields');
       return;
     }
 
@@ -141,7 +158,6 @@ const AddPet = () => {
     const { uploaded, url } = await imageUploadToFirestore(imageData);
 
     if (uploaded) {
-      console.log('url', url);
       await saveData(url);
     } else {
       alert('Could not upload image');
@@ -172,6 +188,7 @@ const AddPet = () => {
     breedRef.current.value = '';
     birthRef.current.value = '';
     descriptionRef.current.value = '';
+    colorRef.current.value = '';
     setPetInputData({
       category: '',
       image: '',
@@ -287,11 +304,11 @@ const AddPet = () => {
             </StyledTitleTypography>
             <Stack
               direction='column'
-              justifyContent='center'
+              justifyContent='flex-start'
               alignItems='center'
-              mt={5}
+              sx={{ margin: '20 auto' }}
             >
-              <FormControl sx={{ m: 1, width: 200 }}>
+              <FormControl sx={{ m: 1, width: 222.4 }}>
                 <InputLabel>Sex</InputLabel>
                 <Select
                   value={sex}
@@ -335,24 +352,45 @@ const AddPet = () => {
                 // helperText='Incorrect entry.'
                 inputRef={breedRef}
                 onBlur={handleChange}
-              />{' '}
-              <FormControl sx={{ m: 1, width: '20ch' }} variant='outlined'>
-                <OutlinedInput
-                  name='weight'
-                  value={weight}
-                  onChange={handleChange}
-                  endAdornment={
-                    <InputAdornment position='end'>kg</InputAdornment>
-                  }
-                  aria-describedby='outlined-weight-helper-text'
-                  inputProps={{
-                    'aria-label': 'weight',
-                  }}
-                />
-                {/* <FormHelperText id='outlined-weight-helper-text'>
-                  Weight
-                </FormHelperText> */}
-              </FormControl>
+              />
+              <TextField
+                error={false}
+                name='color'
+                label='color*'
+                margin='normal'
+                // defaultValue='Hello World'
+                // helperText='Incorrect entry.'
+                inputRef={colorRef}
+                onBlur={handleChange}
+              />
+              <Stack
+                direction='row'
+                justifyContent='center'
+                alignItems='center'
+              >
+                <FormControl sx={{ m: 1, width: '15ch' }} variant='outlined'>
+                  <InputLabel>Weight</InputLabel>
+                  <OutlinedInput
+                    name='weight'
+                    value={weight}
+                    onChange={handleChange}
+                    endAdornment={
+                      <InputAdornment position='end'>kg</InputAdornment>
+                    }
+                  />
+                </FormControl>
+                <FormControl sx={{ m: 1, width: '15ch' }} variant='outlined'>
+                  <InputLabel>Height</InputLabel>
+                  <OutlinedInput
+                    name='height'
+                    value={height}
+                    onChange={handleChange}
+                    endAdornment={
+                      <InputAdornment position='end'>cm</InputAdornment>
+                    }
+                  />
+                </FormControl>
+              </Stack>
             </Stack>
             {/* 4) ============================================= */}
             <StyledTitleTypography variant='body1' mt={5} mx={3}>
@@ -362,117 +400,125 @@ const AddPet = () => {
               direction='column'
               justifyContent='center'
               alignItems='center'
-              mt={5}
+              mt={2}
             >
               <TextField
                 name='description'
                 multiline
-                placeholder='enter your pet description'
-                rows={4}
-                column={5}
+                placeholder='... add some description'
+                rows={3}
                 variant='outlined'
                 inputRef={descriptionRef}
                 onBlur={handleChange}
+                sx={{ m: 1, width: 280 }}
               />
             </Stack>
             <StyledTitleTypography variant='body1' mt={5} mx={3}>
               Care info:
             </StyledTitleTypography>
             <Stack
-              direction='column'
+              direction='row'
               justifyContent='center'
               alignItems='center'
               mt={5}
-              sx={{ width: '100%' }}
+              sx={{ width: '100%', margin: '0 auto' }}
             >
               <Stack
-                direction='row'
+                direction='column'
                 justifyContent='center'
-                alignItems='center'
+                alignItems='flex-end'
               >
-                <label className={classes.label}>Microchipped?</label>
-                <button
-                  variant='outlined'
-                  className={
-                    microchipped ? classes.buttonActive : classes.button
-                  }
-                  id='microchipped'
-                  onClick={onMutate}
-                  value={true}
+                <Stack
+                  direction='row'
+                  justifyContent='space-between'
+                  alignItems='center'
                 >
-                  YES
-                </button>
-                <button
-                  variant='outlined'
-                  className={
-                    !microchipped && microchipped !== null
-                      ? classes.buttonActive
-                      : classes.button
-                  }
-                  id='microchipped'
-                  value={false}
-                  onClick={onMutate}
+                  <label className={classes.label}>Microchipped?</label>
+                  <button
+                    variant='outlined'
+                    className={
+                      microchipped ? classes.buttonActive : classes.button
+                    }
+                    id='microchipped'
+                    onClick={onMutate}
+                    value={true}
+                  >
+                    YES
+                  </button>
+                  <button
+                    variant='outlined'
+                    className={
+                      !microchipped && microchipped !== null
+                        ? classes.buttonActive
+                        : classes.button
+                    }
+                    id='microchipped'
+                    value={false}
+                    onClick={onMutate}
+                  >
+                    NO
+                  </button>
+                </Stack>
+                <Stack
+                  direction='row'
+                  justifyContent='center'
+                  alignItems='center'
                 >
-                  NO
-                </button>
-              </Stack>
-              <Stack
-                direction='row'
-                justifyContent='center'
-                alignItems='center'
-              >
-                <label className={classes.label}>Vaccinated?</label>
-                <button
-                  variant='outlined'
-                  className={vaccinated ? classes.buttonActive : classes.button}
-                  id='vaccinated'
-                  onClick={onMutate}
-                  value={true}
+                  <label className={classes.label}>Vaccinated?</label>
+                  <button
+                    variant='outlined'
+                    className={
+                      vaccinated ? classes.buttonActive : classes.button
+                    }
+                    id='vaccinated'
+                    onClick={onMutate}
+                    value={true}
+                  >
+                    YES
+                  </button>
+                  <button
+                    variant='outlined'
+                    className={
+                      !vaccinated && vaccinated !== null
+                        ? classes.buttonActive
+                        : classes.button
+                    }
+                    id='vaccinated'
+                    value={false}
+                    onClick={onMutate}
+                  >
+                    NO
+                  </button>
+                </Stack>
+                <Stack
+                  direction='row'
+                  justifyContent='center'
+                  alignItems='center'
                 >
-                  YES
-                </button>
-                <button
-                  variant='outlined'
-                  className={
-                    !vaccinated && vaccinated !== null
-                      ? classes.buttonActive
-                      : classes.button
-                  }
-                  id='vaccinated'
-                  value={false}
-                  onClick={onMutate}
-                >
-                  NO
-                </button>
-              </Stack>
-              <Stack
-                direction='row'
-                justifyContent='center'
-                alignItems='center'
-              >
-                <label className={classes.label}>Vaccinated?</label>
-                <button
-                  variant='outlined'
-                  className={sprayed ? classes.buttonActive : classes.button}
-                  id='sprayed'
-                  onClick={onMutate}
-                  value={true}
-                >
-                  YES
-                </button>
-                <button
-                  variant='outlined'
-                  className={
-                    !sprayed && sprayed !== null
-                      ? classes.buttonActive
-                      : classes.button
-                  }
-                  id='sprayed'
-                  value={false}
-                  onClick={onMutate}
-                >
-                  NO
-                </button>
+                  <label className={classes.label}>Sprayed?</label>
+                  <button
+                    variant='outlined'
+                    className={sprayed ? classes.buttonActive : classes.button}
+                    id='sprayed'
+                    onClick={onMutate}
+                    value={true}
+                  >
+                    YES
+                  </button>
+                  <button
+                    variant='outlined'
+                    className={
+                      !sprayed && sprayed !== null
+                        ? classes.buttonActive
+                        : classes.button
+                    }
+                    id='sprayed'
+                    value={false}
+                    onClick={onMutate}
+                  >
+                    NO
+                  </button>
+                </Stack>
               </Stack>
             </Stack>
             <button className={classes.saveButton} onClick={onSave}>
@@ -492,6 +538,7 @@ export default AddPet;
 const Container = styled.div`
   background: white;
   position: relative;
+  margin-bottom: 120px;
 `;
 const Header = styled.div`
   display: flex;
