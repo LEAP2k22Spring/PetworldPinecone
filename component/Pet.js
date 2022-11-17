@@ -5,6 +5,7 @@ import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import { useRouter } from "next/router";
 import LoadingSpinner from "./Spinner";
 import { useFirebase } from "../firebase/useFirebase";
+import db from '../firebase/useFirebase'
 
 const pet = [
   "dog",
@@ -22,6 +23,7 @@ const Pet = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [petData, setPetData] = useState(null);
+  console.log('petee2', petData)
 
   const openAddPetHandler = () => {
     console.log("works");

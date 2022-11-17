@@ -17,10 +17,35 @@ import Typography from '@mui/material/Typography';
 import Popover from '@mui/material/Popover';
 import { useState } from 'react';
 import { Button } from '@mui/material';
+import { useEffect } from 'react';
+import { useFirebase } from "../firebase/useFirebase";
+import { useRouter } from "next/router";
+import LoadingSpinner from "./Spinner";
+
+
 
 
 export default function RecipeReviewCard() {
+  const { getMultipleData } = useFirebase("Pets");
+  const [petData, setPetData] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+
+  useEffect(() => {
+    setIsLoading(true);
+    (async () => {
+      try {
+        const petCollection = await getMultipleData(
+          "ownerID",
+          "YkrI259vNWXbQuEM6J49zpIDcbJ3"
+        );
+        console.log("eesh",petCollection);
+        setIsLoading(false);
+        setPetData(petCollection);
+      } catch (error) {}
+    })();
+  }, []);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -34,22 +59,22 @@ export default function RecipeReviewCard() {
 
   return (
     <Box display="flex" justifyContent="center" sx={{ flexGrow: 1, marginBottom: '120px' }}>
+      <LoadingSpinner open={isLoading} />
       <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '40px', width: '80%' }}>
-        {itemData.map((item, index) => (
-          
-          <Box key={index}>
+        {petData && petData.map((pet, i) => (
+          <Box key={i} id={i}>
             <Card sx={{ width: '350px', borderRadius: '20px' }}>
             <Link href="/" underline="none">
               <CardMedia
                 component="img"
                 height="200"
-                image={`${item.postImg}?w=248&fit=crop&auto=format`}
-                alt="Paella dish"
+                src={`${pet.data.image}?w=248&fit=crop&auto=format`}
+                alt="Pets image"
               />
                     </Link>
               <CardHeader
                 avatar={
-                  <Avatar sx={{ bgcolor: red[500], width:'30px', height:'30px' }} aria-label="recipe" src={`${item.img}?w=248&fit=crop&auto=format`}>
+                  <Avatar sx={{ bgcolor: red[500], width:'30px', height:'30px' }} aria-label="recipe" src={`${pet.data.image}?w=248&fit=crop&auto=format`}>
 
                   </Avatar>
                 }
@@ -59,8 +84,8 @@ export default function RecipeReviewCard() {
                   </IconButton>
                   
                 }
-                title={item.petName} 
-                subheader={item.date}
+                title={pet.data.petName} 
+                subheader={itemData.date}
               />
                 
               <CardActions sx={{justifyContent:'space-between'}}>
