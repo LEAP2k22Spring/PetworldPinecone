@@ -51,7 +51,7 @@ const Profile = () => {
         </AvatarContainer>
         <UserProfile>
           <Stack direction="row" justifyContent="flex-end">
-            <EditButton variant="outlined">Edit profile</EditButton>
+            <EditButton href="/Editprofile" variant="outlined">Edit profile</EditButton>
           </Stack>
           <Typography variant="body1" mt={5} mx={3}>
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Velit
