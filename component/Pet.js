@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Avatar, Typography, Stack, Button, Divider } from "@mui/material";
+import { Avatar, Typography, Stack, Divider } from "@mui/material";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import { useRouter } from "next/router";
 import LoadingSpinner from "./Spinner";
 import { useFirebase } from "../firebase/useFirebase";
+import db from '../firebase/useFirebase'
 
 const pet = [
   "dog",
@@ -22,6 +23,7 @@ const Pet = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [petData, setPetData] = useState(null);
+  console.log('petee2', petData)
 
   const openAddPetHandler = () => {
     console.log("works");
@@ -64,7 +66,7 @@ const Pet = () => {
           alignItems="center"
           mb={5}
         >
-          <PetAvatarContainer>
+          <PetAvatarContainer >
             {petData &&
               petData.map((pet, i) => (
                 <PetAvatar
