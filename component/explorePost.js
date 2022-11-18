@@ -12,14 +12,15 @@ import React, { useEffect, useState } from "react";
 import { db, useCollection } from "../firebase/useFirebase";
 import { collection, deleteDoc, doc, onSnapshot, setDoc } from "firebase/firestore";
 import { useGetUsersDataContext } from "../context/UsersDataContext";
-
+import PostAddIcon from '@mui/icons-material/PostAdd';
+import AddReactionIcon from '@mui/icons-material/AddReaction';
 
 
 const Post = ({ id, userAvatar, createdAt, desc, userName, image, userID }) => {
     const [likes, setLikes] = useState([]);
     const [hasLikes, setHasLikes] = useState(false);
     const { getUsersData } = useGetUsersDataContext();
-
+    const [comment, setComment] = useState("");
 
     useEffect(() =>
         onSnapshot(collection(db, "Posts", id, "likes"), (snapshot) => {
@@ -61,7 +62,6 @@ const Post = ({ id, userAvatar, createdAt, desc, userName, image, userID }) => {
                     }
                     title={userName}
                     subheader={moment(new Date(createdAt?.seconds * 1000)).fromNow()}
-                // subheader={moment(createdAt.toDate()).startOf('hour').fromNow()}
                 />
                 <Typography p={2}>{desc}</Typography>
                 <CardMedia
@@ -81,10 +81,6 @@ const Post = ({ id, userAvatar, createdAt, desc, userName, image, userID }) => {
                         {likes?.map((like, i) => (
                             <Avatar key={i} alt="Remy Sharp" src={like.data().userAvatar} />
                         ))}
-                        {/* <Avatar alt="Travis Howard" src="https://i.pinimg.com/564x/0f/f6/f8/0ff6f8f3a2361ae4e48e0ac6aa9bc939.jpg" />
-                        <Avatar alt="Cindy Baker" src="https://i.pinimg.com/564x/0e/a6/5c/0ea65c90ce035d5df688780e551e736a.jpg" />
-                        <Avatar alt="Agnes Walker" src="https://i.pinimg.com/564x/c0/8e/50/c08e50721c255c74d25964e740046ba8.jpg" />
-                        <Avatar alt="Trevor Henderson" src="https://i.pinimg.com/564x/ba/12/13/ba1213ba9e3be028a6e03f78cfa05e11.jpg" /> */}
                     </AvatarGroup>
                     <IconButton aria-label="add to favorites" sx={{
                         fontSize: '16px', gap: '5px', borderRadius: '15px', bgcolor: 'rgb(96 165 250)', color: 'white', '&:hover': {
@@ -96,7 +92,14 @@ const Post = ({ id, userAvatar, createdAt, desc, userName, image, userID }) => {
                     </IconButton>
                 </CardActions>
                 <CardActions sx={{ justifyContent: 'space-between' }} >
-                    {/* <TextField></TextField> */}
+                    <Typography></Typography>
+                    <AddReactionIcon/>
+                    <TextField size="small" placeholder="Add a comment..." onChange={(e) => setComment(e.target.value)}></TextField>
+                    <IconButton>
+                        <PostAddIcon sx={{'&:hover': {
+                            color: 'rgb(96 165 250)'
+                        }}}/>
+                    </IconButton>
                 </CardActions>
             </Card>
         </Box>
