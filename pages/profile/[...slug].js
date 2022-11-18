@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react';
-import UserPost from '../../component/profile/UserPost';
-import { useFirebase } from '../../firebase/useFirebase';
-import LoadingSpinner from '../../component/Spinner';
+import { useEffect, useState } from "react";
+import UserPost from "../../component/profile/UserPost";
+import { useFirebase } from "../../firebase/useFirebase";
+import LoadingSpinner from "../../component/Spinner";
 
 const UserPosts = (props) => {
   const { slug } = props; //localhost:3000/profile/posts/4cp9r5THWQN3IwpFL9lb  - slug irne.
   const postId = slug[1]; // 4cp9r5THWQN3IwpFL9lb id-gaa awna.
-  const { getSingleData } = useFirebase('Posts');
+  const { getSingleData } = useFirebase("Posts");
   const [isLoading, setIsLoading] = useState(false);
   const [postData, setPostData] = useState(null);
 
@@ -19,7 +19,7 @@ const UserPosts = (props) => {
         setIsLoading(false);
       } catch (error) {}
     })();
-  }, []);
+  }, [getSingleData, postId]);
   // console.log(postData);
   return (
     <div>

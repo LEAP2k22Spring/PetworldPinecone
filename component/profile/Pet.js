@@ -13,7 +13,6 @@ const Pet = ({ petNumber }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [petData, setPetData] = useState(null);
-  console.log('petee2', petData)
 
   // jump to the "localhost:3000/add-pet" page
   const openAddPetHandler = () => {
@@ -60,7 +59,7 @@ const Pet = ({ petNumber }) => {
           alignItems='center'
           mb={5}
         >
-          <PetAvatarContainer >
+          <PetAvatarContainer>
             {petData &&
               petData.map((pet, i) => (
                 <PetAvatar

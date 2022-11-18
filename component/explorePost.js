@@ -1,4 +1,4 @@
-import { Avatar, AvatarGroup, Box, Card, CardActions, CardHeader, CardMedia, IconButton, TextField, Typography } from "@mui/material";
+import { Avatar, AvatarGroup, Box, Card, CardActions, CardHeader, CardMedia, getAlertUtilityClass, IconButton, TextField, Typography } from "@mui/material";
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import IosShareOutlinedIcon from '@mui/icons-material/IosShareOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
@@ -9,11 +9,14 @@ import BookmarkIcon from '@mui/icons-material/Bookmark';
 import { red } from '@mui/material/colors';
 import moment from "moment"
 import React, { useEffect, useState } from "react";
-import { db, useCollection } from "../firebase/useFirebase";
+import { auth, db, useCollection } from "../firebase/useFirebase";
 import { collection, deleteDoc, doc, onSnapshot, setDoc } from "firebase/firestore";
 import { useGetUsersDataContext } from "../context/UsersDataContext";
 import PostAddIcon from '@mui/icons-material/PostAdd';
 import AddReactionIcon from '@mui/icons-material/AddReaction';
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useRouter } from "next/router";
+
 
 
 const Post = ({ id, userAvatar, createdAt, desc, userName, image, userID }) => {
@@ -21,6 +24,10 @@ const Post = ({ id, userAvatar, createdAt, desc, userName, image, userID }) => {
     const [hasLikes, setHasLikes] = useState(false);
     const { getUsersData } = useGetUsersDataContext();
     const [comment, setComment] = useState("");
+    const [user] = useAuthState(auth);
+    const router = useRouter();
+
+
 
     useEffect(() =>
         onSnapshot(collection(db, "Posts", id, "likes"), (snapshot) => {
@@ -29,16 +36,16 @@ const Post = ({ id, userAvatar, createdAt, desc, userName, image, userID }) => {
         ), [db, id])
 
     useEffect(
-        () => setHasLikes(likes.findIndex((like) => like.id === userID) !== -1),
+        () => setHasLikes(likes.findIndex((like) => like.id === user.uid) !== -1),
         [likes]
     );
     const likePost = async () => {
         try {
             if (hasLikes) {
-                await deleteDoc(doc(db, "Posts", id, "likes", userID));
+                await deleteDoc(doc(db, "Posts", id, "likes", user.uid));
             } else {
-                await setDoc(doc(db, "Posts", id, "likes", userID), {
-                    userName: userName,
+                await setDoc(doc(db, "Posts", id, "likes", user.uid), {
+                    userName: getUsersData.firstName,
                     userAvatar: getUsersData.avatar
 
                 });
@@ -46,6 +53,9 @@ const Post = ({ id, userAvatar, createdAt, desc, userName, image, userID }) => {
         } catch (error) {
             console.log(error);
         }
+    };
+    const openAddPetHandler = (docId) => {
+        router.push(`/profile/posts/${docId}`);
     };
     return (
         <Box>
@@ -69,6 +79,7 @@ const Post = ({ id, userAvatar, createdAt, desc, userName, image, userID }) => {
                     height="200"
                     image={image}
                     alt="Paella dish"
+                    onClick={() => openAddPetHandler(id)}
                 />
 
                 <CardActions sx={{ justifyContent: 'space-between' }}>
@@ -77,7 +88,6 @@ const Post = ({ id, userAvatar, createdAt, desc, userName, image, userID }) => {
                     </IconButton>
                     <Typography sx={{ fontWeight: '400', fontSize: '13px' }}>{likes.length === 0 ? "like" : `liked by ${likes.length}`}</Typography>
                     <AvatarGroup max={3} sx={{ '& .MuiAvatar-root': { width: 20, height: 20, fontSize: 12, background: 'orange' }, paddingRight: "60px" }}>
-                        {console.log(likes)}
                         {likes?.map((like, i) => (
                             <Avatar key={i} alt="Remy Sharp" src={like.data().userAvatar} />
                         ))}
@@ -93,12 +103,14 @@ const Post = ({ id, userAvatar, createdAt, desc, userName, image, userID }) => {
                 </CardActions>
                 <CardActions sx={{ justifyContent: 'space-between' }} >
                     <Typography></Typography>
-                    <AddReactionIcon/>
-                    <TextField size="small" placeholder="Add a comment..." onChange={(e) => setComment(e.target.value)}></TextField>
+                    <AddReactionIcon />
+                    <TextField size="small" placeholder="Add a comment..."></TextField>
                     <IconButton>
-                        <PostAddIcon sx={{'&:hover': {
-                            color: 'rgb(96 165 250)'
-                        }}}/>
+                        <PostAddIcon sx={{
+                            '&:hover': {
+                                color: 'rgb(96 165 250)'
+                            }
+                        }} />
                     </IconButton>
                 </CardActions>
             </Card>
