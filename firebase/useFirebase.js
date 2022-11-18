@@ -152,37 +152,6 @@ export const useCollection = (path) => {
   const { getUsersData, setGetUsersData } = useGetUsersDataContext();
   const colRef = collection(db, path);
 
-  // useEffect(() => {
-  //   // setLoading
-  //   (async () => {
-  //     try {
-  //       //   const colRef = createRef(path)
-  //       const result = await getDocs(colRef);
-  //       const item = [];
-  //       if (result) {
-  //         if (result) {
-  //           result.docs.forEach((doc) => {
-  //             item.push(doc.data());
-  //           });
-  //         }
-  //         setUserData(item);
-  //       }
-  //     } catch (error) {}
-  //   })();
-  // }, []);
-  //   const getUsersData = async () => {
-  //     const result = await getDocs(colRef);
-  //     const item = [];
-  //     if (result) {
-  //       if (result) {
-  //         result.docs.forEach((data) => {
-  //           item.push(data.data());
-  //         });
-  //       }
-  //       setUserData(item);
-  //     }
-  //     console.log("GETDATA",item);
-  //   };
   const getUsersDatabase = async (id) => {
     const docRef = doc(colRef, id);
     const docSnap = await getDoc(docRef);
@@ -278,27 +247,7 @@ export const useCollection = (path) => {
     const result = docSnap.data();
     return result;
   };
-
-  // get Post data from Firebase
-  // const getFireabasePostsData = async (postPath) => {
-  //   try {
-  //     const result = await getDocs(collection(db, "Posts"));
-  //     const item = [];
-  //     const postData = [];
-  //     if (result) {
-  //       console.log("result", result);
-  //       for (let doc of result.docs) {
-  //         const results = await userDataPost("Users", doc.data().userID)
-  //         item.push({ ...doc.data(), userName: results.firstName, userAvatar: results.avatar });
-  //       }
-  //       console.log(item);
-  //       console.log(item.length);
-  //       setPostsData(item);
-  //     }
-  //   } catch (error) {
-  //     console.log(error.message);
-  //   }
-  // };
+ 
   const getFireabasePostsData = async (postPath) => {
     try {
       let item = [];
