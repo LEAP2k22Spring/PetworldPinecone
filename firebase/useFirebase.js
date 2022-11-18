@@ -268,7 +268,7 @@ export const useCollection = (path) => {
     try {
          let item = [];
          const id = ""
-         const q = query(collection(db, "Posts"), orderBy("createdAt", "desc"), limit(3))
+         const q = query(collection(db, "Posts"), orderBy("createdAt", "desc"), limit(5))
          const querySnapshot = await getDocs(q);
       if (querySnapshot) {
         for (let doc of querySnapshot.docs) {
