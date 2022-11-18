@@ -74,9 +74,7 @@ const AddPost = ()=>{
           desc:descRef.current.value,
           image: url,
         });
-    
         if (successfullyUploaded) {
-
           alert('Post successfully created!');
           router.push("/explore")
         }

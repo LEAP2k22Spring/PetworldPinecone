@@ -20,15 +20,17 @@ import {
   where,
   getFirestore,
   setDoc,
+  onSnapshot,
+  limit,
   updateDoc,
   deleteDoc,
-} from 'firebase/firestore';
-import { getStorage, ref, getDownloadURL, uploadBytes } from 'firebase/storage';
+} from "firebase/firestore";
+import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
 
 // import { db, app } from "../firebase.config";
 
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+export const db = getFirestore(app);
 export const auth = getAuth();
 
 export const useFirebase = (path) => {
@@ -54,8 +56,8 @@ export const useFirebase = (path) => {
     try {
       const q = query(
         collection(db, path),
-        where(sortField, '==', id),
-        orderBy('createdAt', 'desc')
+        where(sortField, "==", id),
+        orderBy("createdAt", "desc")
       );
       let data = [];
       const querySnapshot = await getDocs(q);
@@ -133,6 +135,8 @@ export const useFirebase = (path) => {
     }
   };
 
+  
+
   return {
     getSingleData,
     imageUploadToFirestore,
@@ -144,7 +148,7 @@ export const useFirebase = (path) => {
 };
 
 export const useCollection = (path) => {
-  const { setPostsData } = useGetPostsDataContext();
+  const { postsData, setPostsData } = useGetPostsDataContext();
 
   const [loading, setLoading] = useState();
   const { getUsersData, setGetUsersData } = useGetUsersDataContext();
@@ -192,7 +196,7 @@ export const useCollection = (path) => {
 
   const createUserData = async (data, userId) => {
     try {
-      await setDoc(doc(db, path, userId), { ...data, avatar: '' });
+      await setDoc(doc(db, path, userId), { ...data, avatar: "" });
     } catch (error) {
       console.log('error', error);
     }
@@ -216,7 +220,7 @@ export const useCollection = (path) => {
         password
       );
       userId = user.user.uid;
-      alert('Sign Up Successfully');
+      alert("Sign Up Successfully");
     } catch (error) {}
 
     return userId;
@@ -277,19 +281,44 @@ export const useCollection = (path) => {
     return result;
   };
 
-  //get Post data from Firebase
+  // get Post data from Firebase
+  // const getFireabasePostsData = async (postPath) => {
+  //   try {
+  //     const result = await getDocs(collection(db, "Posts"));
+  //     const item = [];
+  //     const postData = [];
+  //     if (result) {
+  //       console.log("result", result);
+  //       for (let doc of result.docs) {
+  //         const results = await userDataPost("Users", doc.data().userID)
+  //         item.push({ ...doc.data(), userName: results.firstName, userAvatar: results.avatar });
+  //       }
+  //       console.log(item);
+  //       console.log(item.length);
+  //       setPostsData(item);
+  //     }
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // };
   const getFireabasePostsData = async (postPath) => {
     try {
-      const result = await getDocs(collection(db, 'Posts'));
-      const item = [];
-      const postData = [];
-      if (result) {
-        for (let doc of result.docs) {
-          const results = await userDataPost('Users', doc.data().userID);
+      let item = [];
+      const id = "";
+      const q = query(
+        collection(db, "Posts"),
+        orderBy("createdAt", "desc"),
+        limit(5)
+      );
+      const querySnapshot = await getDocs(q);
+      if (querySnapshot) {
+        for (let doc of querySnapshot.docs) {
+          const results = await userDataPost("Users", doc.data().userID);
           item.push({
             ...doc.data(),
             userName: results.firstName,
             userAvatar: results.avatar,
+            id: doc.id,
           });
         }
         setPostsData(item);
