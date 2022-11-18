@@ -1,4 +1,3 @@
-
 /* ================== Navbar ============== */
 .nav_wrapp {
   width: 100%;
@@ -7,7 +6,7 @@
   height: 100px;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px,
-  rgba(0, 0, 0, 0.15) -1.95px -1.95px 2.6px;
+    rgba(0, 0, 0, 0.15) -1.95px -1.95px 2.6px;
   z-index: 9;
 }
 .nav {
@@ -20,6 +19,7 @@
 }
 
 .menu {
+  
   list-style: none;
   display: flex;
   align-items: center;
@@ -45,7 +45,7 @@
 }
 .list_item:hover {
   transform: translateY(-2px);
-  color: #4689FD;
+  color: #4689fd;
 }
 .list_item:hover .icon {
   transform: translateY(-25px);
@@ -56,7 +56,7 @@
 .logo {
   background-image: url(../public/Logo-1.png);
   background-size: contain;
-  background-repeat: no-repeat  ;
+  background-repeat: no-repeat;
   width: 100px;
   height: 50px;
 }
@@ -68,6 +68,18 @@
   justify-content: center;
   align-items: center;
   width: 100%;
+}
+/* ----------------- Categories ------------ */
+
+.categories_buttons button{
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+}
+.categories_buttons button:hover {
+  background: #4689FD;
+  color: white;
+  transition: all .2s ease-in-out;
 }
 /* ============== Responsive =============== */
 @media (max-width: 800px) {
@@ -87,7 +99,7 @@
     position: fixed;
     bottom: 0;
   }
-  .nav{
+  .nav {
     position: fixed;
     justify-content: center;
     bottom: 30px;

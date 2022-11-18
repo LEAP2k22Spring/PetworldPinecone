@@ -31,12 +31,9 @@ const Login = () => {
     }
   }
 
-  return (
-    !isClicked ? 
-      <Grid container component="main" sx={{ height: "100vh" }}>
-      <Grid
-        item
-        xs={8}>
+  return !isClicked ? (
+    <Grid container component="main" sx={{ height: "100vh" }}>
+      <Grid item xs={8}>
         <Box
           sx={{
             my: 20,
@@ -97,6 +94,7 @@ const Login = () => {
                 fullWidth
                 placeholder="Password"
                 required
+                type="password"
                 inputRef={passwordRef}
                 sx={{
                   borderRadius: "40px",
@@ -119,11 +117,14 @@ const Login = () => {
             </Button>
           </Box>
           <Typography sx={{ textAlign: "center", marginTop: 2 }}>
-            Need an account? <Button onClick={() => setIsClicked(!isClicked) }>SignUp</Button>
+            Need an account?{" "}
+            <Button onClick={() => setIsClicked(!isClicked)}>SignUp</Button>
           </Typography>
         </Box>
       </Grid>
-    </Grid> : <SignUp/>
+    </Grid>
+  ) : (
+    <SignUp />
   );
 };
 export default Login;

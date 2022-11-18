@@ -1,5 +1,7 @@
+
 html,
 body {
+  cursor: url(../image/paw_cursor.png),auto;
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
