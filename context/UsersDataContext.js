@@ -1,13 +1,13 @@
-import { createContext, useState, useContext } from "react";
-const GetUsersDataContext = createContext()
-export const GetUsersDataProvider = (props)=>{
-    const {children} = props;
-    const [getUsersData, setGetUsersData] = useState([])
+import { createContext, useState, useContext } from 'react';
+const GetUsersDataContext = createContext();
+export const GetUsersDataProvider = (props) => {
+  const { children } = props;
+  const [getUsersData, setGetUsersData] = useState([]);
 
-    return(
-        <GetUsersDataContext.Provider value={{getUsersData, setGetUsersData}}>
-            {children}
-        </GetUsersDataContext.Provider>
-    )
-}
-export const useGetUsersDataContext =()=>useContext(GetUsersDataContext)
+  return (
+    <GetUsersDataContext.Provider value={{ getUsersData, setGetUsersData }}>
+      {children}
+    </GetUsersDataContext.Provider>
+  );
+};
+export const useGetUsersDataContext = () => useContext(GetUsersDataContext);

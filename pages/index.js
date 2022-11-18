@@ -12,6 +12,7 @@ import Banner from "../component/Banner";
 function HomePage() {
   const router = useRouter();
   const { logout } = useAuth();
+
   return (
     <Box mt={5} className={styles.home_wrapp}>
       <Reel />

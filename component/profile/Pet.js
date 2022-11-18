@@ -1,35 +1,26 @@
-import { useEffect, useState } from "react";
-import styled from "styled-components";
-import { Avatar, Typography, Stack, Divider } from "@mui/material";
-import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
-import { useRouter } from "next/router";
-import LoadingSpinner from "./Spinner";
-import { useFirebase } from "../firebase/useFirebase";
-import db from '../firebase/useFirebase'
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import { Avatar, Typography, Stack, Button, Divider } from '@mui/material';
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
+import { useRouter } from 'next/router';
+import LoadingSpinner from '../Spinner';
+import { useFirebase } from '../../firebase/useFirebase';
+import { useGetUsersDataContext } from '../../context/UsersDataContext';
 
-const pet = [
-  "dog",
-  "cat",
-  "fish",
-  "husky",
-  "kitty",
-  "doggy",
-  "chihuahua",
-  "pit",
-];
-
-const Pet = () => {
-  const { getMultipleData } = useFirebase("Pets");
+const Pet = ({ petNumber }) => {
+  const { getMultipleData } = useFirebase('Pets');
+  const { getUsersData } = useGetUsersDataContext();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [petData, setPetData] = useState(null);
   console.log('petee2', petData)
 
+  // jump to the "localhost:3000/add-pet" page
   const openAddPetHandler = () => {
-    console.log("works");
     router.push(`/add-pet`);
   };
 
+  // jump to the "localhost:3000/profile/DsfLp8XF54PrVSozK1k4pet" pet profile page
   const editPetHandler = (petId) => {
     router.push(`/profile/${petId}`);
   };
@@ -39,31 +30,34 @@ const Pet = () => {
     (async () => {
       try {
         const petCollection = await getMultipleData(
-          "ownerID",
-          "YkrI259vNWXbQuEM6J49zpIDcbJ3"
+          'ownerID',
+          getUsersData.userId
         );
-        console.log(petCollection);
         setIsLoading(false);
         setPetData(petCollection);
+
+        //parent element-ees function duudaad, data damjuulaw...
+        petNumber(petCollection.length);
       } catch (error) {}
     })();
   }, []);
+
   return (
     <div>
       <LoadingSpinner open={isLoading} />
       <PetProfile>
         <Typography
-          variant="h6"
+          variant='h6'
           mt={2}
           ml={2}
-          sx={{ fontSize: "1.5rem", fontWeight: 700, color: "#696969" }}
+          sx={{ fontSize: '1.5rem', fontWeight: 700, color: '#696969' }}
         >
           Pets
         </Typography>
         <Stack
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
+          direction='row'
+          justifyContent='space-between'
+          alignItems='center'
           mb={5}
         >
           <PetAvatarContainer >
@@ -72,19 +66,19 @@ const Pet = () => {
                 <PetAvatar
                   key={i}
                   id={i}
-                  alt="Remy Sharp"
+                  alt='Remy Sharp'
                   src={pet.data.image}
-                  sx={{ margin: "0 10px" }}
+                  sx={{ margin: '0 10px' }}
                   onClick={() => editPetHandler(pet.docId)}
                 />
               ))}
           </PetAvatarContainer>
-          <Avatar sx={{ margin: "0 10px" }} onClick={openAddPetHandler}>
+          <Avatar sx={{ margin: '0 10px' }} onClick={openAddPetHandler}>
             <AddOutlinedIcon />
           </Avatar>
         </Stack>
       </PetProfile>
-      <Divider sx={{ borderBottomWidth: 20, borderColor: "#d9d9d9" }} />
+      <Divider sx={{ borderBottomWidth: 20, borderColor: '#d9d9d9' }} />
     </div>
   );
 };
@@ -97,7 +91,7 @@ const PetAvatarContainer = styled.div`
   align-items: center;
   justify-content: flex-start;
   overflow-x: scroll;
-  width: 400px;
+  width: 500px;
 `;
 
 const PetAvatar = styled(Avatar)`

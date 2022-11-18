@@ -22,6 +22,8 @@ import {
   setDoc,
   onSnapshot,
   limit,
+  updateDoc,
+  deleteDoc,
 } from "firebase/firestore";
 import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
 
@@ -32,6 +34,8 @@ export const db = getFirestore(app);
 export const auth = getAuth();
 
 export const useFirebase = (path) => {
+  const { getUsersData, setGetUsersData } = useGetUsersDataContext();
+
   // 1) get any single document data
   const getSingleData = async (id) => {
     const docRef = doc(db, path, id);
@@ -48,11 +52,11 @@ export const useFirebase = (path) => {
     }
   };
 
-  const getMultipleData = async (sortFIeld, id) => {
+  const getMultipleData = async (sortField, id) => {
     try {
       const q = query(
         collection(db, path),
-        where(sortFIeld, "==", id),
+        where(sortField, "==", id),
         orderBy("createdAt", "desc")
       );
       let data = [];
@@ -64,7 +68,9 @@ export const useFirebase = (path) => {
         });
       });
       return data;
-    } catch (error) { }
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   // 2)
@@ -102,11 +108,40 @@ export const useFirebase = (path) => {
     }
   };
 
+  //4) Update document
+  const updateData = async (data, id) => {
+    const docRef = doc(db, path, id);
+
+    try {
+      await updateDoc(docRef, {
+        ...data,
+      });
+      return true;
+    } catch (error) {
+      console.log("error from firebase", error);
+      return false;
+    }
+  };
+  //5) Delete document
+  const deleteData = async (id) => {
+    const docRef = doc(db, path, id);
+
+    try {
+      await deleteDoc(docRef);
+      return true;
+    } catch (error) {
+      console.log("error from firebase", error);
+      return false;
+    }
+  };
+
   return {
     getSingleData,
     imageUploadToFirestore,
     createPetData,
     getMultipleData,
+    updateData,
+    deleteData,
   };
 };
 
@@ -159,7 +194,7 @@ export const useCollection = (path) => {
 
   const createUserData = async (data, userId) => {
     try {
-      await setDoc(doc(db, path, userId), { ...data, avatar: '' });
+      await setDoc(doc(db, path, userId), { ...data, avatar: "" });
     } catch (error) {
       console.log("error", error);
     }
@@ -184,7 +219,7 @@ export const useCollection = (path) => {
       );
       userId = user.user.uid;
       alert("Sign Up Successfully");
-    } catch (error) { }
+    } catch (error) {}
 
     return userId;
   };
@@ -241,8 +276,8 @@ export const useCollection = (path) => {
     const docRef = doc(collection(db, path), id);
     const docSnap = await getDoc(docRef);
     const result = docSnap.data();
-    return result
-  }
+    return result;
+  };
 
   // get Post data from Firebase
   // const getFireabasePostsData = async (postPath) => {
@@ -266,14 +301,23 @@ export const useCollection = (path) => {
   // };
   const getFireabasePostsData = async (postPath) => {
     try {
-         let item = [];
-         const id = ""
-         const q = query(collection(db, "Posts"), orderBy("createdAt", "desc"), limit(5))
-         const querySnapshot = await getDocs(q);
+      let item = [];
+      const id = "";
+      const q = query(
+        collection(db, "Posts"),
+        orderBy("createdAt", "desc"),
+        limit(5)
+      );
+      const querySnapshot = await getDocs(q);
       if (querySnapshot) {
         for (let doc of querySnapshot.docs) {
-          const results = await userDataPost("Users", doc.data().userID)
-          item.push({ ...doc.data(), userName: results.firstName, userAvatar: results.avatar, id: doc.id});
+          const results = await userDataPost("Users", doc.data().userID);
+          item.push({
+            ...doc.data(),
+            userName: results.firstName,
+            userAvatar: results.avatar,
+            id: doc.id,
+          });
         }
         setPostsData(item);
       }
@@ -281,8 +325,6 @@ export const useCollection = (path) => {
       console.log(error.message);
     }
   };
-
-
 
   // image upload Component Firebase
   return {
@@ -294,8 +336,7 @@ export const useCollection = (path) => {
     createPost,
     imageUploadToFirestore,
     getFireabasePostsData,
-    getUsersDatabase, 
-    
+    getUsersDatabase,
   };
 };
 // const updateData = () => updateDoc
