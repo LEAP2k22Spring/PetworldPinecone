@@ -1,9 +1,8 @@
-import Layout from "../../component/layout";
-import PetProfile from "../../component/Pet/PetProfile";
+import { useState, useEffect } from "react";
 import { useFirebase } from "../../firebase/useFirebase";
 import LoadingSpinner from "../../component/Spinner";
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
+// import { PetProfile } from "../../component";
 
 const Pet = () => {
   const router = useRouter();
@@ -26,7 +25,7 @@ const Pet = () => {
   return (
     <div>
       <LoadingSpinner open={isLoading} />
-      <PetProfile petData={petData} />
+      {/* <PetProfile petData={petData} /> */}
     </div>
   );
 };

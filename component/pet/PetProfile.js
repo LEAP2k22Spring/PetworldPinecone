@@ -11,7 +11,7 @@ import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutl
 import { useRouter } from "next/router";
 import PetInfo from "./PetInfo";
 
-const PetProfile = ({ petData }) => {
+export const PetProfile = ({ petData }) => {
   const router = useRouter();
 
   const goBackHandler = () => {
@@ -113,8 +113,6 @@ const PetProfile = ({ petData }) => {
     </>
   );
 };
-
-export default PetProfile;
 
 const Container = styled.div`
   position: relative;
