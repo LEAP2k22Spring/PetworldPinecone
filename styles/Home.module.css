@@ -6,13 +6,22 @@
 }
 .landing_wrapp {
   display: flex;
-  align-items: flex-end;
-  flex-direction: column;
-  position: relative;
-  width: 80%;
+  justify-content: space-between;
+  align-items: center;
+  width: 70%;
   margin-top: 50px;
 }
+.landing_text_wrapp {
+  width: 100%;
+}
+.background_wrapp {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
 .img_shape {
+  position: relative;
   width: 350px;
   height: 550px;
   background-image: url(https://firebasestorage.googleapis.com/v0/b/petworldpinecone.appspot.com/o/landing_img.png?alt=media&token=31179fb1-40b9-4add-a93f-ee5695abb9a1);
@@ -20,22 +29,167 @@
   background-position: center;
   border-radius: 175px;
 }
-.img_shape::before {
-  content: '';
+.img_shape small {
   position: absolute;
-  width: 348px;
-  height: 550px;
+  width: 100%;
+  height: 100%;
   margin-top: -8px;
   border: 1px solid orange;
   border-radius: 175px;
   z-index: -1;
 }
-.landing_text_wrapp {
+.circle_shape {
   position: absolute;
-  bottom: 0;
-  left: 0;
+  right: -10px;
+  top: 20px;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 2px solid white;
+  background: #f8aa08;
+  padding: 13px;
+}
+.circle_shape svg {
+  width: 40px;
+  height: 40px;
+  color: white;
+}
+.care_shape {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background: white;
+  left: -150px;
+  bottom: 120px;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.3);
+
+}
+.care_shape p {
+  margin-top: -25px;
+  margin-left: -25px;
+  width: 300px;
+  height: 70px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.7);
+  opacity: 0.4;
+}
+.care_shape b {
+  position: absolute;
+  bottom: 30px;
+  left: 80px;
+  width: 200px;
+}
+.care_shape span {
+  position: absolute;
+  bottom: 10px;
+  left: 80px;
+  width: 200px;
+  font-size: 13px;
+  color: gray;
 }
 
+.inbox_shape {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background: white;
+  right: -20px;
+  top: 220px;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.3);
+}
+.inbox_shape p {
+  margin-top: -25px;
+  margin-left: -25px;
+  width: 300px;
+  height: 70px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.7);
+  opacity: 0.4;
+}
+.inbox_shape b {
+  position: absolute;
+  bottom: 30px;
+  left: 80px;
+  width: 200px;
+}
+.inbox_shape span {
+  position: absolute;
+  bottom: 10px;
+  left: 80px;
+  width: 200px;
+  font-size: 13px;
+  color: gray;
+}
+.walking_shape {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background: white;
+  right: 30px;
+  bottom: 50px;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.3);
+}
+.walking_shape p {
+  margin-top: -25px;
+  margin-left: -25px;
+  width: 300px;
+  height: 70px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.7);
+  opacity: 0.4;
+}
+.walking_shape b {
+  position: absolute;
+  bottom: 30px;
+  left: 80px;
+  width: 200px;
+}
+.walking_shape span {
+  position: absolute;
+  bottom: 10px;
+  left: 80px;
+  width: 200px;
+  font-size: 13px;
+  color: gray;
+}
+/* ----- icons ----- */
+.icon_care  {
+  position: absolute;
+  z-index: 1;
+  width: 40px;
+  height: 40px;
+  bottom: 10px;
+  left: 10px;
+  color: rgb(235, 0, 0);
+}
+.icon_chat {
+  position: absolute;
+  z-index: 1;
+  width: 40px;
+  height: 40px;
+  top: 10px;
+  right: 10px;
+  color: rgb(0, 157, 235);
+}
+.icon_training {
+  position: absolute;
+  z-index: 1;
+  width: 40px;
+  height: 40px;
+  bottom: 10px;
+  right: 10px;
+  color: rgb(24, 235, 0);
+}
+/* ----------------- */
 /* ================== Navbar ============== */
 .nav_wrapp {
   width: 100%;
@@ -183,18 +337,30 @@
 }
 /* =================== Banner ============== */
 .banner1 {
-  background-image: url(../image/banner1.jpeg);
+  background-image: url(https://firebasestorage.googleapis.com/v0/b/petworldpinecone.appspot.com/o/banner%20image%2Fbanne1.jpeg?alt=media&token=f5a2b434-0c9a-45fe-a587-12eb3f52137b);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
 }
 .banner2 {
-  background-image: url(../image/banner3.jpeg);
+  background-image: url(https://firebasestorage.googleapis.com/v0/b/petworldpinecone.appspot.com/o/banner%20image%2Fbanner3.jpeg?alt=media&token=3ae43ef2-964f-4501-82c2-133b7f43d8c2);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
 }
 /* ============== Responsive =============== */
+@media (max-width: 1520px) {
+  .landing_wrapp {
+    flex-wrap: wrap-reverse;
+    align-items: center;
+  }
+  .landing_text_wrapp {
+    text-align: center;
+  }
+  .landing_text_wrapp p {
+    width: 100%;
+  }
+}
 @media (max-width: 800px) {
   .menu {
     gap: -20px;
@@ -202,6 +368,9 @@
   .search_box {
     width: 100%;
     height: 55px;
+  }
+  .landing_text_wrapp h1 {
+    font-size: 70px;
   }
 }
 @media (max-width: 650px) {
@@ -238,6 +407,66 @@
   .header_wrapper_2 {
     display: none;
   }
+  /* ---------- landing page ------- */
+  .img_shape {
+    width: 60%;
+    height: 50vh;
+  }
+  .circle_shape {
+    width: 60px;
+    height: 60px;
+  }
+  .circle_shape svg {
+    padding-bottom: 10px;
+    width: 30px;
+  }
+  .care_shape,
+  .inbox_shape,
+  .walking_shape {
+    width: 50px;
+    height: 50px;
+  }
+  .care_shape p,
+  .inbox_shape p,
+  .walking_shape p {
+    width: 200px;
+    height: 60px;
+  }
+  .icon_care,
+  .icon_chat,
+  .icon_training {
+    width: 30px;
+    top: 5px;
+  }
+  .care_shape b, .care_shape span {
+    left: 55px;
+  }
+  .landing_text_wrapp h1 {
+    font-size: 60px
+  }
+}
+@media (max-width: 550px) {
+  .img_shape {
+    width: 60%;
+    height: 40vh;
+  }
+  .care_shape {
+    left: -90px;
+  }
+  .inbox_shape {
+    right: 50px;
+  }
+  .walking_shape {
+    bottom: 0px;
+    right: 120px;
+  }
+  .landing_text_wrapp h1 {
+    font-size: 50px;
+    margin-top: 15px;
+  }
+  .landing_text_wrapp p {
+    font-size: 13px;
+  }
 }
 @media (max-width: 406px) {
   .list_item_name {
@@ -248,5 +477,11 @@
   }
   .banner_wrapp {
     width: 95%;
+  }
+  .landing_text_wrapp h1 {
+    font-size: 40px;
+  }
+  .img_shape {
+    width: 70%;
   }
 }
