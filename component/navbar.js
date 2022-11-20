@@ -9,8 +9,8 @@ import { Avatar, Button } from "@mui/material";
 import { useAuth } from "../providers/AuthProvider";
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import { Fragment } from "react";
+import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 
 
 function Navbar() {

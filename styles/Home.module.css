@@ -1,3 +1,41 @@
+/* ================== Landing page ======== */
+.landing_page {
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+}
+.landing_wrapp {
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+  position: relative;
+  width: 80%;
+  margin-top: 50px;
+}
+.img_shape {
+  width: 350px;
+  height: 550px;
+  background-image: url(https://firebasestorage.googleapis.com/v0/b/petworldpinecone.appspot.com/o/landing_img.png?alt=media&token=31179fb1-40b9-4add-a93f-ee5695abb9a1);
+  background-size: cover;
+  background-position: center;
+  border-radius: 175px;
+}
+.img_shape::before {
+  content: '';
+  position: absolute;
+  width: 348px;
+  height: 550px;
+  margin-top: -8px;
+  border: 1px solid orange;
+  border-radius: 175px;
+  z-index: -1;
+}
+.landing_text_wrapp {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
 /* ================== Navbar ============== */
 .nav_wrapp {
   width: 100%;
@@ -76,7 +114,7 @@
   cursor: pointer;
   padding: 10px 20px;
   border: none;
-  border-radius: 10px;
+  border-radius: 20px;
 }
 .categories_buttons button:hover {
   background: #4689FD;
@@ -144,95 +182,17 @@
   /* box-shadow: 0 10px 20px rgba(86, 86, 198, 0.3); */
 }
 /* =================== Banner ============== */
-.banner_wrapp {
-  margin-top: 50px;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 20px;
+.banner1 {
+  background-image: url(../image/banner1.jpeg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
-.wrapper_2 {
-  position: relative;
-  height: 300px;
-  width: 600px;
-  display: flex;
-  flex-direction: row;
-  transition: all 200ms ease-in-out;
-  
-}
-
-.image_wrapper_2 {
-  height: 300px;
-  width: 450px;
-  overflow: hidden;
-  border-radius: 15px;
-  cursor: pointer;
-  transition: all 200ms ease-in-out;
-  
-}
-
-.wrapper_2 img {
-  height: 300px;
-  width: 450px;
-  object-fit: cover;
-  object-position: top;
-    
-  transition: all 200ms ease-in-out;
-}
-
-.book_design_image {
-  object-position: center;
-  
-}
-.header_wrapper_1,
-.header_wrapper_2 {
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  height: 300px;
-  width: 350px;
-  left: 280px;
-  transition: all 200ms ease-in-out;
-  overflow: hidden;
-  
-}
-.header_wrapper_1 h1 {
-  position: relative;
-  bottom: 0;
-  height: 300px;
-  color: #fff;
-  font-size: 80px;
-  font-family: Oswald;
-  text-transform: uppercase;
-  transition: all 200ms ease-in-out;
-  -webkit-text-stroke-width: 2px;
-  -webkit-text-stroke-color: #323232;
-}
-.header_wrapper_2 h1 {
-  position: relative;
-  bottom: 0;
-  height: 300px;
-  color: #fff;
-  font-size: 80px;
-  font-family: Oswald;
-  text-transform: uppercase;
-  transition: all 200ms ease-in-out;
-  -webkit-text-stroke-width: 2px;
-  -webkit-text-stroke-color: #cab2cb;
-}
-
-.wrapper_2:hover img {
-  transform: scale(1.1);
-  /*object-position: bottom;*/
-}
-
-.wrapper_2:hover h1 {
-  bottom: 300px;
-  transform: scale(.4);
-}
-
-.wrapper_2:hover .image_wrapper_2 {
-  width: 370px;
+.banner2 {
+  background-image: url(../image/banner3.jpeg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 /* ============== Responsive =============== */
 @media (max-width: 800px) {
@@ -285,5 +245,8 @@
   }
   .wrapper_2 {
     width: 80%;
+  }
+  .banner_wrapp {
+    width: 95%;
   }
 }
