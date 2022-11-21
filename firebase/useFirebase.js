@@ -188,7 +188,7 @@ export const useCollection = (path) => {
       );
       userId = user.user.uid;
       alert("Sign Up Successfully");
-    } catch (error) {}
+    } catch (error) { }
 
     return userId;
   };
@@ -247,7 +247,7 @@ export const useCollection = (path) => {
     const result = docSnap.data();
     return result;
   };
- 
+
   const getFireabasePostsData = async (postPath) => {
     try {
       let item = [];
@@ -275,6 +275,8 @@ export const useCollection = (path) => {
     }
   };
 
+
+
   // image upload Component Firebase
   return {
     loading,
@@ -290,3 +292,29 @@ export const useCollection = (path) => {
 };
 // const updateData = () => updateDoc
 // const deleteData = () => deleteDoc
+
+
+
+export const useSubCollection = (collectionName, docId, subCollection) => {
+
+  const [data, setData] = useState();
+
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(collection(db, collectionName, docId, subCollection), (snapshot) => {
+      setData(snapshot.docs)
+    }
+    )
+
+    return () => unsubscribe()
+  }, [collectionName, docId, subCollection])
+
+  const updateData = (subId, data) => setDoc(doc(db, collectionName, docId, subCollection, subId), data);
+  const createData = (subId, data) => addDoc(collection(db, collectionName, docId, subCollection), data);
+
+
+  const deleteData = (subId) => deleteDoc(doc(db, collectionName, docId, subCollection, subId));
+
+  return { data, updateData, createData, deleteData }
+
+}

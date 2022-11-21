@@ -19,7 +19,7 @@ const UserPosts = (props) => {
         setIsLoading(false);
       } catch (error) {}
     })();
-  }, [getSingleData, postId]);
+  }, [props]);
   // console.log(postData);
   return (
     <div>
