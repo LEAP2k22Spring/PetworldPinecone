@@ -8,7 +8,7 @@ import { useFirebase } from '../../firebase/useFirebase';
 
 const Post = () => {
   const { getUsersData } = useGetUsersDataContext();
-  const { getMultipleData } = useFirebase('Posts');
+  const { getMultipleDataWithSort } = useFirebase('Posts');
   const [postData, setPostData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -33,9 +33,7 @@ const Post = () => {
     (async () => {
       const userId = getUsersData.userId;
       try {
-        const result = await getMultipleData('userID', userId);
-        //if post owner id is equal to logged user id, then
-        setIsPostOwner(true);
+        const result = await getMultipleDataWithSort('userID', userId);
         setPostData(result);
         setIsLoading(false);
       } catch (error) {}

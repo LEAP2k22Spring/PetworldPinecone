@@ -24,8 +24,8 @@ import {
   limit,
   updateDoc,
   deleteDoc,
-} from "firebase/firestore";
-import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
+} from 'firebase/firestore';
+import { getStorage, ref, getDownloadURL, uploadBytes } from 'firebase/storage';
 
 // import { db, app } from "../firebase.config";
 
@@ -52,12 +52,29 @@ export const useFirebase = (path) => {
     }
   };
 
-  const getMultipleData = async (sortField, id) => {
+  const getMultipleData = async (id, subCollection) => {
+    try {
+      const q = query(collection(db, path, id, subCollection));
+      let data = [];
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        data.push({
+          docId: doc.id,
+          data: doc.data(),
+        });
+      });
+      return data;
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const getMultipleDataWithSort = async (sortField, id) => {
     try {
       const q = query(
         collection(db, path),
-        where(sortField, "==", id),
-        orderBy("createdAt", "desc")
+        where(sortField, '==', id),
+        orderBy('createdAt', 'desc')
       );
       let data = [];
       const querySnapshot = await getDocs(q);
@@ -135,13 +152,12 @@ export const useFirebase = (path) => {
     }
   };
 
-  
-
   return {
     getSingleData,
     imageUploadToFirestore,
     createPetData,
     getMultipleData,
+    getMultipleDataWithSort,
     updateData,
     deleteData,
   };
@@ -165,7 +181,7 @@ export const useCollection = (path) => {
 
   const createUserData = async (data, userId) => {
     try {
-      await setDoc(doc(db, path, userId), { ...data, avatar: "" });
+      await setDoc(doc(db, path, userId), { ...data, avatar: '' });
     } catch (error) {
       console.log('error', error);
     }
@@ -189,7 +205,7 @@ export const useCollection = (path) => {
         password
       );
       userId = user.user.uid;
-      alert("Sign Up Successfully");
+      alert('Sign Up Successfully');
     } catch (error) {}
 
     return userId;
@@ -249,20 +265,20 @@ export const useCollection = (path) => {
     const result = docSnap.data();
     return result;
   };
- 
+
   const getFireabasePostsData = async (postPath) => {
     try {
       let item = [];
-      const id = "";
+      const id = '';
       const q = query(
-        collection(db, "Posts"),
-        orderBy("createdAt", "desc"),
+        collection(db, 'Posts'),
+        orderBy('createdAt', 'desc'),
         limit(5)
       );
       const querySnapshot = await getDocs(q);
       if (querySnapshot) {
         for (let doc of querySnapshot.docs) {
-          const results = await userDataPost("Users", doc.data().userID);
+          const results = await userDataPost('Users', doc.data().userID);
           item.push({
             ...doc.data(),
             userName: results.firstName,

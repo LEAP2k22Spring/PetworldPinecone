@@ -8,7 +8,7 @@ import { useFirebase } from '../../firebase/useFirebase';
 import { useGetUsersDataContext } from '../../context/UsersDataContext';
 
 const Pet = ({ petNumber }) => {
-  const { getMultipleData } = useFirebase('Pets');
+  const { getMultipleDataWithSort } = useFirebase('Pets');
   const { getUsersData } = useGetUsersDataContext();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
@@ -28,7 +28,7 @@ const Pet = ({ petNumber }) => {
     setIsLoading(true);
     (async () => {
       try {
-        const petCollection = await getMultipleData(
+        const petCollection = await getMultipleDataWithSort(
           'ownerID',
           getUsersData.userId
         );

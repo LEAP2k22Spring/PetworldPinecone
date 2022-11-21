@@ -98,11 +98,26 @@
 .commentActive {
   background-color: rgba(44, 44, 44, 0.1);
   width: 100%;
-  padding: 10px;
+  /* padding: 10px; */
   font-weight: 600;
+  outline: none;
+  border: none;
 }
 .commentInActive {
   width: 100%;
-  padding: 10px;
+  /* padding: 10px; */
   font-weight: 600;
+  outline: none;
+  border: none;
+  background: transparent;
+}
+
+.viewMoreBtn {
+  background-color: transparent;
+  border: none;
+  color: #696969;
+  text-align: center;
+  text-decoration: none;
+  /* display: inline-block;
+  font-size: 16px; */
 }
