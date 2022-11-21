@@ -1,25 +1,35 @@
-import { useEffect, useState } from "react";
-import UserPost from "../../component/profile/UserPost";
-import { useFirebase } from "../../firebase/useFirebase";
-import LoadingSpinner from "../../component/Spinner";
+import { useEffect, useState } from 'react';
+import UserPost from '../../component/profile/UserPost';
+import { useFirebase } from '../../firebase/useFirebase';
+import LoadingSpinner from '../../component/Spinner';
+import { useGetUsersDataContext } from '../../context/UsersDataContext';
 
 const UserPosts = (props) => {
   const { slug } = props; //localhost:3000/profile/posts/4cp9r5THWQN3IwpFL9lb  - slug irne.
   const postId = slug[1]; // 4cp9r5THWQN3IwpFL9lb id-gaa awna.
-  const { getSingleData } = useFirebase("Posts");
-  const [isLoading, setIsLoading] = useState(false);
+  const { getSingleData } = useFirebase('Posts');
   const [postData, setPostData] = useState(null);
+  const { getUsersData } = useGetUsersDataContext();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isPostOwner, setIsPostOwner] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
+    const userId = getUsersData.userId;
     (async () => {
       try {
         const result = await getSingleData(postId);
+        console.log(result);
         setPostData(result);
-        setIsLoading(false);
+        if (result.userID === userId) {
+          setIsPostOwner(true);
+          setIsLoading(false);
+        } else {
+          setIsLoading(false);
+        }
       } catch (error) {}
     })();
-  }, [getSingleData, postId]);
+  }, [postId]);
   // console.log(postData);
   return (
     <div>

@@ -34,6 +34,8 @@ const Post = () => {
       const userId = getUsersData.userId;
       try {
         const result = await getMultipleData('userID', userId);
+        //if post owner id is equal to logged user id, then
+        setIsPostOwner(true);
         setPostData(result);
         setIsLoading(false);
       } catch (error) {}
