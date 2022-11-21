@@ -1,8 +1,9 @@
 /* ================== Landing page ======== */
 .landing_page {
   display: flex;
-  justify-content: center;
   width: 100vw;
+  flex-direction: column;
+  align-items: center;
 }
 .landing_wrapp {
   display: flex;
@@ -187,7 +188,47 @@
   height: 40px;
   bottom: 10px;
   right: 10px;
-  color: rgb(24, 235, 0);
+  color: rgb(59, 188, 0);
+}
+/* ------------------ Landing page middle - */
+.gradient_line {
+  width: 80%;
+  height: 3px;
+  background-image: linear-gradient(to right, #fffefc, #fcf2e3, #fbe6cb, #fbd8b5, #fccaa0, #fccaa0, #fccaa0, #fccaa0, #fbd8b5, #fbe6cb, #fcf2e3, #fffefc);
+}
+.middle_img_wrapp svg {
+
+}
+.transparent_img {
+  position: absolute;
+  left: 60px;
+  top: 50px;
+}
+.circle_shape_middle {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background: white;
+  border-radius: 50%;
+  top: 120px;
+  right: 90px;
+  border: 3px solid #4C92B9;
+}
+.circle_shape_middle p {
+  content: "";
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background: #ff9100;
+  border-radius: 50%;
+  top: 2px;
+  right: 2px;
+}
+.circle_shape_middle p svg {
+  margin: 5px 5px;
+  width: 40px;
+  height: 40px;
+  color: white;
 }
 /* ----------------- */
 /* ================== Navbar ============== */
@@ -410,7 +451,7 @@
   /* ---------- landing page ------- */
   .img_shape {
     width: 60%;
-    height: 50vh;
+    height: 450px;
   }
   .circle_shape {
     width: 60px;
@@ -448,7 +489,7 @@
 @media (max-width: 550px) {
   .img_shape {
     width: 60%;
-    height: 40vh;
+    height: 350px;
   }
   .care_shape {
     left: -90px;
@@ -483,5 +524,19 @@
   }
   .img_shape {
     width: 70%;
+    height: 300px;
+  }
+  .care_shape {
+    bottom: 120px;
+  }
+  .inbox_shape {
+    top: 190px;
+  }
+  .walking_shape {
+    bottom: 0px;
+    right: 120px;
+  }
+  .landing_text_wrapp p {
+    margin-top: 10px;
   }
 }

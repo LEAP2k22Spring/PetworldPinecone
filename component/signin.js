@@ -9,9 +9,9 @@ import {
 import { Box } from "@mui/system";
 import { useRef, useState } from "react";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import { LogoSignIn } from "./LogoSignIn";
+import { LogoSignIn } from "./svg/LogoSignIn";
 import { useCollection } from "../firebase/useFirebase";
-import Link from "next/link";
+
 const margintop = {
   marginTop: "10px",
 };
