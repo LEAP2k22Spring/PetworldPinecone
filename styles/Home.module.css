@@ -15,6 +15,12 @@
 .landing_text_wrapp {
   width: 100%;
 }
+.landing_text_wrapp button {
+  background-image: linear-gradient(to right top, #f7ac08, #f89c00, #f98b00, #f97900, #f86608);
+  border-radius: 20px;
+  padding: 8px 35px;
+}
+
 .background_wrapp {
   position: relative;
   display: flex;
@@ -188,17 +194,14 @@
   height: 40px;
   bottom: 10px;
   right: 10px;
-  color: rgb(59, 188, 0);
+
 }
 /* ------------------ Landing page middle - */
 .gradient_line {
   width: 80%;
   height: 3px;
   background-image: linear-gradient(to right, #fffefc, #fcf2e3, #fbe6cb, #fbd8b5, #fccaa0, #fccaa0, #fccaa0, #fccaa0, #fbd8b5, #fbe6cb, #fcf2e3, #fffefc);
-}
-.middle_img_wrapp svg {
-
-}
+} 
 .transparent_img {
   position: absolute;
   left: 60px;
@@ -210,24 +213,24 @@
   height: 60px;
   background: white;
   border-radius: 50%;
-  top: 120px;
-  right: 90px;
-  border: 3px solid #4C92B9;
+  top: 160px;
+  right: 40px;
+  border: 3px solid #4495c7;
 }
 .circle_shape_middle p {
   content: "";
   position: absolute;
   width: 50px;
   height: 50px;
-  background: #ff9100;
+  background: #ffbb00;
   border-radius: 50%;
   top: 2px;
   right: 2px;
 }
 .circle_shape_middle p svg {
-  margin: 5px 5px;
-  width: 40px;
-  height: 40px;
+  margin: 8px 9px;
+  width: 33px;
+  height: 33px;
   color: white;
 }
 /* ----------------- */
@@ -476,8 +479,10 @@
   .icon_care,
   .icon_chat,
   .icon_training {
-    width: 30px;
+    width: 40px;
+    height: 40px;
     top: 5px;
+    left: 5px;
   }
   .care_shape b, .care_shape span {
     left: 55px;
@@ -538,5 +543,8 @@
   }
   .landing_text_wrapp p {
     margin-top: 10px;
+  }
+  .circle_shape_middle {
+    top: 190px;
   }
 }
