@@ -11,6 +11,7 @@ import { useRef, useState } from "react";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { LogoSignIn } from "./svg/LogoSignIn";
 import { useCollection } from "../firebase/useFirebase";
+import Styles from '../styles/Home.module.css'
 
 const margintop = {
   marginTop: "10px",
@@ -32,7 +33,7 @@ const Login = () => {
   }
 
   return !isClicked ? (
-    <Grid container component="main" sx={{ height: "100vh" }}>
+    <Grid className={Styles.login_wrapper} container component="main" sx={{ height: "100vh" }}>
       <Grid item xs={8}>
         <Box
           sx={{

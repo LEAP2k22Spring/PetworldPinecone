@@ -29,9 +29,6 @@ export default function LandingPage() {
             Get start
           </Button>
         </Box>
-        <Box>
-          {/* <LogoSignIn/> */}
-        </Box>
         <Box className={styles.background_wrapp}>
           <Box className={styles.img_shape}><small></small>
               
@@ -73,7 +70,7 @@ export default function LandingPage() {
       </Box>
       <Box mt={15} width="100%" display="flex" flexDirection="column" alignItems="center">
         <Box className={styles.gradient_line}></Box>
-        <Box width="100%" display="flex" justifyContent="center" className={styles.middle_wrapper}>
+        <Box width="100%" display="flex" justifyContent="center" alignItems="center" textAlign="center" className={styles.middle_wrapper}>
           <Box className={styles.middle_img_wrapp} display="flex" width="400px" position="relative">
               <Shape1/>
               <Image src="https://firebasestorage.googleapis.com/v0/b/petworldpinecone.appspot.com/o/banner%20image%2Fdog_transparent.png?alt=media&token=a3358112-53fc-4c50-b9a3-42258c8eacb1" 
@@ -85,7 +82,7 @@ export default function LandingPage() {
               <Box className={styles.circle_shape_middle}><p><PhotoCameraIcon/></p></Box>
           </Box>
           <Box>
-            <Typography color="#000c52" mt={20} fontWeight={500} variant="h4">Share a photo your pet</Typography>
+            <Typography color="#000c52" fontWeight={500} variant="h4">Share a photo your pet</Typography>
             <Typography color="#000c52" fontWeight={500} variant="h4">Let's start the fun!</Typography>
           </Box>
 

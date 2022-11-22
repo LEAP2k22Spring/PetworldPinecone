@@ -38,6 +38,10 @@ function HomePage() {
         <button>Bird</button>
         <button>Fish</button>
         <button>Humster</button>
+        <button>Raccoon</button>
+        <button>Turtle</button>
+        <button>Shimpanzee</button>
+        <button>Panda</button>
       </Stack>
 
       <Box
