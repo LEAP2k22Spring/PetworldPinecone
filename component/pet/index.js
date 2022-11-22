@@ -1,1 +1,2 @@
-export * from "./PetProfile";
+export * from './PetProfile';
+export * from './PetInfo';

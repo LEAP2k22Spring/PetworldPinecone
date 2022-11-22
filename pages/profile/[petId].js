@@ -1,17 +1,17 @@
-import { useState, useEffect } from "react";
-import { useFirebase } from "../../firebase/useFirebase";
-import LoadingSpinner from "../../component/Spinner";
-import { useRouter } from "next/router";
-import { PetProfile } from "../../component/pet";
+import { useState, useEffect, useCallback } from 'react';
+import { useFirebase } from '../../firebase/useFirebase';
+import LoadingSpinner from '../../component/Spinner';
+import { useRouter } from 'next/router';
+import { PetProfile } from '../../component/pet';
 
 const Pet = () => {
   const router = useRouter();
-  const { getSingleData } = useFirebase("Pets");
+  const { getSingleData } = useFirebase('Pets');
   const [petData, setPetData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const petId = router.query.petId;
 
   useEffect(() => {
-    const petId = router.query.petId;
     setIsLoading(true);
     (async () => {
       try {
@@ -20,7 +20,8 @@ const Pet = () => {
         setPetData(result);
       } catch (error) {}
     })();
-  }, [getSingleData, router.query.petId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [petId]);
 
   return (
     <div>

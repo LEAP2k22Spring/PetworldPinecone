@@ -6,3 +6,5 @@ git pull hiihed "error: cannot lock ref 'refs/remotes/origin/Sobri'" iim aldaa g
 Try cleaning-up your local repository with:
 $ git gc --prune=now
 $ git remote prune origin
+
+npm install eslint-plugin-react-hooks@next

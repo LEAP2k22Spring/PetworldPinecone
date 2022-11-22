@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Avatar, Typography, Stack, Button, Divider } from '@mui/material';
+import { Avatar, Typography, Stack, Divider } from '@mui/material';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import { useRouter } from 'next/router';
 import LoadingSpinner from '../Spinner';
@@ -8,9 +8,9 @@ import { useFirebase } from '../../firebase/useFirebase';
 import { useGetUsersDataContext } from '../../context/UsersDataContext';
 
 const Pet = ({ petNumber }) => {
+  const router = useRouter();
   const { getMultipleDataWithSort } = useFirebase('Pets');
   const { getUsersData } = useGetUsersDataContext();
-  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [petData, setPetData] = useState(null);
 
@@ -39,6 +39,7 @@ const Pet = ({ petNumber }) => {
         petNumber(petCollection.length);
       } catch (error) {}
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

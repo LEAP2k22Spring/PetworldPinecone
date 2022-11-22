@@ -10,7 +10,6 @@ const UserPosts = (props) => {
   const { getSingleData } = useFirebase('Posts');
   const [postData, setPostData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  // const { getUsersData } = useGetUsersDataContext();
 
   useEffect(() => {
     setIsLoading(true);
@@ -22,6 +21,7 @@ const UserPosts = (props) => {
         setIsLoading(false);
       } catch (error) {}
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [postId]);
 
   return (
