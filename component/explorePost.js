@@ -23,20 +23,14 @@ import { async } from "@firebase/util";
 
 
 const Post = ({ id, userAvatar, createdAt, desc, userName, image, userID }) => {
-    // const [likes, setLikes] = useState([]);
-    const [hasLikes, setHasLikes] = useState(false);
-    const [follows, setFollows] = useState([]);
-    const [hasFollows, setHasFollows] = useState(false);
     const { getUsersData } = useGetUsersDataContext();
     const [comment, setComment] = useState("");
-    // const [comments, setComments] = useState([]);
     const [user] = useAuthState(auth);
     const router = useRouter();
 
-
     const { data: likes, deleteData: deleteLike, updateData: updateLike } = useSubCollection("Posts", id, "likes")
-    const { data: comments, createData: createComment } = useSubCollection("Posts", id, "comments")
-    console.log(likes)
+    const { data: comments, deleteData: deleteComment, createData: createComment } = useSubCollection("Posts", id, "comments")
+    const { data: follows, deleteData: unfollow, updateData: updateFollow } = useSubCollection("Users", userID, "follows")
 
     //Post likes deleteData and createData
     const likePost = async () => {
@@ -71,51 +65,17 @@ const Post = ({ id, userAvatar, createdAt, desc, userName, image, userID }) => {
     };
 
 
-
-    // useEffect(
-    //     () =>
-    //         onSnapshot(collection(db, "Posts", id, "comments"), (snapshot) => {
-    //             setComments(snapshot.docs)
-    //         }
-    //         ), [id]
-    // );
-
-
-    const deleteComment = async (e) => {
-        console.log("delelte", e);
-        try {
-            await deleteDoc(doc(db, "Posts", id, "comments", e));
-        } catch (error) {
-
-        }
-    }
-
-
-    useEffect(() =>
-        onSnapshot(collection(db, "Users", userID, "follows"), (snapshot) => {
-            setFollows(snapshot.docs)
-        }
-        ), [id, userID])
-    useEffect(
-        () => setHasFollows(follows.findIndex((follow) => follow.id === user.uid) !== -1),
-        [follows, user.uid]
-    );
     const followUser = async () => {
         try {
-            if (hasFollows) {
-                await deleteDoc(doc(db, "Users", userID, "follows", user.uid));
+            if (follows?.find((follow) => follow?.id === user?.uid)) {
+                unfollow(user?.uid)
             } else {
-                await setDoc(doc(db, "Users", userID, "follows", user.uid), {
-                    userName: getUsersData.firstName,
-                    userAvatar: getUsersData.avatar
-
-                });
+                updateFollow(user.uid, { userName: getUsersData.firstName, userAvatar: getUsersData.avatar })
             }
         } catch (error) {
             console.log(error);
         }
     };
-
 
 
     const openAddPetHandler = (docId) => {
@@ -161,7 +121,7 @@ const Post = ({ id, userAvatar, createdAt, desc, userName, image, userID }) => {
                             backgroundColor: "rgb(0, 87, 194)"
                         }
                     }}>
-                        {hasFollows ? "Unfollow" : "Follow"}
+                        {follows?.find((follow) => follow?.id === user?.uid) ? "Unfollow" : "Follow"}
                         <BookmarkIcon sx={{ color: 'white' }} />
                     </IconButton>}
                 </CardActions>

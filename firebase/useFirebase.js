@@ -152,6 +152,17 @@ export const useCollection = (path) => {
   const { getUsersData, setGetUsersData } = useGetUsersDataContext();
   const colRef = collection(db, path);
 
+  const getData = (docId) =>{
+    // useEffect( async () =>{
+    //   const docSnap = await getDocs(doc(colRef, docId));
+    //   const result = docSnap.data();
+    //   if (result) {
+    //     // `setGet${path}Data`({ ...result, userId: id });
+    //   }
+    // },[])
+  }
+
+
   const getUsersDatabase = async (id) => {
     const docRef = doc(colRef, id);
     const docSnap = await getDoc(docRef);
@@ -159,6 +170,7 @@ export const useCollection = (path) => {
     if (result) {
       setGetUsersData({ ...result, userId: id });
     }
+    return result;
   };
 
   const createUserData = async (data, userId) => {
@@ -296,16 +308,11 @@ export const useCollection = (path) => {
 
 
 export const useSubCollection = (collectionName, docId, subCollection) => {
-
   const [data, setData] = useState();
-
-
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, collectionName, docId, subCollection), (snapshot) => {
       setData(snapshot.docs)
-    }
-    )
-
+    })
     return () => unsubscribe()
   }, [collectionName, docId, subCollection])
 
@@ -314,7 +321,6 @@ export const useSubCollection = (collectionName, docId, subCollection) => {
 
 
   const deleteData = (subId) => deleteDoc(doc(db, collectionName, docId, subCollection, subId));
-
   return { data, updateData, createData, deleteData }
 
 }
