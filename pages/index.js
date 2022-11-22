@@ -19,13 +19,13 @@ function HomePage() {
       <Box display="flex" justifyContent="flex-end" width="80%" zIndex={20}>
         <LimitTags />
       </Box>
-      <Button variant="contained" onClick={() => logout()}>
+      <Button variant='contained' onClick={() => logout()}>
         Sign out
       </Button>
       <Banner />
       <Stack
         className={styles.categories_buttons}
-        direction="row"
+        direction='row'
         spacing={1}
         mt={5}
         justifyContent="flex-end"
@@ -41,7 +41,7 @@ function HomePage() {
 
       <Box
         mt={2}
-        sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
       >
         <RecipeReviewCard />
       </Box>

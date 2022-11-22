@@ -19,14 +19,18 @@ import { useRouter } from "next/router";
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { textAlign } from "@mui/system";
 import { async } from "@firebase/util";
+import { useGetPostsDataContext } from "../context/PostsDataContext";
 
 
 
 const Post = ({ id, userAvatar, createdAt, desc, userName, image, userID }) => {
     const { getUsersData } = useGetUsersDataContext();
+    const { setPostOwner } = useGetPostsDataContext();
     const [comment, setComment] = useState("");
+
     const [user] = useAuthState(auth);
     const router = useRouter();
+
 
     const { data: likes, deleteData: deleteLike, updateData: updateLike } = useSubCollection("Posts", id, "likes")
     const { data: comments, deleteData: deleteComment, createData: createComment } = useSubCollection("Posts", id, "comments")
@@ -79,6 +83,11 @@ const Post = ({ id, userAvatar, createdAt, desc, userName, image, userID }) => {
 
 
     const openAddPetHandler = (docId) => {
+        setPostOwner({
+            avatar: userAvatar,
+            name: userName,
+            id: userID,
+        });
         router.push(`/profile/posts/${docId}`);
     };
     return (

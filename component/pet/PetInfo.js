@@ -1,4 +1,3 @@
-import React from 'react';
 import { Paper, Typography, Stack } from '@mui/material';
 import classes from '../../component/profile.module.css';
 
@@ -12,7 +11,7 @@ const PetInfo = ({ petData }) => {
             justifyContent='flex-start'
             sx={{ padding: '10px 20px' }}
           >
-            <Typography sx={{ color: '#696969' }}>Weight:</Typography>
+            <Typography sx={{ color: '#696969' }}>Weight (kg):</Typography>
             <Typography sx={{ fontSize: '1rem', fontWeight: 700 }}>
               {petData?.weight}
             </Typography>
@@ -24,7 +23,7 @@ const PetInfo = ({ petData }) => {
             justifyContent='flex-start'
             sx={{ padding: '10px 20px' }}
           >
-            <Typography sx={{ color: '#696969' }}>Height:</Typography>
+            <Typography sx={{ color: '#696969' }}>Height (cm):</Typography>
             <Typography sx={{ fontSize: '1rem', fontWeight: 700 }}>
               {petData?.height}
             </Typography>

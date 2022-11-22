@@ -3,14 +3,18 @@ import { Avatar, Typography, Stack, Button, Divider, Box } from '@mui/material';
 import { useEffect, useState } from 'react';
 import LoadingSpinner from '../../component/Spinner';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined';
+
 import Pet from '../../component/profile/Pet';
 import Post from '../../component/profile/Post';
 import { useGetUsersDataContext } from '../../context/UsersDataContext';
+import { useRouter } from 'next/router';
 
 const Profile = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { getUsersData } = useGetUsersDataContext();
   const [totalPets, setTotalPets] = useState('');
+  const router = useRouter();
 
   useEffect(() => {
     setIsLoading(true);
@@ -27,11 +31,18 @@ const Profile = () => {
     setTotalPets(number);
   };
 
+  const goBackHandler = () => {
+    router.back();
+  };
+
   return (
     <>
       <Container>
         <LoadingSpinner open={isLoading} />
         <Header>
+          <BackIconContainer onClick={goBackHandler}>
+            <ArrowBackIosNewOutlinedIcon fontSize='large' />
+          </BackIconContainer>
           <SettingsIconContainer>
             <SettingsOutlinedIcon fontSize='large' />
           </SettingsIconContainer>
@@ -152,4 +163,9 @@ const StyledTypography = styled(Typography)`
   color: #696969;
   font-weight: 700;
   font-size: 1rem;
+`;
+const BackIconContainer = styled.div`
+  padding: 20px;
+  position: absolute;
+  left: 10px;
 `;

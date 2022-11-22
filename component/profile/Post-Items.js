@@ -4,11 +4,21 @@ import { Typography, Stack, Button, Divider } from '@mui/material';
 import styled from 'styled-components';
 import classes from '../../component/profile.module.css';
 import { useRouter } from 'next/router';
+import { useGetPostsDataContext } from '../../context/PostsDataContext';
+import { useGetUsersDataContext } from '../../context/UsersDataContext';
 
 const PostItems = ({ postData }) => {
+  const { setPostOwner } = useGetPostsDataContext();
+  const { getUsersData } = useGetUsersDataContext();
+
   const router = useRouter();
 
   const openAddPetHandler = (docId) => {
+    setPostOwner({
+      avatar: getUsersData.avatar,
+      name: getUsersData.firtName,
+      id: getUsersData.userId,
+    });
     router.push(`/profile/posts/${docId}`);
   };
   return (

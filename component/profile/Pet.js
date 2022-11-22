@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Avatar, Typography, Stack, Button, Divider } from '@mui/material';
+import { Avatar, Typography, Stack, Divider } from '@mui/material';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import { useRouter } from 'next/router';
 import LoadingSpinner from '../Spinner';
@@ -8,12 +8,11 @@ import { useFirebase } from '../../firebase/useFirebase';
 import { useGetUsersDataContext } from '../../context/UsersDataContext';
 
 const Pet = ({ petNumber }) => {
-  const { getMultipleData } = useFirebase('Pets');
-  const { getUsersData } = useGetUsersDataContext();
   const router = useRouter();
+  const { getMultipleDataWithSort } = useFirebase('Pets');
+  const { getUsersData } = useGetUsersDataContext();
   const [isLoading, setIsLoading] = useState(false);
   const [petData, setPetData] = useState(null);
-  console.log('petee2', petData)
 
   // jump to the "localhost:3000/add-pet" page
   const openAddPetHandler = () => {
@@ -29,7 +28,7 @@ const Pet = ({ petNumber }) => {
     setIsLoading(true);
     (async () => {
       try {
-        const petCollection = await getMultipleData(
+        const petCollection = await getMultipleDataWithSort(
           'ownerID',
           getUsersData.userId
         );
@@ -40,6 +39,7 @@ const Pet = ({ petNumber }) => {
         petNumber(petCollection.length);
       } catch (error) {}
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -60,7 +60,7 @@ const Pet = ({ petNumber }) => {
           alignItems='center'
           mb={5}
         >
-          <PetAvatarContainer >
+          <PetAvatarContainer>
             {petData &&
               petData.map((pet, i) => (
                 <PetAvatar
