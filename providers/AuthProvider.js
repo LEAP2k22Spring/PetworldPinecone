@@ -1,23 +1,20 @@
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { createContext, useContext, useEffect, useState } from 'react';
-import { auth, useCollection } from '../firebase/useFirebase';
+import { auth, useDocument } from '../firebase/useFirebase';
 import Login from '../component/signin';
 import LandingPage from '../component/landingPage';
-import { useGetUsersDataContext } from '../context/UsersDataContext';
 
 const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
+  // const  = auth.currentUser;
   const [user, setUser] = useState(false);
-  const [checking, setChecking] = useState(true);
+  const [checking, setChecking] = useState(true)
   const [startBtnClick, setStartBtnClick] = useState(false);
-  const { getUsersDatabase } = useCollection('Users');
+  const { data: userData, loading } = useDocument({ path: 'Users', docId: auth?.currentUser?.uid });
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        let userId = '';
-        userId = user.uid;
         setUser(true);
-        getUsersDatabase(userId);
       } else {
         setUser(false);
       }
@@ -25,7 +22,6 @@ export const AuthProvider = ({ children }) => {
     });
 
     return () => unsubscribe();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const logout = () => {
@@ -50,7 +46,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
   return (
-    <AuthContext.Provider value={{ user, logout, userSignIn }}>
+    <AuthContext.Provider value={{ user, logout, userData, loading }}>
       {checking && (
         <h1
           style={{

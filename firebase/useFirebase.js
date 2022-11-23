@@ -166,40 +166,45 @@ export const useFirebase = (path) => {
 export const useCollection = (collectionName, docId) => {
   const { postsData, setPostsData } = useGetPostsDataContext();
 
-  const [loading, setLoading] = useState();
+  const [loading, setLoading] = useState(false);
   const { getUsersData, setGetUsersData } = useGetUsersDataContext();
   const colRef = collection(db, collectionName);
   const [data, setData] = useState();
-  
-  useEffect(()=>{
-    const getData = async () =>{
-      try {
-        const docRef = doc(db, collectionName, docId);
-        const docSnap =await getDoc(docRef);
-        if (docSnap.exists()) {
-          setData(docSnap.data())
-        } else {
-          console.log('No such document!');
+
+  useEffect(() => {
+    if(docId){
+      (async () => {
+        try {
+          setLoading(true)
+          const docRef = doc(db, collectionName, docId);
+          const docSnap = await getDoc(docRef);
+          if (docSnap.exists()) {
+            setData(docSnap.data())
+          } else {
+            console.log('No such document!');
+          }
+        } catch (error) {
+          console.log(error.message);
+        } finally {
+          setLoading(false)
         }
-      } catch (error) {
-        console.log(error.message);
       }
+      )()
     }
-    getData()
-  },[collectionName, docId])
+  }, [collectionName, docId])
 
-  
 
-  
-  const getUsersDatabase = async (id) => {
-    const docRef = doc(colRef, id);
-    const docSnap = await getDoc(docRef);
-    const result = docSnap.data();
-    if (result) {
-      setGetUsersData({ ...result, userId: id });
-    }
-    return result;
-  };
+
+
+  // const getUsersDatabase = async (id) => {
+  //   const docRef = doc(colRef, id);
+  //   const docSnap = await getDoc(docRef);
+  //   const result = docSnap.data();
+  //   if (result) {
+  //     setGetUsersData({ ...result, userId: id });
+  //   }
+  //   return result;
+  // };
 
   const createUserData = async (data, userId) => {
     try {
@@ -228,22 +233,12 @@ export const useCollection = (collectionName, docId) => {
       );
       userId = user.user.uid;
       alert('Sign Up Successfully');
-    } catch (error) {}
+    } catch (error) { }
 
     return userId;
   };
 
-  const userSignIn = async (email, pass) => {
-    let userId = '';
-    try {
-      const user = await signInWithEmailAndPassword(auth, email, pass);
-      userId = user.user.uid;
-      getUsersDatabase(userId);
-      alert('Sign in Success');
-    } catch (error) {
-      console.log(error);
-    }
-  };
+
 
   const imageUploadToFirestore = async (imageData) => {
     let isImageUploaded = '';
@@ -328,7 +323,7 @@ export const useCollection = (collectionName, docId) => {
     createPost,
     imageUploadToFirestore,
     getFireabasePostsData,
-    getUsersDatabase,
+    // getUsersDatabase,
   };
 };
 // const updateData = () => updateDoc
@@ -376,4 +371,100 @@ export const useSubCollection = (collectionName, docId, subCollection) => {
   const deleteData = (subId) => deleteDoc(doc(db, collectionName, docId, subCollection, subId));
   return { data, updateData, createData, deleteData }
 
+}
+
+
+export const userSignIn = async (email, pass) => {
+  let userId = '';
+  try {
+    const user = await signInWithEmailAndPassword(auth, email, pass);
+    userId = user.user.uid;
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    getUsersDatabase(useCollection("Users", userId));
+    alert('Sign in Success');
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+
+
+export const useCollection1 = ({ path }) => {
+  const [data, setData] = useState();
+  useEffect(() => {
+    const unsubscribe = onSnapshot(collection(db, path), (snapshot) => {
+      setData(snapshot.docs)
+    })
+    return () => unsubscribe()
+  }, [path])
+
+
+  const updateData = (docId, data) => setDoc(doc(db, path, docId), data);
+  const createData = (docId, data) => addDoc(collection(db, path, docId), data);
+
+
+  const deleteData = (docId) => deleteDoc(doc(db, path, docId));
+  return { data, updateData, createData, deleteData }
+
+}
+export const useSort = (path, sortField, id) => {
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    if (id) {
+      (async () => {
+        try {
+          const q = query(
+            collection(db, path),
+            where(sortField, '==', id),
+            orderBy('createdAt', 'desc')
+          );
+          const result = [];
+          const querySnapshot = await getDocs(q);
+          querySnapshot.forEach((doc) => {
+            result.push({
+              docId: doc.id,
+              data: doc.data(),
+            });
+          });
+          setData(result)
+        } catch (error) {
+          console.log(error.message);
+        }
+      })()
+    }
+  }, [id, path, sortField])
+  return { data }
+}
+
+export const useDocument = ({ path, docId }) => {
+  const [data, setData] = useState();
+
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    if (docId) {
+      (async () => {
+        setLoading(true)
+        const docRef = doc(db, path, docId);
+        try {
+          const docSnap = await getDoc(docRef);
+          if (docSnap.exists()) {
+            setData(docSnap.data())
+          } else {
+            console.log('No such document!');
+          }
+
+        } catch (error) {
+          console.log(error)
+        } finally {
+          setLoading(false)
+        }
+      })()
+    }
+  }, [path, docId])
+  const updateData = (data) => setDoc(doc(db, path, docId), data);
+  const createData = (docId, data) => addDoc(collection(db, path, docId), data);
+  const deleteData = (docId) => deleteDoc(doc(db, path, docId));
+
+  return { data, loading, updateData, createData, deleteData }
 }

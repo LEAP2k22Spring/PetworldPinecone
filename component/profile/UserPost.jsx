@@ -22,13 +22,14 @@ import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
 import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { useFirebase } from '../../firebase/useFirebase';
+import { auth, useFirebase } from '../../firebase/useFirebase';
 import { useRouter } from 'next/router';
 import LoadingSpinner from '../Spinner';
 import moment from 'moment';
 
 //pages/profile/[...slug].js-ees duudagdagj bga.
 const UserPost = ({ postData, postId }) => {
+  
   const router = useRouter();
   const { getUsersData } = useGetUsersDataContext();
   const { postOwner } = useGetPostsDataContext();
@@ -175,7 +176,7 @@ const UserPost = ({ postData, postId }) => {
               </Typography>
             </Stack>
             {/* 2.1.1) =================================== */}
-            {getUsersData.userId === postOwner.id && (
+            {auth?.currentUser?.uid === postOwner.id && (
               <PopupState variant='popper' popupId='demo-popup-popper'>
                 {(popupState) => (
                   <div>
