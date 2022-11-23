@@ -19,7 +19,7 @@ export default function LandingPage() {
     <Box className={styles.landing_page}>
       <Box className={styles.landing_wrapp}>
         <Box className={styles.landing_text_wrapp}>
-          <Typography fontWeight={500} variant="h1">Great Your </Typography>
+          <Typography fontWeight={500} variant="h1">Create Your </Typography>
           <Typography fontWeight={600} variant="h1">Pet’s Profile</Typography>
           <Typography sx={{width:'80%'}} mt={5}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do

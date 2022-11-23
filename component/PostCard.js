@@ -12,7 +12,6 @@ import AvatarGroup from '@mui/material/AvatarGroup';
 import PetsIcon from '@mui/icons-material/Pets';
 import Link from '@mui/material/Link';
 import { Box } from '@mui/system';
-import { red } from '@mui/material/colors';
 import Typography from '@mui/material/Typography';
 import Popover from '@mui/material/Popover';
 import { useState } from 'react';
@@ -41,10 +40,12 @@ export default function RecipeReviewCard() {
         );
         setIsLoading(false);
         setPetData(petCollection);
+        console.log("pets", petCollection) 
       } catch (error) { }
     })();
   }, []);
 
+   
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -63,19 +64,17 @@ export default function RecipeReviewCard() {
           <Box key={i} id={i}>
             <Card sx={{ width: '350px', borderRadius: '20px' }}>
               <Link href="/" underline="none">
-                <CardMedia
+                <CardMedia 
                   component="img"
                   height="200"
                   src={`${pet.data.image}?w=248&fit=crop&auto=format`}
                   alt="Pets image"
-                />
-              </Link>
-              <CardHeader
-                avatar={
-                  <Avatar sx={{ bgcolor: red[500], width: '30px', height: '30px' }} aria-label="recipe" src={`${pet.data.image}?w=248&fit=crop&auto=format`}>
-
-                  </Avatar>
-                }
+                  >
+                  
+                
+                    </CardMedia>
+                    </Link>
+              <CardHeader 
                 action={
                   <IconButton aria-label="settings" aria-describedby={id} onClick={handleClick}>
                     <MoreVertIcon />
@@ -83,9 +82,8 @@ export default function RecipeReviewCard() {
 
                 }
                 title={pet.data.petName}
-                subheader={itemData.date}
+                // subheader={pet.date.date}
               />
-
               <CardActions sx={{ justifyContent: 'space-between' }}>
                 <IconButton aria-label="add to favorites">
                   <FavoriteIcon />
@@ -107,6 +105,7 @@ export default function RecipeReviewCard() {
                   <PetsIcon sx={{ color: 'white' }} />
                 </IconButton>
               </CardActions>
+              
             </Card>
           </Box>
         ))}
