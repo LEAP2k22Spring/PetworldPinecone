@@ -9,7 +9,6 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useRouter } from "next/router";
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 
-
 const AddPost = ()=>{
     const { createPost, imageUploadToFirestore } = useCollection("Posts");
     const [imageData, setImageData] = useState({
