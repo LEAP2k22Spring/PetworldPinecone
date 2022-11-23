@@ -288,7 +288,10 @@
   transform: translateY(-25px);
   opacity: 1;
 }
-
+/* ================== Login page =========== */
+.login_inside svg {
+  width: 200px;
+}
 /* ================== Logo ================= */
 .logo {
   background-image: url(../public/Logo-1.png);

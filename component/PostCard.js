@@ -39,7 +39,6 @@ export default function RecipeReviewCard() {
           "ownerID",
           "w6mdaHnKEATyBHQQtG8X9lrpftk2"
         );
-        console.log("eesh", petCollection);
         setIsLoading(false);
         setPetData(petCollection);
       } catch (error) { }

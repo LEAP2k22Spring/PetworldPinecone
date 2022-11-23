@@ -3,6 +3,8 @@ import {
   createUserWithEmailAndPassword,
   getAuth,
   signInWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider
 } from "firebase/auth";
 import { useGetUsersDataContext } from "../context/UsersDataContext";
 import { useGetPostsDataContext } from "../context/PostsDataContext";
@@ -35,6 +37,7 @@ export const auth = getAuth();
 
 export const useFirebase = (path) => {
   const { getUsersData, setGetUsersData } = useGetUsersDataContext();
+  
 
   // 1) get any single document data
   const getSingleData = async (id) => {

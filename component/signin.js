@@ -6,24 +6,30 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { auth } from "../firebase/useFirebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { Box } from "@mui/system";
-import { useRef, useState } from "react";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { useEffect, useRef, useState } from "react";
 import { LogoSignIn } from "./svg/LogoSignIn";
 import { useCollection } from "../firebase/useFirebase";
 import Styles from '../styles/Home.module.css'
+import FormControl from '@mui/material/FormControl';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
 
 const margintop = {
   marginTop: "10px",
 };
 import SignUp from "./signup";
+import Image from "next/image";
 
 const Login = () => {
   const { userSignIn } = useCollection("Users");
   const [isClicked, setIsClicked] = useState(false);
   const emailRef = useRef();
   const passwordRef = useRef();
-  console.log("login");
+
   async function handleSignIn(e) {
     try {
       await userSignIn(emailRef.current.value, passwordRef.current.value);
@@ -31,6 +37,14 @@ const Login = () => {
       console.log(error);
     }
   }
+  const [user, setUser] = useAuthState(auth);
+  const googleAuth = new GoogleAuthProvider();
+
+  const login = async() => {
+    const result = await signInWithPopup(auth, googleAuth);
+  }
+  useEffect(() => {
+  }, [user])
 
   return !isClicked ? (
     <Grid className={Styles.login_wrapper} container component="main" sx={{ height: "100vh" }}>
@@ -43,10 +57,10 @@ const Login = () => {
             alignItems: "center",
           }}
         >
-          <LogoSignIn />
+          
         </Box>
       </Grid>
-      <Grid item xs={4} backgroundColor="#dddd">
+      <Grid item xs={4} backgroundColor="#dddd"  className={Styles.login_inside}>
         <Box
           sx={{
             my: 20,
@@ -55,11 +69,9 @@ const Login = () => {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "adminColor.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
+          <LogoSignIn />
           <Typography variant="h5">Sign In</Typography>
-          <Box sx={{ width: "80%" }}>
+          <Box sx={{ width: "50%" }}>
             <Box
               sx={{
                 display: "flex",
@@ -110,11 +122,22 @@ const Login = () => {
             <Button
               sx={{ ...margintop, backgroundColor: "buttonColor.main" }}
               fullWidth
-              variant="contained"
-              color="secondary"
+              variant="outlined"
               onClick={handleSignIn}
             >
               Sign in
+            </Button>
+            <Button
+              sx={{ ...margintop, backgroundColor: "buttonColor.main" }}
+              fullWidth
+              variant="outlined"
+              onClick={login}>
+              <Image src="https://firebasestorage.googleapis.com/v0/b/petworldpinecone.appspot.com/o/icons%2Fgoogle-logo.png?alt=media&token=336a7af6-544a-4cc2-b881-a89be5434f32"
+              alt="google sign in"
+              width={20}
+              height={20}
+              />
+              Google login
             </Button>
           </Box>
           <Typography sx={{ textAlign: "center", marginTop: 2 }}>
