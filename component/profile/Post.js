@@ -39,8 +39,6 @@ const Post = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log('post.js');
-
   return (
     <Stack direction='column' justifyContent='center'>
       <Stack direction='row' justifyContent='center'>

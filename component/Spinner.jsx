@@ -9,9 +9,9 @@ const LoadingSpinner = ({ open }) => {
         open={open}
       >
         <Stack>
-          <div style={{ marginBottom: '20px', fontSize: '18px' }}>
+          {/* <div style={{ marginBottom: '20px', fontSize: '18px' }}>
             Loading...
-          </div>
+          </div> */}
           <CircularProgress color='inherit' />
         </Stack>
       </Backdrop>

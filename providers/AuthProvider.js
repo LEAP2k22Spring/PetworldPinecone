@@ -64,7 +64,7 @@ export const AuthProvider = ({ children }) => {
             background: 'rgba(0,0,0,0.3)',
           }}
         >
-          LOADING...
+          {/* LOADING... */}
         </h1>
       )}
 

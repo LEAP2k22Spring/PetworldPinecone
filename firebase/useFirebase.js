@@ -37,20 +37,20 @@ export const useFirebase = (path) => {
   const { getUsersData, setGetUsersData } = useGetUsersDataContext();
 
   // 1) get any single document data
-  const getSingleData = async (id) => {
-    const docRef = doc(db, path, id);
-    try {
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        return docSnap.data();
-      } else {
-        // doc.data() will be undefined in this case
-        console.log('No such document!');
-      }
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+  // const getSingleData = async (id) => {
+  //   const docRef = doc(db, path, id);
+  //   try {
+  //     const docSnap = await getDoc(docRef);
+  //     if (docSnap.exists()) {
+  //       return docSnap.data();
+  //     } else {
+  //       // doc.data() will be undefined in this case
+  //       console.log('No such document!');
+  //     }
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // };
 
   const getMultipleData = async (id, subCollection) => {
     try {
@@ -153,7 +153,7 @@ export const useFirebase = (path) => {
   };
 
   return {
-    getSingleData,
+    // getSingleData,
     imageUploadToFirestore,
     createPetData,
     getMultipleData,
@@ -163,24 +163,34 @@ export const useFirebase = (path) => {
   };
 };
 
-export const useCollection = (path) => {
+export const useCollection = (collectionName, docId) => {
   const { postsData, setPostsData } = useGetPostsDataContext();
 
   const [loading, setLoading] = useState();
   const { getUsersData, setGetUsersData } = useGetUsersDataContext();
-  const colRef = collection(db, path);
+  const colRef = collection(db, collectionName);
+  const [data, setData] = useState();
+  
+  useEffect(()=>{
+    const getData = async () =>{
+      try {
+        const docRef = doc(db, collectionName, docId);
+        const docSnap =await getDoc(docRef);
+        if (docSnap.exists()) {
+          setData(docSnap.data())
+        } else {
+          console.log('No such document!');
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+    getData()
+  },[collectionName, docId])
 
-  const getData = (docId) =>{
-    // useEffect( async () =>{
-    //   const docSnap = await getDocs(doc(colRef, docId));
-    //   const result = docSnap.data();
-    //   if (result) {
-    //     // `setGet${path}Data`({ ...result, userId: id });
-    //   }
-    // },[])
-  }
+  
 
-
+  
   const getUsersDatabase = async (id) => {
     const docRef = doc(colRef, id);
     const docSnap = await getDoc(docRef);
@@ -193,7 +203,7 @@ export const useCollection = (path) => {
 
   const createUserData = async (data, userId) => {
     try {
-      await setDoc(doc(db, path, userId), { ...data, avatar: '' });
+      await setDoc(doc(db, collectionName, userId), { ...data, avatar: '' });
     } catch (error) {
       console.log('error', error);
     }
@@ -309,6 +319,7 @@ export const useCollection = (path) => {
 
   // image upload Component Firebase
   return {
+    data,
     loading,
     createUserData,
     createUser,
@@ -322,7 +333,31 @@ export const useCollection = (path) => {
 };
 // const updateData = () => updateDoc
 // const deleteData = () => deleteDoc
+// export const getUsersDatabase1 = (collectionName, docId) =>{
+//   const [data, setData] = useState();
+//   useEffect(()=>{
+//     const getData = async () =>{
+//       try {
+//         const docRef = doc(db, collectionName, docId);
+//         const docSnap =await getDoc(docRef);
+//         if (docSnap.exists()) {
+//           setData(docSnap.data())
+//         } else {
+//           console.log('No such document!');
+//         }
+//       } catch (error) {
+//         console.log(error.message);
+//       }
+//     }
+//     getData()
+//   },[collectionName, docId])
 
+
+
+
+
+//   return {data}
+// }
 
 
 export const useSubCollection = (collectionName, docId, subCollection) => {
