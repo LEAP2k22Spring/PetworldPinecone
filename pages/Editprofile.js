@@ -10,7 +10,7 @@ function Editprofile() {
     <Box
     sx={{
         width: '100%',
-        height: '200vh'
+        height: '100vh'
     }}>
         <Typography variant='h5'
         sx={{

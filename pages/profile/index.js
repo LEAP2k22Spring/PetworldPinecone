@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Avatar, Typography, Stack, Button, Divider } from "@mui/material";
+import { Avatar, Typography, Stack, Button, Divider, IconButton } from "@mui/material";
 import { useFirebase } from "../../firebase/useFirebase";
 import { useEffect, useState } from "react";
 import LoadingSpinner from "../../component/Spinner";
@@ -32,9 +32,9 @@ const Profile = () => {
         <LoadingSpinner open={isLoading} />
 
         <Header>
-          <SettingsIconContainer>
+            <IconButton href="/Editprofile">
             <SettingsOutlinedIcon fontSize="large" />
-          </SettingsIconContainer>
+            </IconButton>
         </Header>
         <AvatarContainer>
           <UserAvatar
@@ -50,9 +50,6 @@ const Profile = () => {
           </Typography>
         </AvatarContainer>
         <UserProfile>
-          <Stack direction="row" justifyContent="flex-end">
-            <EditButton href="/Editprofile" variant="outlined">Edit profile</EditButton>
-          </Stack>
           <Typography variant="body1" mt={5} mx={3}>
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Velit
             eaque nemo reprehenderit sint inventore obcaecati et eum maxime
