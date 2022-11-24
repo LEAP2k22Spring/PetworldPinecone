@@ -1,4 +1,8 @@
 /* ================== Landing page ======== */
+.search_box {
+  z-index: 9;
+}
+
 .landing_page {
   display: flex;
   width: 100vw;
@@ -529,6 +533,9 @@
   }
 }
 @media (max-width: 406px) {
+  .search_box {
+    width: 110%;
+  }
   .list_item_name {
     font-size: 11px;
   }

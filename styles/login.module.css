@@ -89,8 +89,8 @@
     padding: 10px 0 10px 15px;
     font-family: "Open Sans", sans;
     font-weight: 200;
-    color: #f89900;
-    background: #efefef;
+    color: #5d5d5d;
+    background: #f8f8f8;
     border: 0;
     border-radius: 20px;
     outline: 0;
@@ -98,7 +98,7 @@
     transition: all 0.3s ease-in-out;
 }
 .balloon::-webkit-input-placeholder {
-    color: #efefef;
+    color: #f8f8f8;
     text-indent: 0;
     font-weight: 300;
 }
@@ -135,7 +135,8 @@
 .balloon:active {
     color: #f89900;
     text-indent: 0;
-    background: rgb(222, 222, 222);
+    background: none;
+    border: 0.5px solid rgb(232, 232, 232);
 }
 .balloon:focus::-webkit-input-placeholder,
 .balloon:active::-webkit-input-placeholder {
@@ -157,4 +158,20 @@
     position: relative;
     display: inline-block;
     margin: 18px 10px;
+}
+
+/* ========================== SIGN UP SECTION ======================= */
+
+.signup_wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+}
+.signup_box {
+    width: 375px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

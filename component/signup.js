@@ -10,6 +10,7 @@ import { useState } from "react";
 import { FormProvider } from "react-hook-form";
 import StepperComp from "./StepperComp";
 import { useCollection } from "../firebase/useFirebase";
+import styles from "../styles/login.module.css"
 
 
 //Sign Up Component
@@ -89,7 +90,9 @@ const SignUp = () => {
   };
 
   return (
-    <Box width="30%" m="auto">
+    <Box className={styles.signup_wrapper}>
+      <Box className={styles.signup_box}>
+        <Typography m={2}>Create account</Typography>
       <Stepper alternativeLabel activeStep={activeStep}>
         {steps.map((step, index) => {
           const labelProps = {};
@@ -151,6 +154,7 @@ const SignUp = () => {
           </form>
         </FormProvider>
       )}
+      </Box>
     </Box>
   );
 };
