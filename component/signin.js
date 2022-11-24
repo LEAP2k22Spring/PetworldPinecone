@@ -42,35 +42,47 @@ const Login = () => {
 
   return !isClicked ? (
     <Box className={styles.login_wrapper}>
-      <Box className={styles.login_inside}>
+      <Box className={styles.login_middle_wrapp}>
+        <Box className={styles.login_inside}>
+          <Image
+            className={styles.login_top_img} 
+            src="https://firebasestorage.googleapis.com/v0/b/petworldpinecone.appspot.com/o/banner%20image%2Fmagic_cut.png?alt=media&token=3c6a4129-4fa4-4aa2-a5b5-74239fa6369e"
+            alt="login top image"
+            height={210}
+            width={350}
+          />
           <LogoSignIn />
-          <Typography variant="h5">Sign In</Typography>
+          <Typography variant="h5">Login</Typography>
           <Box className={styles.login_wrapp} >
               <span>
-                <input className={styles.balloon}  type="text" placeholder="Email" ref={emailRef} /><label for="Email">Email</label>
+                <input className={styles.balloon}  type="text" placeholder="" ref={emailRef} /><label for="Email">Email</label>
               </span>
               <span>
-                <input className={styles.balloon}  type="password" placeholder="Password" ref={passwordRef} /><label for="password">Password</label>
+                <input className={styles.balloon}  type="password" placeholder="" ref={passwordRef} /><label for="password">Password</label>
               </span>
             <button
+              style={{background:'orange'}}
               onClick={handleSignIn}
             >
-              Sign in
+              Login
             </button>
+            <Typography className={styles.text_google}><b></b>or login with<a></a></Typography>
             <button
+              className={styles.google_button}
               onClick={login}>
-              <Image src="https://firebasestorage.googleapis.com/v0/b/petworldpinecone.appspot.com/o/icons%2Fgoogle-logo.png?alt=media&token=336a7af6-544a-4cc2-b881-a89be5434f32"
-              alt="google sign in"
-              width={20}
-              height={20}
-              />
+                <Image src="https://firebasestorage.googleapis.com/v0/b/petworldpinecone.appspot.com/o/icons%2Fgoogle-logo.png?alt=media&token=336a7af6-544a-4cc2-b881-a89be5434f32"
+                  alt="google sign in"
+                  width={20}
+                  height={20}
+                  />
               Google login
             </button>
           </Box>
-          <Typography sx={{ textAlign: "center", marginTop: 2 }}>
+          <Typography sx={{ textAlign: "center", marginTop: 2, fontWeight:'400', fontSize:'15px' }}>
             Need an account?{" "}
             <Button onClick={() => setIsClicked(!isClicked)}>SignUp</Button>
           </Typography>
+        </Box>
       </Box>
     </Box>
   ) : (

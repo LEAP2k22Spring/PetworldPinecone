@@ -19,6 +19,8 @@ import { Button } from '@mui/material';
 import { useEffect } from 'react';
 import { useFirebase } from "../firebase/useFirebase";
 import LoadingSpinner from "./Spinner";
+import styles from "../styles/Home.module.css";
+
 
 
 
@@ -74,7 +76,8 @@ export default function RecipeReviewCard() {
                 
                     </CardMedia>
                     </Link>
-              <CardHeader 
+              <CardHeader
+                className=''
                 action={
                   <IconButton aria-label="settings" aria-describedby={id} onClick={handleClick}>
                     <MoreVertIcon />

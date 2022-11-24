@@ -3,20 +3,39 @@
 .login_wrapper {
     display: flex;
     justify-content: center;
-    align-items: center;
     width: 100vw;
     height: 100vh;
 }
+.login_middle_wrapp {
+    display: flex;
+    height: 670px;
+    width: 100%;
+    justify-content: center;
+}
+.login_top_img {
+    position: absolute;
+    top: -147px;
+}
 .login_inside {
+    position: relative;
+    margin-top: 120px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 400px;
-    height: 700px;
-    background: #c4c4c4;
+    width: 375px;
+    height: 545px;
+
+    -webkit-box-shadow: 0px 1px 3px -1px rgba(66, 68, 90, 1);
+    -moz-box-shadow: 0px 1px 3px -1px rgba(66, 68, 90, 1);
+    box-shadow: 0px 1px 3px -1px rgba(66, 68, 90, 1);
+    border-radius: 15px;
 }
 .login_inside svg {
-    width: 200px;
+    width: 100px;
+    margin-top: -90px;
+}
+.login_inside h5 {
+    margin-top: -80px;
 }
 .login_wrapp {
     display: flex;
@@ -24,22 +43,56 @@
     align-items: center;
 }
 .login_wrapp button {
+    cursor: pointer;
     width: 300px;
     height: 40px;
     border: none;
-    margin-top: 5px;
-    border-radius: 6px;
+    margin-top: 15px;
+    border-radius: 20px;
+    color: white;
 }
-
+.text_google {
+    margin-top: 30px;
+    font-size: 13px;
+    font-weight: 300;
+    position: relative;
+    color: rgb(121, 121, 121);
+}
+.text_google b {
+    position: absolute;
+    top: 10px;
+    left: -90px;
+    height: 1px;
+    width: 80px;
+    background-color: rgb(151, 151, 151);
+}
+.text_google a {
+    position: absolute;
+    top: 10px;
+    left: 80px;
+    height: 1px;
+    width: 80px;
+    background-color: rgb(151, 151, 151);
+}
+.google_button {
+    position: relative;
+    background: #aaa;
+}
+.google_button img {
+    position: absolute;
+    left: 80px;
+    top: 10px;
+}
+/* ----------- input ------------- */
 .balloon {
     width: 300px;
     padding: 10px 0 10px 15px;
     font-family: "Open Sans", sans;
-    font-weight: 400;
-    color: #377d6a;
+    font-weight: 200;
+    color: #f89900;
     background: #efefef;
     border: 0;
-    border-radius: 6px;
+    border-radius: 20px;
     outline: 0;
     text-indent: 70px;
     transition: all 0.3s ease-in-out;
@@ -56,11 +109,10 @@
     left: 0;
     bottom: 8px;
     padding: 5px 15px;
-    color: #032429;
+    color: #f89900;
     font-size: 11px;
-    font-weight: 700;
+    font-weight: 500;
     text-transform: uppercase;
-    text-shadow: 0 1px 0 rgba(19, 74, 70, 0);
     transition: all 0.3s ease-in-out;
     border-radius: 3px;
     background: rgba(122, 184, 147, 0);
@@ -81,9 +133,9 @@
 
 .balloon:focus,
 .balloon:active {
-    color: #377d6a;
+    color: #f89900;
     text-indent: 0;
-    background: #fff;
+    background: rgb(222, 222, 222);
 }
 .balloon:focus::-webkit-input-placeholder,
 .balloon:active::-webkit-input-placeholder {
@@ -92,18 +144,17 @@
 .balloon:focus + label,
 .balloon:active + label {
     color: #fff;
-    text-shadow: 0 1px 0 rgba(19, 74, 70, 0.4);
-    background: #7ab893;
+    background: #f89900;
     transform: translateY(-40px);
 }
 .balloon:focus + label:after,
 .balloon:active + label:after {
-    border-top: 4px solid #7ab893;
+    border-top: 4px solid #f89900;
 }
 
 
 .login_wrapp span {
     position: relative;
     display: inline-block;
-    margin: 30px 10px;
+    margin: 18px 10px;
 }

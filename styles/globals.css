@@ -1,4 +1,9 @@
 
+:root {
+  --button-color: green;
+}
+
+
 html,
 body {
   /* cursor: url(../image/paw_cursor.png),auto; */

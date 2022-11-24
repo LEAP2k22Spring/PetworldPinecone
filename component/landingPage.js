@@ -1,11 +1,8 @@
 import { Box, Button, Grid, Typography } from "@mui/material";
-import { LogoSignIn } from "./svg/LogoSignIn";
 import Login from "./signin";
 import { useAuth } from "../providers/AuthProvider";
 import styles from "../styles/Home.module.css";
 import PetsIcon from '@mui/icons-material/Pets';
-import HealthAndSafetyIcon from '@mui/icons-material/HealthAndSafety';
-import ChatIcon from '@mui/icons-material/Chat';
 import { Shape1 } from "./svg/Shape1";
 import Image from "next/image";
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
