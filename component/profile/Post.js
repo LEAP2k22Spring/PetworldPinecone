@@ -2,7 +2,6 @@ import { Stack, Button } from '@mui/material';
 import { useState, useEffect } from 'react';
 import PostItems from './Post-Items';
 import classes from '../profile.module.css';
-import { useGetUsersDataContext } from '../../context/UsersDataContext';
 import { auth, useFirebase, useSort } from '../../firebase/useFirebase';
 
 //imported from 'profile/index.js'

@@ -35,16 +35,7 @@ export const AuthProvider = ({ children }) => {
       });
   };
 
-  const userSignIn = async (email, pass) => {
-    console.log('starting user sign');
-    try {
-      const user = await signInWithEmailAndPassword(auth, email, pass);
-      setUser(true);
-      console.log(user);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+
   return (
     <AuthContext.Provider value={{ user, logout, userData, loading }}>
       {checking && (

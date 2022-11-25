@@ -1,18 +1,18 @@
-import { Avatar, Button, Fab, Input, TextField, Typography } from "@mui/material"
+import {  Button, Fab, Input, TextField, Typography } from "@mui/material"
 import { Box } from "@mui/system"
-import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
 import { useRef, useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
-import { useCollection } from "../firebase/useFirebase";
+import { auth, imageUploadToFirestore, useCollection, useDocument } from "../firebase/useFirebase";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useRouter } from "next/router";
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import LoadingSpinner from "../component/Spinner";
+import { serverTimestamp } from "firebase/firestore";
 
 
 const AddPost = () => {
-  const { createPost, imageUploadToFirestore } = useCollection("Posts");
+  const {createData:createPost} = useDocument({path:"Posts"})
   const [imageData, setImageData] = useState({
     url: '',
     file: '',
@@ -49,11 +49,9 @@ const AddPost = () => {
     setIsLoading(true)
     // Validation - 1;
     const { uploaded, url } = await imageUploadToFirestore(imageData);
-
     if (uploaded) {
       await saveData(url);
       setIsLoading(false)
-
     } else {
       alert('Could not upload image');
       return;
@@ -64,7 +62,9 @@ const AddPost = () => {
   const saveData = async (url) => {
     const successfullyUploaded = await createPost({
       desc: descRef.current.value,
+      userID: auth?.currentUser?.uid,
       image: url,
+      createdAt: serverTimestamp(),
     });
     if (successfullyUploaded) {
       alert('Post successfully created!');

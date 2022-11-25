@@ -27,7 +27,7 @@ const ExplorePage = () => {
   const router = useRouter();
   const [user] = useAuthState(auth);
   const { postsData } = useGetPostsDataContext();
-  const { getFireabasePostsData } = useCollection('Posts');
+  const { getFireabasePostsData } = useCollection("Posts");
   const [hasLikes, setHasLikes] = useState(false);
   useEffect(() => {
     getFireabasePostsData();

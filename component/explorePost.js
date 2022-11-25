@@ -1,34 +1,26 @@
-import { Avatar, AvatarGroup, Box, Card, CardActions, CardHeader, CardMedia, getAlertUtilityClass, IconButton, TextField, Typography } from "@mui/material";
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import IosShareOutlinedIcon from '@mui/icons-material/IosShareOutlined';
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import AddCommentOutlinedIcon from '@mui/icons-material/AddCommentOutlined';
+import { Avatar, AvatarGroup, Box, Card, CardActions, CardHeader, CardMedia,  IconButton, TextField, Typography } from "@mui/material";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import { red } from '@mui/material/colors';
 import moment from "moment"
-import React, { useEffect, useState } from "react";
-import { auth, db, useCollection, useSubCollection } from "../firebase/useFirebase";
-import { addDoc, collection, deleteDoc, doc, onSnapshot, orderBy, query, serverTimestamp, setDoc } from "firebase/firestore";
-import { useGetUsersDataContext } from "../context/UsersDataContext";
+import React, {  useState } from "react";
+import { auth, useSubCollection } from "../firebase/useFirebase";
+import {  serverTimestamp,  } from "firebase/firestore";
 import PostAddIcon from '@mui/icons-material/PostAdd';
-import AddReactionIcon from '@mui/icons-material/AddReaction';
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from "next/router";
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import { textAlign } from "@mui/system";
-import { async } from "@firebase/util";
 import { useGetPostsDataContext } from "../context/PostsDataContext";
+import { useAuth } from "../providers";
 
 
 
 const Post = ({ id, userAvatar, createdAt, desc, userName, image, userID }) => {
-    const { getUsersData } = useGetUsersDataContext();
+    const {userData} = useAuth();
     const { setPostOwner } = useGetPostsDataContext();
     const [comment, setComment] = useState("");
-
-    const [user] = useAuthState(auth);
+    // const [user] = useAuthState(auth);
     const router = useRouter();
 
 
@@ -39,10 +31,10 @@ const Post = ({ id, userAvatar, createdAt, desc, userName, image, userID }) => {
     //Post likes deleteData and createData
     const likePost = async () => {
         try {
-            if (likes?.find((like) => like?.id === user?.uid)) {
-                deleteLike(user.uid)
+            if (likes?.find((like) => like?.id === auth?.currentUser?.uid)) {
+                deleteLike(auth?.currentUser?.uid)
             } else {
-                updateLike(user.uid, { userName: getUsersData.firstName, userAvatar: getUsersData.avatar })
+                updateLike(auth?.currentUser?.uid, { userName: userData.firstName, userAvatar: userData.avatar })
             }
         } catch (error) {
             console.log(error);
@@ -53,12 +45,12 @@ const Post = ({ id, userAvatar, createdAt, desc, userName, image, userID }) => {
         e.preventDefault();
         /*     setLoading(true); */
         try {
-            createComment(user.uid, {
+            createComment(auth?.currentUser?.uid, {
                 comment: comment,
-                userName: getUsersData.firstName,
-                userAvatar: getUsersData.avatar,
+                userName: userData.firstName,
+                userAvatar: userData.avatar,
                 createdAt: serverTimestamp(),
-                userId: user.uid
+                userId: auth?.currentUser?.uid
             })
         } catch (error) {
             console.log(error);
@@ -71,10 +63,10 @@ const Post = ({ id, userAvatar, createdAt, desc, userName, image, userID }) => {
 
     const followUser = async () => {
         try {
-            if (follows?.find((follow) => follow?.id === user?.uid)) {
-                unfollow(user?.uid)
+            if (follows?.find((follow) => follow?.id === auth?.currentUser?.uid)) {
+                unfollow(auth?.currentUser?.uid)
             } else {
-                updateFollow(user.uid, { userName: getUsersData.firstName, userAvatar: getUsersData.avatar })
+                updateFollow(auth?.currentUser?.uid, { userName: userData.firstName, userAvatar: userData.avatar })
             }
         } catch (error) {
             console.log(error);
@@ -117,7 +109,7 @@ const Post = ({ id, userAvatar, createdAt, desc, userName, image, userID }) => {
 
                 <CardActions sx={{ justifyContent: 'space-between' }}>
                     <IconButton aria-label="add to favorites" onClick={likePost}>
-                        <FavoriteIcon color={likes?.find((like) => like?.id === user?.uid) ? 'error' : 'inherit'} />
+                        <FavoriteIcon color={likes?.find((like) => like?.id === auth?.currentUser?.uid) ? 'error' : 'inherit'} />
                     </IconButton>
                     <Typography sx={{ fontWeight: '400', fontSize: '13px' }}>{likes?.length === 0 ? "like" : `liked by ${likes?.length}`}</Typography>
                     <AvatarGroup max={3} sx={{ '& .MuiAvatar-root': { width: 20, height: 20, fontSize: 12, background: 'orange' }, paddingRight: "60px" }}>
@@ -125,12 +117,12 @@ const Post = ({ id, userAvatar, createdAt, desc, userName, image, userID }) => {
                             <Avatar key={i} alt="Remy Sharp" src={like.data().userAvatar} />
                         ))}
                     </AvatarGroup>
-                    {user.uid === userID ? "" : <IconButton aria-label="add to favorites" onClick={followUser} sx={{
+                    {auth?.currentUser?.uid === userID ? "" : <IconButton aria-label="add to favorites" onClick={followUser} sx={{
                         fontSize: '16px', gap: '5px', borderRadius: '15px', bgcolor: 'rgb(96 165 250)', color: 'white', '&:hover': {
                             backgroundColor: "rgb(0, 87, 194)"
                         }
                     }}>
-                        {follows?.find((follow) => follow?.id === user?.uid) ? "Unfollow" : "Follow"}
+                        {follows?.find((follow) => follow?.id === auth?.currentUser?.uid) ? "Unfollow" : "Follow"}
                         <BookmarkIcon sx={{ color: 'white' }} />
                     </IconButton>}
                 </CardActions>
@@ -155,7 +147,7 @@ const Post = ({ id, userAvatar, createdAt, desc, userName, image, userID }) => {
 
                         </Box>
                         <Typography fontSize={13}>{moment(new Date(comment?.data().createdAt?.seconds * 1000)).fromNow()}</Typography>
-                        {user.uid === comment?.data().userId ? <DeleteOutlineOutlinedIcon fontSize="small" onClick={() => deleteComment(comment?.id)} sx={{
+                        {auth?.currentUser?.uid === comment?.data().userId ? <DeleteOutlineOutlinedIcon fontSize="small" onClick={() => deleteComment(comment?.id)} sx={{
                             '&:hover': {
                                 color: 'rgb(96 165 250)', cursor: "pointer"
                             }

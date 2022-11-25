@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
 import UserPost from '../../component/profile/UserPost';
-import { useCollection, useFirebase } from '../../firebase/useFirebase';
+import { useCollection, useDocument, useFirebase } from '../../firebase/useFirebase';
 import LoadingSpinner from '../../component/Spinner';
 import { useGetUsersDataContext } from '../../context/UsersDataContext';
 import { useAuth } from '../../providers';
 
 const UserPosts = (props) => {
-  const { slug } = props; //localhost:3000/profile/posts/4cp9r5THWQN3IwpFL9lb  - slug irne.
+  const { slug } = props;
+   //localhost:3000/profile/posts/4cp9r5THWQN3IwpFL9lb  - slug irne.
   const postId = slug[1]; // 4cp9r5THWQN3IwpFL9lb id-gaa awna.
-  const { data: postData } = useCollection("Posts", postId) 
+  const { data: postData } = useDocument({ path: 'Posts', docId: postId });
   const {loading} = useAuth()
-  // const [postData, setPostData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   // useEffect(() => {
@@ -29,7 +29,7 @@ const UserPosts = (props) => {
   return (
     <div>
       {loading && <LoadingSpinner open={loading} />}
-      <UserPost postData={postData} postId={postId} />
+      <UserPost postData={postData} postId={postId}  />
     </div>
   );
 };

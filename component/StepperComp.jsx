@@ -13,7 +13,7 @@ import {
 import { Box } from "@mui/system";
 import { useRef } from "react";
 import { Controller, useForm, useFormContext } from "react-hook-form";
-let cityname = ["Архангай", "Баян-Өлгий", "Баянхонгор", "Булган", "Говь-Алтай", "Говьсүмбэр", "Дархан-Уул", "Дорноговь", "Дорнод", "Дундговь", "Завхан"]
+let cityname = ["Архангай", "Баян-Өлгий", "Баянхонгор", "Булган", "Говь-Алтай", "Говьсүмбэр", "Дархан-Уул", "Дорноговь", "Дорнод", "Дундговь", "Завхан", "Орхон", "Өвөрхангай", "Өмнөговь", "Сүхбаатар", "Сэлэнгэ", "Төв", "Увс", "Улаанбаатар", "Ховд", "Хөвсгөл", "Хэнтий"]
 //StepperComp
 const StepperComp = () => {
   function getSteps() {
@@ -336,11 +336,11 @@ const StepperComp = () => {
         />
         <Controller
           control={control}
-          name="petgender"
+          name="sex"
           render={({ field }) => (
             <>
               <FormLabel id="demo-pet-gender">
-                Gender
+              sex
               </FormLabel>
               <RadioGroup
                 row
@@ -364,11 +364,11 @@ const StepperComp = () => {
         />
         <Controller
           control={control}
-          name="vaccined"
+          name="vaccinated"
           render={({ field }) => (
             <>
               <FormLabel id="demo-pet-vaccined">
-                Vaccined
+              vaccinated
               </FormLabel>
               <RadioGroup
                 row
@@ -376,8 +376,8 @@ const StepperComp = () => {
                 name="demo-pet-vaccined"
                 {...field}
               >
-                <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
-                <FormControlLabel value="No" control={<Radio />} label="No" />
+                <FormControlLabel value={true} control={<Radio />} label="Yes" />
+                <FormControlLabel value={false} control={<Radio />} label="No" />
               </RadioGroup>
             </>
           )}
@@ -418,8 +418,8 @@ const StepperComp = () => {
       petName: "",
       petAge: "",
       breed: "",
-      petgender: "",
-      vaccined: "",
+      sex: "",
+      vaccinated: false,
     },
   });
   return { getStepContent, getSteps, userInputData, petInputData };

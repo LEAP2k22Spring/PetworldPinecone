@@ -34,23 +34,8 @@ export const db = getFirestore(app);
 export const auth = getAuth();
 
 export const useFirebase = (path) => {
-  const { getUsersData, setGetUsersData } = useGetUsersDataContext();
 
   // 1) get any single document data
-  // const getSingleData = async (id) => {
-  //   const docRef = doc(db, path, id);
-  //   try {
-  //     const docSnap = await getDoc(docRef);
-  //     if (docSnap.exists()) {
-  //       return docSnap.data();
-  //     } else {
-  //       // doc.data() will be undefined in this case
-  //       console.log('No such document!');
-  //     }
-  //   } catch (error) {
-  //     console.log(error.message);
-  //   }
-  // };
 
   const getMultipleData = async (id, subCollection) => {
     try {
@@ -69,61 +54,30 @@ export const useFirebase = (path) => {
     }
   };
 
-  const getMultipleDataWithSort = async (sortField, id) => {
-    try {
-      const q = query(
-        collection(db, path),
-        where(sortField, '==', id),
-        orderBy('createdAt', 'desc')
-      );
-      let data = [];
-      const querySnapshot = await getDocs(q);
-      querySnapshot.forEach((doc) => {
-        data.push({
-          docId: doc.id,
-          data: doc.data(),
-        });
-      });
-      return data;
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+  // const getMultipleDataWithSort = async (sortField, id) => {
+  //   try {
+  //     const q = query(
+  //       collection(db, path),
+  //       where(sortField, '==', id),
+  //       orderBy('createdAt', 'desc')
+  //     );
+  //     let data = [];
+  //     const querySnapshot = await getDocs(q);
+  //     querySnapshot.forEach((doc) => {
+  //       data.push({
+  //         docId: doc.id,
+  //         data: doc.data(),
+  //       });
+  //     });
+  //     return data;
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // };
 
   // 2)
-  const imageUploadToFirestore = async (imageData) => {
-    let isImageUploaded = '';
-    try {
-      const storage = getStorage(app);
-      const storageRef = ref(storage, 'images/' + imageData.imageName);
-
-      await uploadBytes(storageRef, imageData.file);
-
-      const downloadURL = await getDownloadURL(storageRef);
-
-      isImageUploaded = true;
-      //add new key (URL) to addedFood object.
-
-      return { uploaded: isImageUploaded, url: downloadURL };
-    } catch (error) {
-      alert(error);
-      console.log('aldaa', error.message);
-      return false;
-    }
-  };
   // 3)
-  const createPetData = async (data) => {
-    try {
-      await addDoc(collection(db, path), {
-        ...data,
-        createdAt: serverTimestamp(),
-      });
-      return true;
-    } catch (error) {
-      console.log('error from firebase', error);
-      return false;
-    }
-  };
+
 
   //4) Update document
   const updateData = async (data, id) => {
@@ -155,9 +109,7 @@ export const useFirebase = (path) => {
   return {
     // getSingleData,
     imageUploadToFirestore,
-    createPetData,
     getMultipleData,
-    getMultipleDataWithSort,
     updateData,
     deleteData,
   };
@@ -165,9 +117,7 @@ export const useFirebase = (path) => {
 
 export const useCollection = (collectionName, docId) => {
   const { postsData, setPostsData } = useGetPostsDataContext();
-
   const [loading, setLoading] = useState(false);
-  const { getUsersData, setGetUsersData } = useGetUsersDataContext();
   const colRef = collection(db, collectionName);
   const [data, setData] = useState();
 
@@ -194,29 +144,17 @@ export const useCollection = (collectionName, docId) => {
   }, [collectionName, docId])
 
 
+  const createData = (userId, data) => setDoc(doc(db, collectionName, userId), data);
+  const updateData = (data)=> updateDoc(doc(db, collectionName, docId), data);
 
 
-  // const getUsersDatabase = async (id) => {
-  //   const docRef = doc(colRef, id);
-  //   const docSnap = await getDoc(docRef);
-  //   const result = docSnap.data();
-  //   if (result) {
-  //     setGetUsersData({ ...result, userId: id });
-  //   }
-  //   return result;
-  // };
 
-  const createUserData = async (data, userId) => {
+
+
+  const createUserData = async (userId, data) => {
+
     try {
-      await setDoc(doc(db, collectionName, userId), { ...data, avatar: '' });
-    } catch (error) {
-      console.log('error', error);
-    }
-  };
-
-  const createPetData = async (data) => {
-    try {
-      await addDoc(collection(db, 'Pets'), data);
+      await setDoc(doc(db, collectionName, userId),data);
     } catch (error) {
       console.log('error', error);
     }
@@ -238,43 +176,6 @@ export const useCollection = (collectionName, docId) => {
     return userId;
   };
 
-
-
-  const imageUploadToFirestore = async (imageData) => {
-    let isImageUploaded = '';
-    try {
-      const storage = getStorage(app);
-      const storageRef = ref(storage, 'images/' + imageData.imageName);
-
-      await uploadBytes(storageRef, imageData.file);
-
-      const downloadURL = await getDownloadURL(storageRef);
-
-      isImageUploaded = true;
-      //add new key (URL) to addedFood object.
-
-      return { uploaded: isImageUploaded, url: downloadURL };
-    } catch (error) {
-      alert(error);
-      console.log('aldaa', error.message);
-      return false;
-    }
-  };
-
-  // create Post add Firebase
-  const createPost = async (data) => {
-    try {
-      await addDoc(collection(db, 'Posts'), {
-        userID: getUsersData.userId,
-        ...data,
-        createdAt: serverTimestamp(),
-      });
-      return true;
-    } catch (error) {
-      console.log('error from firebase', error);
-      return false;
-    }
-  };
 
   const userDataPost = async (path, id) => {
     const docRef = doc(collection(db, path), id);
@@ -318,50 +219,23 @@ export const useCollection = (collectionName, docId) => {
     loading,
     createUserData,
     createUser,
-    createPetData,
     userSignIn,
-    createPost,
-    imageUploadToFirestore,
     getFireabasePostsData,
-    // getUsersDatabase,
+    createData
   };
 };
 // const updateData = () => updateDoc
 // const deleteData = () => deleteDoc
-// export const getUsersDatabase1 = (collectionName, docId) =>{
-//   const [data, setData] = useState();
-//   useEffect(()=>{
-//     const getData = async () =>{
-//       try {
-//         const docRef = doc(db, collectionName, docId);
-//         const docSnap =await getDoc(docRef);
-//         if (docSnap.exists()) {
-//           setData(docSnap.data())
-//         } else {
-//           console.log('No such document!');
-//         }
-//       } catch (error) {
-//         console.log(error.message);
-//       }
-//     }
-//     getData()
-//   },[collectionName, docId])
-
-
-
-
-
-//   return {data}
-// }
-
 
 export const useSubCollection = (collectionName, docId, subCollection) => {
   const [data, setData] = useState();
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
-    const unsubscribe = onSnapshot(collection(db, collectionName, docId, subCollection), (snapshot) => {
-      setData(snapshot.docs)
-    })
-    return () => unsubscribe()
+      const unsubscribe = onSnapshot(collection(db, collectionName, docId, subCollection), (snapshot) => {
+        setData(snapshot.docs)
+      })
+      return () => unsubscribe()
   }, [collectionName, docId, subCollection])
 
   const updateData = (subId, data) => setDoc(doc(db, collectionName, docId, subCollection, subId), data);
@@ -390,24 +264,6 @@ export const userSignIn = async (email, pass) => {
 
 
 
-export const useCollection1 = ({ path }) => {
-  const [data, setData] = useState();
-  useEffect(() => {
-    const unsubscribe = onSnapshot(collection(db, path), (snapshot) => {
-      setData(snapshot.docs)
-    })
-    return () => unsubscribe()
-  }, [path])
-
-
-  const updateData = (docId, data) => setDoc(doc(db, path, docId), data);
-  const createData = (docId, data) => addDoc(collection(db, path, docId), data);
-
-
-  const deleteData = (docId) => deleteDoc(doc(db, path, docId));
-  return { data, updateData, createData, deleteData }
-
-}
 export const useSort = (path, sortField, id) => {
   const [data, setData] = useState([]);
   useEffect(() => {
@@ -439,8 +295,8 @@ export const useSort = (path, sortField, id) => {
 
 export const useDocument = ({ path, docId }) => {
   const [data, setData] = useState();
-
   const [loading, setLoading] = useState(false);
+  console.log();
   useEffect(() => {
     if (docId) {
       (async () => {
@@ -463,8 +319,35 @@ export const useDocument = ({ path, docId }) => {
     }
   }, [path, docId])
   const updateData = (data) => setDoc(doc(db, path, docId), data);
-  const createData = (docId, data) => addDoc(collection(db, path, docId), data);
+  const createData = (data) => addDoc(collection(db, path), data);
   const deleteData = (docId) => deleteDoc(doc(db, path, docId));
 
   return { data, loading, updateData, createData, deleteData }
 }
+
+
+
+
+
+
+
+export const imageUploadToFirestore = async (imageData) => {
+  let isImageUploaded = '';
+  try {
+    const storage = getStorage(app);
+    const storageRef = ref(storage, 'images/' + imageData.imageName);
+
+    await uploadBytes(storageRef, imageData.file);
+
+    const downloadURL = await getDownloadURL(storageRef);
+
+    isImageUploaded = true;
+    //add new key (URL) to addedFood object.
+
+    return { uploaded: isImageUploaded, url: downloadURL };
+  } catch (error) {
+    alert(error);
+    console.log('aldaa', error.message);
+    return false;
+  }
+};

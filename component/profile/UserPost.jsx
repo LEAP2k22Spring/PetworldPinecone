@@ -22,28 +22,35 @@ import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
 import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { auth, useFirebase } from '../../firebase/useFirebase';
+import { auth, useCollection, useDocument, useFirebase, useSubCollection } from '../../firebase/useFirebase';
 import { useRouter } from 'next/router';
 import LoadingSpinner from '../Spinner';
 import moment from 'moment';
+import { useAuth } from '../../providers';
 
 //pages/profile/[...slug].js-ees duudagdagj bga.
-const UserPost = ({ postData, postId }) => {
-  
+const UserPost = ({ postId }) => {
+  console.log("postId", postId);
   const router = useRouter();
-  const { getUsersData } = useGetUsersDataContext();
+  // const { getUsersData } = useGetUsersDataContext();
   const { postOwner } = useGetPostsDataContext();
-  const { getMultipleData, updateData, deleteData } = useFirebase('Posts');
+  const {  deleteData } = useFirebase('Posts');
+  const { data: postData, updateData } = useCollection("Posts", postId)
+  const { data: likes} = useSubCollection("Posts", postId, "likes")
+  const { data: comments, deleteData: deleteComment, createData: createComment } = useSubCollection("Posts", postId, "comments")
+  console.log("comments", comments);
+  // const { data: follows, deleteData: unfollow, updateData: updateFollow } = useSubCollection("Users", userID, "follows")
+
+
+      // const { data: ownerData } = useDocument({ path: 'Users', docId:  ownerId});
   const [isLoading, setIsLoading] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [openEditModal, setOpenEditModal] = useState(false);
   const [disableInput, setDisableInput] = useState(true);
   const [inputEditButton, setInputEditButton] = useState(false);
   const [desc, setDesc] = useState('');
-  const [posts, setPosts] = useState([]);
-  const [likes, setLikes] = useState('0');
   const [isReadMore, setIsReadMore] = useState(true);
-
+  console.log("postOwner", postOwner);
   const handleOpen = (e) => {
     if (e.target.id === 'delete') {
       setOpenModal(true);
@@ -64,22 +71,6 @@ const UserPost = ({ postData, postId }) => {
   const toggleReadMore = () => {
     setIsReadMore(!isReadMore);
   };
-
-  useEffect(() => {
-    setDesc(postData?.desc);
-
-    const getData = async () => {
-      try {
-        const postResult = await getMultipleData(postId, 'comments');
-        const likeResult = await getMultipleData(postId, 'likes');
-        setPosts(postResult);
-        setLikes(likeResult.length);
-        // console.log(likeresult);
-      } catch (error) {}
-    };
-    getData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [postData]);
 
   const goBackHandler = () => {
     router.back();
@@ -112,6 +103,7 @@ const UserPost = ({ postData, postId }) => {
 
   // FINAL STEP 2. - Update data to the firestore
   const onSubmit = async () => {
+    
     //1) get doc ID from "localhost:3000/profile/posts/PGxpOpuxFpscgloxV62g" url
     const postId = router.query.slug[1];
 
@@ -121,14 +113,13 @@ const UserPost = ({ postData, postId }) => {
       setOpenEditModal(false);
 
       try {
-        const result = await updateData(
+        updateData(
           {
             desc: desc,
-          },
-          postId
+          }
         );
 
-        if (result) {
+        if (updateData) {
           setInputEditButton(false);
           setIsLoading(false);
           alert('doc updated!');
@@ -151,7 +142,7 @@ const UserPost = ({ postData, postId }) => {
             <ArrowBackIosNewOutlinedIcon fontSize='large' />
           </BackIconContainer>
           <Typography variant='h6' sx={{ fontSize: '1.5rem', fontWeight: 700 }}>
-            {getUsersData.userId === postOwner.id
+            {auth?.currentUser?.uid === postData?.userID
               ? 'My posts'
               : `${postOwner?.name}'s posts`}
           </Typography>
@@ -214,13 +205,26 @@ const UserPost = ({ postData, postId }) => {
           </AvatarContainer>
           {/* 2.2) ==========USER POST IMAGE========================= */}
           <PostImage>
-            <Image
+            {postData? <Image
               src={postData?.image}
               alt='Picture of the author'
               width={600}
               height={400}
               className={classes.postImage}
-            />{' '}
+            />: <Image
+            src="https://firebasestorage.googleapis.com/v0/b/petworldpinecone.appspot.com/o/no-image%20(1).png?alt=media&token=a56e4cdf-5382-4c6f-8860-aaa004558de6"
+            alt='Picture of the'
+            width={600}
+            height={400}
+            className={classes.postImage}
+          />}
+            {/* <Image
+              src={postData?.image}
+              alt='Picture of the author'
+              width={600}
+              height={400}
+              className={classes.postImage}
+            />{' '} */}
           </PostImage>
           {/* 2.3) ==========USER LIKES========================= */}
           <Typography
@@ -229,7 +233,7 @@ const UserPost = ({ postData, postId }) => {
             mt={1}
             sx={{ fontSize: '1rem', fontWeight: 700 }}
           >
-            {likes} likes
+            {likes?.length} likes
           </Typography>
           {/* 2.4.1) ==================USER OWN POST======================== */}
           <div>
@@ -269,11 +273,11 @@ const UserPost = ({ postData, postId }) => {
             {/* 2.4.2) ==================COMMENTS======================== */}
             <div className={classes.comment}>
               {/* ==================OTHER COMMENTS======================== */}
-              {posts?.map((post, i) => {
+              {comments?.map((comment, i) => {
                 return (
                   <>
                     <Stack direction='row' alignItems='center'>
-                      <UserAvatarSmall src={post.data?.userAvatar} />
+                      <UserAvatarSmall src={comment?.data().userAvatar} />
                       <Stack direction='column' sx={{ width: '100%' }}>
                         <Stack direction='row' alignItems='center'>
                           <Typography
@@ -284,7 +288,7 @@ const UserPost = ({ postData, postId }) => {
                               fontWeight: 700,
                             }}
                           >
-                            {post.data?.userName}
+                            {comment?.data().userName}
                           </Typography>
                           <Typography
                             variant='h6'
@@ -295,7 +299,7 @@ const UserPost = ({ postData, postId }) => {
                             }}
                           >
                             {moment(
-                              new Date(post.data?.createdAt.seconds * 1000)
+                              new Date(comment?.data().createdAt.seconds * 1000)
                             ).fromNow()}
                           </Typography>
                         </Stack>
@@ -307,7 +311,7 @@ const UserPost = ({ postData, postId }) => {
                             fontWeight: 700,
                           }}
                         >
-                          {post.data?.comment}
+                          {comment?.data().comment}
                         </Typography>
                       </Stack>
                     </Stack>
