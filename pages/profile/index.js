@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Avatar, Typography, Stack, Divider, Box } from '@mui/material';
+import { Avatar, Typography, Stack, Divider, Box, IconButton } from '@mui/material';
 import { useState } from 'react';
 import LoadingSpinner from '../../component/Spinner';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
@@ -33,7 +33,9 @@ const Profile = () => {
             <ArrowBackIosNewOutlinedIcon fontSize='large' />
           </BackIconContainer>
           <SettingsIconContainer>
+            <IconButton href="/Editprofile">
             <SettingsOutlinedIcon fontSize='large' />
+            </IconButton>
           </SettingsIconContainer>
         </Header>
         <AvatarContainer>

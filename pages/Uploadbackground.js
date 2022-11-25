@@ -11,8 +11,6 @@ function Uploadprofile() {
 
   const [ImageUrl, setImageUrl] = useState("");
 
-  
-
   function HandleImage(e) {
     var file = e.target.files[0];
     var reader = new FileReader();
@@ -53,6 +51,3 @@ function Uploadprofile() {
 }
 
 export default Uploadprofile;
-
-
-{/* https://github.com/bilg08/foodAsite/blob/main/src/components/addNewFood.jsx */}
