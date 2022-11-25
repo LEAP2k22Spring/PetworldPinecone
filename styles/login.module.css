@@ -1,0 +1,177 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,600,300,800);
+
+.login_wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+}
+.login_middle_wrapp {
+    display: flex;
+    height: 670px;
+    width: 100%;
+    justify-content: center;
+}
+.login_top_img {
+    position: absolute;
+    top: -147px;
+}
+.login_inside {
+    position: relative;
+    margin-top: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 375px;
+    height: 545px;
+
+    -webkit-box-shadow: 0px 1px 3px -1px rgba(66, 68, 90, 1);
+    -moz-box-shadow: 0px 1px 3px -1px rgba(66, 68, 90, 1);
+    box-shadow: 0px 1px 3px -1px rgba(66, 68, 90, 1);
+    border-radius: 15px;
+}
+.login_inside svg {
+    width: 100px;
+    margin-top: -90px;
+}
+.login_inside h5 {
+    margin-top: -80px;
+}
+.login_wrapp {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.login_wrapp button {
+    cursor: pointer;
+    width: 300px;
+    height: 40px;
+    border: none;
+    margin-top: 15px;
+    border-radius: 20px;
+    color: white;
+}
+.text_google {
+    margin-top: 30px;
+    font-size: 13px;
+    font-weight: 300;
+    position: relative;
+    color: rgb(121, 121, 121);
+}
+.text_google b {
+    position: absolute;
+    top: 10px;
+    left: -90px;
+    height: 1px;
+    width: 80px;
+    background-color: rgb(151, 151, 151);
+}
+.text_google a {
+    position: absolute;
+    top: 10px;
+    left: 80px;
+    height: 1px;
+    width: 80px;
+    background-color: rgb(151, 151, 151);
+}
+.google_button {
+    position: relative;
+    background: #aaa;
+}
+.google_button img {
+    position: absolute;
+    left: 80px;
+    top: 10px;
+}
+/* ----------- input ------------- */
+.balloon {
+    width: 300px;
+    padding: 10px 0 10px 15px;
+    font-family: "Open Sans", sans;
+    font-weight: 200;
+    color: #5d5d5d;
+    background: #f8f8f8;
+    border: 0;
+    border-radius: 20px;
+    outline: 0;
+    text-indent: 70px;
+    transition: all 0.3s ease-in-out;
+}
+.balloon::-webkit-input-placeholder {
+    color: #f8f8f8;
+    text-indent: 0;
+    font-weight: 300;
+}
+.balloon + label {
+
+    position: absolute;
+    top: 8px;
+    left: 0;
+    bottom: 8px;
+    padding: 5px 15px;
+    color: #f89900;
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    transition: all 0.3s ease-in-out;
+    border-radius: 3px;
+    background: rgba(122, 184, 147, 0);
+}
+.balloon + label:after {
+    position: absolute;
+    content: "";
+    width: 0;
+    height: 0;
+    top: 100%;
+    left: 50%;
+    margin-left: -3px;
+    border-left: 3px solid transparent;
+    border-right: 3px solid transparent;
+    border-top: 3px solid rgba(122, 184, 147, 0);
+    transition: all 0.3s ease-in-out;
+}
+
+.balloon:focus,
+.balloon:active {
+    color: #f89900;
+    text-indent: 0;
+    background: none;
+    border: 0.5px solid rgb(232, 232, 232);
+}
+.balloon:focus::-webkit-input-placeholder,
+.balloon:active::-webkit-input-placeholder {
+    color: #aaa;
+}
+.balloon:focus + label,
+.balloon:active + label {
+    color: #fff;
+    background: #f89900;
+    transform: translateY(-40px);
+}
+.balloon:focus + label:after,
+.balloon:active + label:after {
+    border-top: 4px solid #f89900;
+}
+
+
+.login_wrapp span {
+    position: relative;
+    display: inline-block;
+    margin: 18px 10px;
+}
+
+/* ========================== SIGN UP SECTION ======================= */
+
+.signup_wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+}
+.signup_box {
+    width: 375px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

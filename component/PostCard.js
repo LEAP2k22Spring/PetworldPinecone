@@ -12,15 +12,15 @@ import AvatarGroup from '@mui/material/AvatarGroup';
 import PetsIcon from '@mui/icons-material/Pets';
 import Link from '@mui/material/Link';
 import { Box } from '@mui/system';
-import { red } from '@mui/material/colors';
 import Typography from '@mui/material/Typography';
 import Popover from '@mui/material/Popover';
 import { useState } from 'react';
 import { Button } from '@mui/material';
 import { useEffect } from 'react';
 import { useFirebase } from "../firebase/useFirebase";
-import { useRouter } from "next/router";
 import LoadingSpinner from "./Spinner";
+import styles from "../styles/Home.module.css";
+
 
 
 
@@ -38,15 +38,16 @@ export default function RecipeReviewCard() {
       try {
         const petCollection = await getMultipleData(
           "ownerID",
-          "YkrI259vNWXbQuEM6J49zpIDcbJ3"
+          "w6mdaHnKEATyBHQQtG8X9lrpftk2"
         );
-        console.log("eesh",petCollection);
         setIsLoading(false);
         setPetData(petCollection);
-      } catch (error) {}
+        console.log("pets", petCollection) 
+      } catch (error) { }
     })();
   }, []);
 
+   
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -64,49 +65,50 @@ export default function RecipeReviewCard() {
         {petData && petData.map((pet, i) => (
           <Box key={i} id={i}>
             <Card sx={{ width: '350px', borderRadius: '20px' }}>
-            <Link href="/" underline="none">
-              <CardMedia
-                component="img"
-                height="200"
-                src={`${pet.data.image}?w=248&fit=crop&auto=format`}
-                alt="Pets image"
-              />
+              <Link href="/" underline="none">
+                <CardMedia 
+                  component="img"
+                  height="200"
+                  src={`${pet.data.image}?w=248&fit=crop&auto=format`}
+                  alt="Pets image"
+                  >
+                  
+                
+                    </CardMedia>
                     </Link>
               <CardHeader
-                avatar={
-                  <Avatar sx={{ bgcolor: red[500], width:'30px', height:'30px' }} aria-label="recipe" src={`${pet.data.image}?w=248&fit=crop&auto=format`}>
-
-                  </Avatar>
-                }
+                className=''
                 action={
                   <IconButton aria-label="settings" aria-describedby={id} onClick={handleClick}>
                     <MoreVertIcon />
                   </IconButton>
-                  
+
                 }
-                title={pet.data.petName} 
-                subheader={itemData.date}
+                title={pet.data.petName}
+                // subheader={pet.date.date}
               />
-                
-              <CardActions sx={{justifyContent:'space-between'}}>
+              <CardActions sx={{ justifyContent: 'space-between' }}>
                 <IconButton aria-label="add to favorites">
                   <FavoriteIcon />
                 </IconButton>
-                <Typography sx={{ fontWeight:'400', fontSize:'13px'}}>Liked by</Typography>
-                <AvatarGroup max={3} sx={{'& .MuiAvatar-root': { width: 20, height: 20, fontSize: 12, background:'orange' }, paddingRight:"60px"}}>
+                <Typography sx={{ fontWeight: '400', fontSize: '13px' }}>Liked by</Typography>
+                <AvatarGroup max={3} sx={{ '& .MuiAvatar-root': { width: 20, height: 20, fontSize: 12, background: 'orange' }, paddingRight: "60px" }}>
                   <Avatar alt="Remy Sharp" src="https://i.pinimg.com/564x/76/ce/7f/76ce7fe848cc16930d2d3570e24850e9.jpg" />
                   <Avatar alt="Travis Howard" src="https://i.pinimg.com/564x/0f/f6/f8/0ff6f8f3a2361ae4e48e0ac6aa9bc939.jpg" />
                   <Avatar alt="Cindy Baker" src="https://i.pinimg.com/564x/0e/a6/5c/0ea65c90ce035d5df688780e551e736a.jpg" />
                   <Avatar alt="Agnes Walker" src="https://i.pinimg.com/564x/c0/8e/50/c08e50721c255c74d25964e740046ba8.jpg" />
                   <Avatar alt="Trevor Henderson" src="https://i.pinimg.com/564x/ba/12/13/ba1213ba9e3be028a6e03f78cfa05e11.jpg" />
                 </AvatarGroup>
-                <IconButton aria-label="add to favorites" sx={{fontSize:'16px', gap:'5px', borderRadius:'15px', bgcolor:'rgb(96 165 250)', color:'white', '&:hover': {
-                  backgroundColor: "#4689FD"
-                }} }>
+                <IconButton aria-label="add to favorites" sx={{
+                  fontSize: '16px', gap: '5px', borderRadius: '15px', bgcolor: 'rgb(96 165 250)', color: 'white', '&:hover': {
+                    backgroundColor: "#4689FD"
+                  }
+                }}>
                   follow
-                  <PetsIcon sx={{color:'white'}} />
+                  <PetsIcon sx={{ color: 'white' }} />
                 </IconButton>
               </CardActions>
+              
             </Card>
           </Box>
         ))}
@@ -114,7 +116,7 @@ export default function RecipeReviewCard() {
       {/* --------------------------- Popper -------------------------- */}
       <Box >
         <Popover
-          sx={{'& .MuiPopover-paper': { borderRadius:'8px'}}}
+          sx={{ '& .MuiPopover-paper': { borderRadius: '8px' } }}
           id={id}
           open={open}
           anchorEl={anchorEl}
@@ -127,15 +129,15 @@ export default function RecipeReviewCard() {
             vertical: 'top',
             horizontal: 'right',
           }}
-          >
+        >
           <Box display="flex">
-            <Avatar 
-              alt="Remy Sharp" 
+            <Avatar
+              alt="Remy Sharp"
               src={`${itemData[0].img}?w=248&fit=crop&auto=format`}
-              sx={{m: 2}}
-              />
-              <Typography sx={{ mt: 3, p: "0 20px 0 10px"}}>{itemData[0].name}</Typography>
-              <Button variant='contained' sx={{padding:'10px', width: "100%", margin: "10px"}}>Follow</Button>
+              sx={{ m: 2 }}
+            />
+            <Typography sx={{ mt: 3, p: "0 20px 0 10px" }}>{itemData[0].name}</Typography>
+            <Button variant='contained' sx={{ padding: '10px', width: "100%", margin: "10px" }}>Follow</Button>
           </Box>
         </Popover>
       </Box>

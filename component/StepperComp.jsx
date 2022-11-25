@@ -396,7 +396,7 @@ const StepperComp = () => {
       case 2:
         return <PetForm />;
       default:
-        return "unknown step";
+        return "You're almost there";
     }
   }
   const userInputData = useForm({
