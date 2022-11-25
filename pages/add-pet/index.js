@@ -1,13 +1,11 @@
 import styled from 'styled-components';
-import { useEffect, useState, useRef } from 'react';
-// import { useTheme } from '@mui/material/styles';
+import { useState, useRef } from 'react';
 import { useRouter } from 'next/router';
 import classes from '../../component/profile.module.css';
 import {
   Avatar,
   Typography,
   Stack,
-  Button,
   Divider,
   Box,
   FormControl,
@@ -20,11 +18,13 @@ import {
   InputAdornment,
 } from '@mui/material';
 import LoadingSpinner from '../../component/Spinner';
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
-import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
+import {
+  SettingsOutlined,
+  CameraAltOutlined,
+  ArrowBackIosNewOutlined,
+} from '@mui/icons-material';
 import { v4 as uuidv4 } from 'uuid';
 import { useFirebase } from '../../firebase/useFirebase';
-import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined';
 import { useGetUsersDataContext } from '../../context/UsersDataContext';
 
 const names = [
@@ -164,7 +164,6 @@ const AddPet = () => {
       return;
     }
   };
-  console.log('pet inputs:', petInputData);
 
   // if image successfully uploaded then save all data to the firebase/firestore
   const saveData = async (url) => {
@@ -217,10 +216,10 @@ const AddPet = () => {
         <LoadingSpinner open={isLoading} />
         <Header>
           <BackIconContainer onClick={goBackHandler}>
-            <ArrowBackIosNewOutlinedIcon fontSize='large' />
+            <ArrowBackIosNewOutlined fontSize='large' />
           </BackIconContainer>
           <SettingsIconContainer>
-            <SettingsOutlinedIcon fontSize='large' />
+            <SettingsOutlined fontSize='large' />
           </SettingsIconContainer>
           <UserProfile>
             <Typography variant='body1' mt={5} mx={3}>
@@ -294,7 +293,7 @@ const AddPet = () => {
                     type='file'
                     onChange={imgUploadHandler}
                   />
-                  <CameraAltOutlinedIcon />
+                  <CameraAltOutlined />
                 </Label>
               </div>
             </UploadImageContainer>

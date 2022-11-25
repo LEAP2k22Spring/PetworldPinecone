@@ -6,3 +6,5 @@ Try cleaning-up your local repository with:
 $ git gc --prune=now
 $ git remote prune origin
 npm i leaflet react-leaflet
+
+npm install eslint-plugin-react-hooks@next

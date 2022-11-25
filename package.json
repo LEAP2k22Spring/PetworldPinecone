@@ -18,6 +18,7 @@
     "@mui/icons-material": "^5.10.9",
     "@mui/material": "^5.10.11",
     "babel": "^6.23.0",
+    "eslint-plugin-react-hooks": "^5.0.0-next-c08d8b804-20221118",
     "firebase": "^9.13.0",
     "jsonwebtoken": "^8.5.1",
     "leaflet": "^1.9.3",

@@ -8,14 +8,9 @@ import { useGetPostsDataContext } from '../../context/PostsDataContext';
 import { useGetUsersDataContext } from '../../context/UsersDataContext';
 
 const PostItems = ({ postData }) => {
-  const { postOwner, setPostOwner } = useGetPostsDataContext();
+  const { setPostOwner } = useGetPostsDataContext();
   const { getUsersData } = useGetUsersDataContext();
 
-  // setPostOwner({
-  //   avatar: userAvatar,
-  //   name: userName,
-  //   id: userID,
-  // });
   const router = useRouter();
 
   const openAddPetHandler = (docId) => {

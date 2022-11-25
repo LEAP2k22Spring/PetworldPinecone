@@ -51,6 +51,7 @@ const UserPost = ({ postData, postId }) => {
       setDisableInput(false);
     }
   };
+
   const handleClose = (choice) => {
     if (choice === 'delete') {
       setOpenModal(false);
@@ -62,6 +63,7 @@ const UserPost = ({ postData, postId }) => {
   const toggleReadMore = () => {
     setIsReadMore(!isReadMore);
   };
+
   useEffect(() => {
     setDesc(postData?.desc);
 
@@ -75,6 +77,7 @@ const UserPost = ({ postData, postId }) => {
       } catch (error) {}
     };
     getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [postData]);
 
   const goBackHandler = () => {
