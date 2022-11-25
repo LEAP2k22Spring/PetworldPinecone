@@ -1,42 +1,20 @@
-import Avatar from "@mui/material/Avatar";
-import { useState } from "react";
-import { ref, uploadBytes, getDownloadURL, storage } from "firebase/storage";
+import * as React from "react";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import PhotoCamera from "@mui/icons-material/PhotoCamera";
+import Stack from "@mui/material/Stack";
 
-function App() {
-  const [image, setImage] = useState(null);
-  const [url, setUrl] = useState(null);
-
-  const handleImageChange = (e) => {
-    if (e.target.files[0]) {
-      setImage(e.target.files[0]);
-    }
-  };
-
-  const handleSubmit = () => {
-    const imageRef = ref(storage, "image");
-    uploadBytes(imageRef, image)
-      .then(() => {
-        getDownloadURL(imageRef)
-          .then((url) => {
-            setUrl(url);
-          })
-          .catch((error) => {
-            console.log(error.message, "error getting the image url");
-          });
-        setImage(null);
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-  };
-
+export default function UploadButtons() {
   return (
-    <div className="App">
-      <Avatar src={url} sx={{ width: 150, height: 150 }} />
-      <input type="file" onChange={handleImageChange} />
-      <button onClick={handleSubmit}>Submit</button>
-    </div>
+    <Stack direction="row" alignItems="center" spacing={2}>
+      <Button variant="contained" component="label">
+        Upload
+        <input hidden accept="image/*" multiple type="file" />
+      </Button>
+      <IconButton color="primary" aria-label="upload picture" component="label">
+        <input hidden accept="image/*" type="file" />
+        <PhotoCamera />
+      </IconButton>
+    </Stack>
   );
 }
-
-export default App;
