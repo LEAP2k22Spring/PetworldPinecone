@@ -1,7 +1,7 @@
 import { Button, Card, Input, List, message, Image, Progress } from 'antd'
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
 import React, { useState } from 'react'
-import  { storage }  from "../firebase/useFirebase";
+// import  { storage }  from "../firebase/useFirebase";
 
 const UploadImageToStorage = () => {
   const [imageFile, setImageFile] = useState<File>()
@@ -20,41 +20,41 @@ const UploadImageToStorage = () => {
   }
 
   const handleUploadFile = () => {
-    if (imageFile) {
-      const name = imageFile.name
-      const storageRef = ref(storage, `image/${name}`)
-      const uploadTask = uploadBytesResumable(storageRef, imageFile)
+    // if (imageFile) {
+    //   const name = imageFile.name
+    //   const storageRef = ref(storage, `image/${name}`)
+    //   const uploadTask = uploadBytesResumable(storageRef, imageFile)
 
-      uploadTask.on(
-        'state_changed',
-        (snapshot) => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+    //   uploadTask.on(
+    //     'state_changed',
+    //     (snapshot) => {
+    //       const progress =
+    //         (snapshot.bytesTransferred / snapshot.totalBytes) * 100
 
-          setProgressUpload(progress) // to show progress upload
+    //       setProgressUpload(progress) // to show progress upload
 
-          switch (snapshot.state) {
-            case 'paused':
-              console.log('Upload is paused')
-              break
-            case 'running':
-              console.log('Upload is running')
-              break
-          }
-        },
-        (error) => {
-          message.error(error.message)
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-            //url is download url of file
-            setDownloadURL(url)
-          })
-        },
-      )
-    } else {
-      message.error('File not found')
-    }
+    //       switch (snapshot.state) {
+    //         case 'paused':
+    //           console.log('Upload is paused')
+    //           break
+    //         case 'running':
+    //           console.log('Upload is running')
+    //           break
+    //       }
+    //     },
+    //     (error) => {
+    //       message.error(error.message)
+    //     },
+    //     () => {
+    //       getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+    //         //url is download url of file
+    //         setDownloadURL(url)
+    //       })
+    //     },
+    //   )
+    // } else {
+    //   message.error('File not found')
+    // }
   }
 
   const handleRemoveFile = () => setImageFile(undefined)
