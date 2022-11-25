@@ -212,7 +212,6 @@ export const useCollection = (collectionName, docId) => {
     loading,
     createUserData,
     createUser,
-    userSignIn,
     getFireabasePostsData,
     createData,
   };
@@ -250,7 +249,7 @@ export const userSignIn = async (email, pass) => {
     const user = await signInWithEmailAndPassword(auth, email, pass);
     userId = user.user.uid;
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    getUsersDatabase(useCollection("Users", userId));
+    // getUsersDatabase(useCollection("Users", userId));
     alert("Sign in Success");
   } catch (error) {
     console.log(error);

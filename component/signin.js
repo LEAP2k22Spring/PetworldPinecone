@@ -1,6 +1,6 @@
 import { Button, InputBase, Typography } from "@mui/material";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { auth } from "../firebase/useFirebase";
+import { auth, userSignIn } from "../firebase/useFirebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Box } from "@mui/system";
 import { useEffect, useRef, useState } from "react";
@@ -15,7 +15,6 @@ import SignUp from "./signup";
 import Image from "next/image";
 
 const Login = () => {
-  const { userSignIn } = useCollection("Users");
   const [isClicked, setIsClicked] = useState(false);
   const emailRef = useRef();
   const passwordRef = useRef();
