@@ -7,7 +7,7 @@ import {
   MaleOutlined,
   ArrowBackIosNewOutlined,
 } from '@mui/icons-material';
-import classes from '../../component/profile.module.css';
+import classes from '../../styles/profile.module.css';
 import styled from 'styled-components';
 import PetInfo from './PetInfo';
 import { useCollection } from '../../firebase/useFirebase';
@@ -131,7 +131,7 @@ export const PetProfile = ({ petData }) => {
             className={classes.image}
 
           />}
-
+          <Box sx={{width:'100%', height:'100px'}}></Box>
         </UserProfile>
       </Container>
     </>

@@ -53,10 +53,13 @@
 }
 
 .paper {
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  width: 150px;
+  -webkit-box-shadow: 0px 2px 2px -1px  rgb(155, 155, 157, 1);
+  -moz-box-shadow: 0px 2px 2px -1px  rgb(155, 155, 157, 1);
+  box-shadow: 0px 2px 2px -1px  rgb(155, 155, 157);
   margin: 10px;
   border-radius: 10px;
+  width: 100px;
+  height: 100px;
 }
 
 .image {
@@ -120,4 +123,25 @@
   text-decoration: none;
   /* display: inline-block;
   font-size: 16px; */
+}
+.profile_wrapp {
+  display: flex;
+}
+.petInfo_text {
+  margin-top: 5px;
+  text-align: center;
+}
+@media (max-width: 415px) {
+  .paper {
+    margin: 9px;
+    width: 80px;
+    height: 80px;
+  }
+  .paper img {
+    width: 30px;
+    height: 30px;
+  }
+  .paper p {
+    margin: 0;
+  }
 }

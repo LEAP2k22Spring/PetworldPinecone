@@ -15,8 +15,7 @@ import {
   Paper,
 } from '@mui/material';
 import PopupState, { bindToggle, bindPopper } from 'material-ui-popup-state';
-import classes from '../../component/profile.module.css';
-import { useGetUsersDataContext } from '../../context/UsersDataContext';
+import classes from '../../styles/profile.module.css';
 import { useGetPostsDataContext } from '../../context/PostsDataContext';
 import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
