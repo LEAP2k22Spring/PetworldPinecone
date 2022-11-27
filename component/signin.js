@@ -22,7 +22,6 @@ const Login = () => {
   async function handleSignIn(e) {
     try {
       await userSignIn(emailRef.current.value, passwordRef.current.value);
-      console.log("starting sign in");
     } catch (error) {
       console.log(error);
     }

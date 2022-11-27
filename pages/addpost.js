@@ -48,8 +48,11 @@ const AddPost = () => {
     reader.readAsDataURL(file);
   };
   const onSave = async () => {
-    setIsLoading(true);
     // Validation - 1;
+    if (imageData.url === '') {
+      alert('Please upload your image');
+      return;
+    }
     const { uploaded, url } = await imageUploadToFirestore(imageData);
     if (uploaded) {
       await saveData(url);

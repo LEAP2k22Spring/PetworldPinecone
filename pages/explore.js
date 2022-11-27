@@ -18,23 +18,19 @@ import AddIcon from '@mui/icons-material/Add';
 import { useRouter } from 'next/router';
 import { useGetPostsDataContext } from '../context/PostsDataContext';
 import { useEffect } from 'react';
-import { auth, useCollection } from '../firebase/useFirebase';
+import { auth, useCollection, useFirebase } from '../firebase/useFirebase';
 import { useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import Post from '../component/explorePost';
+import LoadingSpinner from '../component/Spinner';
 
 const ExplorePage = () => {
   const router = useRouter();
-  const [user] = useAuthState(auth);
-  const { postsData } = useGetPostsDataContext();
-  const { getFireabasePostsData } = useCollection("Posts");
-  const [hasLikes, setHasLikes] = useState(false);
-  useEffect(() => {
-    getFireabasePostsData();
-  }, []);
-
+  const {data:postsData, loading} = useFirebase("Posts")
+  const {data:userData} = useFirebase("Users")
   return (
     <Box display='flex' flexDirection='column' gap={3} pt={6} pb={2}>
+        <LoadingSpinner open={loading} color="#000" />
       <Box textAlign='center' component='span'>
         <Typography fontWeight={800}>EXPLORE</Typography>
       </Box>
@@ -70,14 +66,15 @@ const ExplorePage = () => {
           }}
         >
           {postsData?.map((el, i) => {
+            const userFilterData = userData.find((data)=> data.id ===el.userID)
             return (
               <Post
                 key={i}
                 id={el.id}
-                userAvatar={el.userAvatar}
+                userAvatar={userFilterData?.avatar}
                 createdAt={el.createdAt}
                 desc={el.desc}
-                userName={el.userName}
+                userName={userFilterData?.firstName}
                 image={el.image}
                 userID={el.userID}
               />

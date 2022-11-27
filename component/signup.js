@@ -11,6 +11,7 @@ import { FormProvider } from "react-hook-form";
 import StepperComp from "./StepperComp";
 import { useCollection } from "../firebase/useFirebase";
 import styles from "../styles/login.module.css"
+import { serverTimestamp } from "firebase/firestore";
 
 
 //Sign Up Component
@@ -42,7 +43,8 @@ const SignUp = () => {
     phoneNumber: "",
     gender: "",
     cityName: "",
-
+    createdAt: serverTimestamp(),
+    backgroundImage: "",
   }
   const petInputDataDefaultValue = {
     category: "",

@@ -19,7 +19,8 @@ import classes from '../../component/profile.module.css';
 import { useGetUsersDataContext } from '../../context/UsersDataContext';
 import { useGetPostsDataContext } from '../../context/PostsDataContext';
 import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
-import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { auth, useCollection, useDocument, useFirebase, useSubCollection } from '../../firebase/useFirebase';
@@ -30,7 +31,6 @@ import { useAuth } from '../../providers';
 
 //pages/profile/[...slug].js-ees duudagdagj bga.
 const UserPost = ({ postId }) => {
-  console.log("postId", postId);
   const router = useRouter();
   // const { getUsersData } = useGetUsersDataContext();
   const { postOwner } = useGetPostsDataContext();
@@ -38,7 +38,6 @@ const UserPost = ({ postId }) => {
   const { data: postData, updateData } = useCollection("Posts", postId)
   const { data: likes} = useSubCollection("Posts", postId, "likes")
   const { data: comments, deleteData: deleteComment, createData: createComment } = useSubCollection("Posts", postId, "comments")
-  console.log("comments", comments);
   // const { data: follows, deleteData: unfollow, updateData: updateFollow } = useSubCollection("Users", userID, "follows")
 
 
@@ -50,7 +49,6 @@ const UserPost = ({ postId }) => {
   const [inputEditButton, setInputEditButton] = useState(false);
   const [desc, setDesc] = useState('');
   const [isReadMore, setIsReadMore] = useState(true);
-  console.log("postOwner", postOwner);
   const handleOpen = (e) => {
     if (e.target.id === 'delete') {
       setOpenModal(true);
@@ -139,7 +137,9 @@ const UserPost = ({ postId }) => {
         {/* 1) ==============HEADER===================== */}
         <Header>
           <BackIconContainer onClick={goBackHandler}>
-            <ArrowBackIosNewOutlinedIcon fontSize='large' />
+            <IconButton>
+              <ArrowBackIcon fontSize='large' />
+            </IconButton>
           </BackIconContainer>
           <Typography variant='h6' sx={{ fontSize: '1.5rem', fontWeight: 700 }}>
             {auth?.currentUser?.uid === postData?.userID
