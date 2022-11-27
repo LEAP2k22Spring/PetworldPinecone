@@ -1,299 +1,110 @@
-import { Avatar, Box, Button,  Paper,  Typography } from '@mui/material'
-import { borderBottom, Container, fontFamily } from '@mui/system'
+import {Avatar, Box, Button, Divider, Fab, ImageList, ImageListItem, Input, Typography,} from '@mui/material'
 import React from 'react'
-import AddIcon from '@mui/icons-material/Add';
-import { Add } from '@mui/icons-material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import styled from "styled-components";
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 function Editprofile() {
-
-  return (
-    <Box
-    sx={{
-        width: '100%',
-        height: '100vh'
-    }}>
-        <Typography variant='h5'
-        sx={{
-            width: '100%',
-            display: 'flex',
-            height: '70px',
-            bgcolor: '#D9D9D9',
-            justifyContent: 'center',
-            alignItems: 'center',
-        }}>
-            <div style={{
-            display:'flex',
-             width:'80%', 
-             display:'flex', 
-             justifyContent:'center', 
-             paddingLeft:'100px',
-             color:'#696969'
-             }}>
-                Edit profile</div>
-            <Button sx={{
-            widht:'50px', 
-            marginLeft:'100px', 
-            color: '#696969',}}>
-                Save</Button>
-        </Typography>
-        <Typography variant='h6'
-        sx={{
-            width: '100%',
-            display: 'flex',
-            height: '70px',
-            justifyContent: 'space-around',
-            alignItems: 'center',}}>
-            <div style={{
-                display:'flex', 
-                justifyContent:'center',
-                color: '#696969',
-                fontSize: '20px',
-                }}>
-                    Profile picture</div>
-            <Button href='/Uploadprofile' sx={{display:'flex', marginLeft:'100px', color: '#696969',}}>Upload new</Button>
-        </Typography>
-        <Box sx={{
-            display:'flex',
-            justifyContent:'center',
-            borderBottom: '2px solid #D9D9D9',
-            width:'100%',
-            height: '140px'}}>
-        <Avatar
-            alt="Remy Sharp"
-            src="https://images.unsplash.com/photo-1667795016173-3c1c7c86b1fe?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
-            sx={{width: 106, height: 106}}/>
+    const click2 = (e) =>{
+        console.log(e);
+    }
+    return(
+        <>
+        <Box p={2} display="flex" justifyContent="space-between" alignItems="center" sx={{backgroundColor:"#ddd"}}> 
+            <Fab variant='circular' size='small' sx={{display:'flex', justifyContent:'center', alignItems:'center'}}>
+                <ArrowBackIcon/>
+            </Fab>
+            <Typography variant='h6'>Edit Profile</Typography>
+            <Button variant='contained'>Save</Button>
         </Box>
-        <Typography variant='h6'
-        sx={{
-            width: '100%',
-            display: 'flex',
-            height: '70px',
-            justifyContent: 'space-around',
-            alignItems: 'center'
-            }}>
-            <div style={{
-                display:'flex', 
-                justifyContent:'center',
-                color: '#696969',
-                fontSize: '20px',
-                }}>
-                    Background</div>
-            <Button href="/Uploadbackground" sx={{display:'flex', marginLeft:'100px', color: '#696969',}}>Upload new</Button>
-        </Typography>
-        <Box sx={{
-            display:'flex',
-            justifyContent:'center',
-            borderBottom: '2px solid #D9D9D9',
-            width:'100%',
-            height: '160px'
-            }}>
-            <Box
-                sx={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    '& > :not(style)': {
-                    width: 344,
-                    height: 126,
-                    bgcolor:'#D9D9D9'
-                    },
-                }}>
-                <Paper />
+        <Box >
+            <Box p={2} display="flex" justifyContent="space-between" alignItems="center">
+                <Typography fontSize={15}>Profile picture</Typography>
+                <Box>
+                        <Input type='file' sx={{display:'none'}} onChange={click2} >Upload New</Input>
+                        <Fab size='small' variant='extended' color='error'>
+                            <Typography fontSize={12}>Upload New</Typography>
+                        </Fab>
+                </Box>
+            </Box>
+            <Box display="flex" justifyContent="center" alignItems="center">
+                <Avatar alt="user_avatar" src="" sx={{ width: 106, height: 106 }}/>
+            </Box>
+            <Divider sx={{margin:'20px 20px 0 20px'}}/>
+        </Box>
+        <Box >
+            <Box p={2} display="flex" justifyContent="space-between" alignItems="center">
+                <Typography fontSize={15}>Background picture</Typography>
+                <Box>
+                        <Input type='file' sx={{display:'none'}} onChange={click2} >Upload New</Input>
+                        <Fab size='small' variant='extended' color='error'>
+                            <Typography fontSize={12}>Upload New</Typography>
+                        </Fab>
+                </Box>
+            </Box>
+            <Box ml={2} mr={2} display="flex" justifyContent="center" alignItems="center">
+                <ImageList sx={{ width: '100%', height: "150px" }} cols={1} rowHeight={164}>
+                        <ImageListItem >
+                            <img
+                                src="https://firebasestorage.googleapis.com/v0/b/petworldpinecone.appspot.com/o/images%2Fcat.png-c7503874-5726-4877-becb-307f3216d3f2?alt=media&token=92d41ca5-5571-47af-b6b0-d4a8d0684804"
+                                alt="test"
+                            />
+                        </ImageListItem>
+                </ImageList>
+
+            </Box>
+            <Divider sx={{margin:'20px 20px 0 20px'}}/>
+        </Box>
+        <Box p={2} display="flex" justifyContent="space-between" alignItems="center" > 
+            <Typography variant='h7' >Name</Typography>
+            <Box display="flex" justifyContent="space-between" alignItems="center">
+                <Typography variant='h7'> Munkhbold</Typography>
+                <NavigateNextIcon />
             </Box>
         </Box>
-
-        <Box sx={{
-            width:'100%',
-            height:'40px',
-            display:'flex',
-            alignItems:'center',
-            justifyContent:'space-around',
-            borderBottom:'2px solid #D9D9D9',
-            marginTop:'50px'
-        }}>
-            <div style={{
-                width:'160px',
-                height:'40px',
-                display:'flex',
-                justifyContent:'flex-start'
-            }}>Name</div>
-            <div style={{
-                width:'100px',
-                height:'40px',
-                display:'flex',
-                justifyContent:'flex-end'
-            }}>Munkhbold</div>
+        <Divider sx={{margin:'0 20px 0 20px'}}/>
+        <Box p={2} display="flex" justifyContent="space-between" alignItems="center" > 
+            <Typography variant='h7' >Gender</Typography>
+            <Box display="flex" justifyContent="space-between" alignItems="center">
+                <Typography variant='h7'> Male</Typography>
+                <NavigateNextIcon />
+            </Box>
         </Box>
-        <Box sx={{
-            width:'100%',
-            height:'30px',
-            display:'flex',
-            alignItems:'center',
-            justifyContent:'space-around',
-            borderBottom:'2px solid #D9D9D9',
-            marginTop:'20px'
-        }}>
-            <div style={{
-                width:'100px',
-                height:'40px',
-                display:'flex',
-                justifyContent:'flex-start'
-            }}>Bio</div>
-            <div style={{
-                width:'160px',
-                height:'40px',
-                display:'flex',
-                justifyContent:'flex-end',
-            }}>Hi my ...
-            <Button sx={{
-                display:'flex',
-                alignItems:'center',
-                marginBottom:'20px',
-                color:'#696969'
-            }}><AddIcon sx={{size:'medium'}}/></Button> </div>
+        <Divider sx={{margin:'0 20px 0 20px'}}/>
+        <Box p={2} display="flex" justifyContent="space-between" alignItems="center" > 
+            <Typography variant='h7' >Date of birth</Typography>
+            <Box display="flex" justifyContent="space-between" alignItems="center">
+                <Typography variant='h7'> Male</Typography>
+                <NavigateNextIcon />
+            </Box>
         </Box>
-        <Box sx={{
-            width:'100%',
-            height:'30px',
-            display:'flex',
-            alignItems:'center',
-            justifyContent:'space-around',
-            borderBottom:'2px solid #D9D9D9',
-            marginTop:'20px'
-        }}>
-            <div style={{
-                width:'100px',
-                height:'40px',
-                display:'flex',
-                justifyContent:'flex-start'
-            }}>Gender</div>
-            <div style={{
-                width:'160px',
-                height:'40px',
-                display:'flex',
-                justifyContent:'flex-end',
-            }}>Male
-            <Button sx={{
-                display:'flex',
-                alignItems:'center',
-                marginBottom:'20px',
-                color:'#696969'
-            }}><AddIcon sx={{size:'medium'}}/></Button> </div>
+        <Divider sx={{margin:'0 20px 0 20px'}}/>
+        <Box p={2} display="flex" justifyContent="space-between" alignItems="center" > 
+            <Typography variant='h7' >Email address</Typography>
+            <Box display="flex" justifyContent="space-between" alignItems="center">
+                <Typography variant='h7'> mbold.unimed@gmail.com</Typography>
+                <NavigateNextIcon />
+            </Box>
         </Box>
-        <Box sx={{
-            width:'100%',
-            height:'30px',
-            display:'flex',
-            alignItems:'center',
-            justifyContent:'space-around',
-            borderBottom:'2px solid #D9D9D9',
-            marginTop:'20px'
-        }}>
-            <div style={{
-                width:'100px',
-                height:'40px',
-                display:'flex',
-                justifyContent:'flex-start'
-            }}>Date of birth</div>
-            <div style={{
-                width:'160px',
-                height:'40px',
-                display:'flex',
-                justifyContent:'flex-end',
-            }}>1999-09-09
-            <Button sx={{
-                display:'flex',
-                alignItems:'center',
-                marginBottom:'20px',
-                color:'#696969'
-            }}><AddIcon sx={{size:'medium'}}/></Button> </div>
+        <Divider sx={{margin:'0 20px 0 20px'}}/>
+        <Box p={2} display="flex" justifyContent="space-between" alignItems="center" > 
+            <Typography variant='h7' >City</Typography>
+            <Box display="flex" justifyContent="space-between" alignItems="center">
+                <Typography variant='h7'> Ulaanbaatar</Typography>
+                <NavigateNextIcon />
+            </Box>
         </Box>
-        <Box sx={{
-            width:'100%',
-            height:'30px',
-            display:'flex',
-            alignItems:'center',
-            justifyContent:'space-around',
-            borderBottom:'2px solid #D9D9D9',
-            marginTop:'20px'
-        }}>
-            <div style={{
-                width:'100px',
-                height:'40px',
-                display:'flex',
-                justifyContent:'flex-start'
-            }}>Email adress</div>
-            <div style={{
-                width:'160px',
-                height:'40px',
-                display:'flex',
-                justifyContent:'flex-end',
-            }}>mbbold@gmail.com
-            <Button sx={{
-                display:'flex',
-                alignItems:'center',
-                marginBottom:'20px',
-                color:'#696969'
-            }}><AddIcon sx={{size:'medium'}}/></Button> </div>
+        <Divider sx={{margin:'0 20px 0 20px'}}/>
+        <Box p={2} display="flex" justifyContent="space-between" alignItems="center" > 
+            <Typography variant='h7' >Phone</Typography>
+            <Box display="flex" justifyContent="space-between" alignItems="center">
+                <Typography variant='h7'> 80797850</Typography>
+                <NavigateNextIcon />
+            </Box>
         </Box>
-        <Box sx={{
-            width:'100%',
-            height:'30px',
-            display:'flex',
-            alignItems:'center',
-            justifyContent:'space-around',
-            borderBottom:'2px solid #D9D9D9',
-            marginTop:'20px'
-        }}>
-            <div style={{
-                width:'100px',
-                height:'40px',
-                display:'flex',
-                justifyContent:'flex-start'
-            }}>City</div>
-            <div style={{
-                width:'160px',
-                height:'40px',
-                display:'flex',
-                justifyContent:'flex-end',
-            }}>Ulaanbaatar
-            <Button sx={{
-                display:'flex',
-                alignItems:'center',
-                marginBottom:'20px',
-                color:'#696969'
-            }}><AddIcon sx={{size:'medium'}}/></Button> </div>
-        </Box>
-        <Box sx={{
-            width:'100%',
-            height:'30px',
-            display:'flex',
-            alignItems:'center',
-            justifyContent:'space-around',
-            borderBottom:'2px solid #D9D9D9',
-            marginTop:'20px',
-        }}>
-            <div style={{
-                width:'110px',
-                height:'40px',
-                display:'flex',
-                justifyContent:'flex-start'
-            }}>Phone number</div>
-            <div style={{
-                width:'160px',
-                height:'40px',
-                display:'flex',
-                justifyContent:'flex-end',
-            }}>80797850 
-            <Button sx={{
-                display:'flex',
-                alignItems:'center',
-                marginBottom:'20px',
-                color:'#696969'
-            }}><AddIcon sx={{size:'medium'}}/></Button> </div>
-        </Box>
-        
-    </Box>
-  )
+        <Divider sx={{margin:'0 20px 0 20px'}}/>
+        </>
+    )
 }
 
 export default Editprofile

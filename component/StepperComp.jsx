@@ -410,6 +410,8 @@ const StepperComp = () => {
       phoneNumber: "",
       gender: "",
       cityName: "",
+      createdAt: serverTimestamp(),
+      backgroundImage: "",
     },
   });
   const petInputData = useForm({

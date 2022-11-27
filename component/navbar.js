@@ -11,7 +11,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { Fragment } from "react";
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
-
+// import { useLocation } from 'react-router-dom'
 
 function Navbar() {
   const router = useRouter();
@@ -21,36 +21,36 @@ function Navbar() {
       <Box className={styles.nav}>
         <b className={styles.logo} onClick={() => router.push("/")}></b>
         <Box className={styles.menu} sx={{ cursor: "pointer" }}>
-          <li className={styles.list_item} onClick={() => router.push("/")}>
+          <li className={router.pathname === "/" ? styles.list_item_active : styles.list_item} onClick={() => router.push("/")}>
             <span className={styles.list_item_name}>Home</span>
-            <HomeRoundedIcon className={styles.icon} />
+            <HomeRoundedIcon className={router.pathname === "/" ? styles.icon_active : styles.icon} />
           </li>
           <li
-            className={styles.list_item}
+            className={router.pathname === "/explore" ? styles.list_item_active : styles.list_item}
             onClick={() => router.push("/explore")}
           >
             <span className={styles.list_item_name}>Explore</span>
-            <ExploreRoundedIcon className={styles.icon} />
+            <ExploreRoundedIcon className={router.pathname === "/explore" ? styles.icon_active : styles.icon} />
           </li>
           <li
-            className={styles.list_item}
+            className={router.pathname === "/addpost" ? styles.list_item_active : styles.list_item}
             onClick={() => router.push("/addpost")}
           >
             <span className={styles.list_item_name}>Pet Care</span>
-            <QueueRoundedIcon className={styles.icon} />
+            <QueueRoundedIcon className={router.pathname === "/addpost" ? styles.icon_active : styles.icon} />
           </li>
           <li
-            className={styles.list_item}
+            className={router.pathname === "/inbox" ? styles.list_item_active : styles.list_item}
             onClick={() => router.push("/inbox")}
           >
             <span className={styles.list_item_name}>Inbox</span>
-            <EmailRoundedIcon className={styles.icon} />
+            <EmailRoundedIcon className={router.pathname === "/inbox" ? styles.icon_active : styles.icon} />
           </li>
-          <li className={styles.list_item}>
+          <li className={styles.list_item} >
             <PopupState variant="popover" popupId="demo-popup-menu">
               {(popupState) => (
-                <Fragment>
-                  <span className={styles.list_item_name} {...bindTrigger(popupState)}>Profile</span>
+                <Fragment >
+                  <span className={styles.list_item_name} {...bindTrigger(popupState)} >Profile</span>
                   <Avatar
                     {...bindTrigger(popupState)}
                     alt="Remy Sharp"
@@ -61,6 +61,7 @@ function Navbar() {
                       marginTop: "1px",
                       fontSize: "12px",
                       border: "1px solid black",
+                      position: "absolute",
                     }}
                     className={styles.icon}
                   />

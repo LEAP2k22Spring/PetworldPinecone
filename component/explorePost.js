@@ -20,10 +20,7 @@ const Post = ({ id, userAvatar, createdAt, desc, userName, image, userID }) => {
     const {userData} = useAuth();
     const { setPostOwner } = useGetPostsDataContext();
     const [comment, setComment] = useState("");
-    // const [user] = useAuthState(auth);
     const router = useRouter();
-
-
     const { data: likes, deleteData: deleteLike, updateData: updateLike } = useSubCollection("Posts", id, "likes")
     const { data: comments, deleteData: deleteComment, createData: createComment } = useSubCollection("Posts", id, "comments")
     const { data: follows, deleteData: unfollow, updateData: updateFollow } = useSubCollection("Users", userID, "follows")

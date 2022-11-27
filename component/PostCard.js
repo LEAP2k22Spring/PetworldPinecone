@@ -17,30 +17,19 @@ import Popover from "@mui/material/Popover";
 import { useState } from "react";
 import { Button } from "@mui/material";
 import { useEffect } from "react";
-import { useFirebase } from "../firebase/useFirebase";
+import { useDocument, useFirebase } from "../firebase/useFirebase";
 import LoadingSpinner from "./Spinner";
 import styles from "../styles/Home.module.css";
 
 export default function RecipeReviewCard() {
   const { getMultipleData } = useFirebase("Pets");
-  const [petData, setPetData] = useState(null);
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const {data:petData, loading} = useFirebase("Pets")
+  const {data:userData} = useFirebase("Users")
 
-  useEffect(() => {
-    setIsLoading(true);
-    (async () => {
-      try {
-        const petCollection = await getMultipleData(
-          "ownerID",
-          "w6mdaHnKEATyBHQQtG8X9lrpftk2"
-        );
-        setIsLoading(false);
-        setPetData(petCollection);
-        console.log("pets", petCollection);
-      } catch (error) {}
-    })();
-  }, []);
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  let ownerData = []
+
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -58,7 +47,8 @@ export default function RecipeReviewCard() {
       justifyContent="center"
       sx={{ flexGrow: 1, marginBottom: "120px" }}
     >
-      <LoadingSpinner open={isLoading} />
+      <LoadingSpinner open={loading} color="#000" />
+
       <Box
         sx={{
           display: "flex",
@@ -69,14 +59,14 @@ export default function RecipeReviewCard() {
         }}
       >
         {petData &&
-          petData.map((pet, i) => (
+          petData?.map((pet, i) => (
             <Box key={i} id={i}>
               <Card sx={{ width: "350px", borderRadius: "20px" }}>
                 <Link href="/" underline="none">
                   <CardMedia
                     component="img"
                     height="200"
-                    src={`${pet.data.image}?w=248&fit=crop&auto=format`}
+                    src={`${pet.image}?w=248&fit=crop&auto=format`}
                     alt="Pets image"
                   ></CardMedia>
                 </Link>
@@ -91,7 +81,7 @@ export default function RecipeReviewCard() {
                       <MoreVertIcon />
                     </IconButton>
                   }
-                  title={pet.data.petName}
+                  title={pet.petName}
                   // subheader={pet.date.date}
                 />
                 <CardActions sx={{ justifyContent: "space-between" }}>

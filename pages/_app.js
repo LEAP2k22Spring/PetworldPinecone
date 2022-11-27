@@ -8,7 +8,6 @@ import { GetPostsDataProvider } from "../context/PostsDataContext";
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const showHeader = router.pathname === "/login" ? false : true;
-
   // const { data, loading, createData, deleteData } = userCollection('product')
 
   return (
