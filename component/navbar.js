@@ -67,7 +67,7 @@ function Navbar() {
                   />
 
                   <Menu {...bindMenu(popupState)}>
-                    <MenuItem onClick={() => router.push("/profile")}>Profile</MenuItem>
+                    <MenuItem onClick={() => {router.push("/profile"); popupState.close()}}>Profile</MenuItem>
                     <MenuItem onClick={popupState.close}>My account</MenuItem>
                     <MenuItem onClick={() => logout()}>Logout</MenuItem>
                   </Menu>
