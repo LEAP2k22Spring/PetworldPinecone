@@ -2,16 +2,11 @@ import { Stack, Button } from '@mui/material';
 import { useState, useEffect } from 'react';
 import PostItems from './Post-Items';
 import classes from '../profile.module.css';
-import { useGetUsersDataContext } from '../../context/UsersDataContext';
-import { useFirebase } from '../../firebase/useFirebase';
+import { auth, useFirebase, useSort } from '../../firebase/useFirebase';
 
 //imported from 'profile/index.js'
 const Post = () => {
-  const { getUsersData } = useGetUsersDataContext();
-  const { getMultipleDataWithSort } = useFirebase('Posts');
-  const [postData, setPostData] = useState(null);
-  // const [isLoading, setIsLoading] = useState(false);
-
+  const { data: postData } = useSort("Posts", "userID", auth?.currentUser?.uid);
   const [selectedTab, setSelectedTab] = useState({
     posts: true,
     videos: false,
@@ -25,21 +20,6 @@ const Post = () => {
   };
 
   const { posts, videos } = selectedTab;
-
-  useEffect(() => {
-    // setIsLoading(true);
-    (async () => {
-      const userId = getUsersData.userId;
-      try {
-        const result = await getMultipleDataWithSort('userID', userId);
-        setPostData(result);
-        // setIsLoading(false);
-      } catch (error) {}
-    })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  console.log('post.js');
 
   return (
     <Stack direction='column' justifyContent='center'>

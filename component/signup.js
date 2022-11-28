@@ -10,6 +10,8 @@ import { useState } from "react";
 import { FormProvider } from "react-hook-form";
 import StepperComp from "./StepperComp";
 import { useCollection } from "../firebase/useFirebase";
+import styles from "../styles/login.module.css"
+import { serverTimestamp } from "firebase/firestore";
 
 
 //Sign Up Component
@@ -17,7 +19,9 @@ const SignUp = () => {
 
   const [activeStep, setActiveStep] = useState(0);
   const [skippedSteps, setSkippedSteps] = useState([]);
-  const { getUsersData, createUserData, createUser, createPetData } = useCollection("Users");
+  const {createData:createUserData, createUser} = useCollection("Users");
+  const {createData:createPet}=useDocument({path:"Pets"});
+
   const { getStepContent, getSteps, userInputData } = StepperComp();
   const steps = getSteps();
 
@@ -39,15 +43,26 @@ const SignUp = () => {
     phoneNumber: "",
     gender: "",
     cityName: "",
+    createdAt: serverTimestamp(),
+    backgroundImage: "",
   }
   const petInputDataDefaultValue = {
     category: "",
     petName: "",
     petAge: "",
     breed: "",
-    petgender: "",
-    vaccined: "",
+    image: '',
+    sex: '',
+    birthDate: '',
+    description: '',
+    weight: '',
+    height: '',
+    color: '',
+    microchipped: false,
+    vaccinated: false,
+    sprayed: false,
   }
+  
   const handleNext = async (data) => {
     if (activeStep == steps.length - 1) {
 
@@ -56,16 +71,17 @@ const SignUp = () => {
         tempUserData[key] = data[key];
       }
       const userId = await createUser(data);
-      console.log(userId)
-      await createUserData(tempUserData, userId);
-
+      createUserData(userId, {...tempUserData, avatar:""});
       if(!skippedSteps.includes(2)){
         let tempPetData = {};
         for (const [key, value] of Object.entries(petInputDataDefaultValue)) {
           tempPetData[key] = data[key] == undefined ? '' : data[key];
         }
-        tempPetData.OwnerId = userId;
-        await createPetData(tempPetData);
+        tempPetData.ownerID = userId;
+        tempPetData.createdAt = serverTimestamp()
+        if(userId){
+          createPet(tempPetData);
+        }
       }
       
 
@@ -89,7 +105,9 @@ const SignUp = () => {
   };
 
   return (
-    <Box width="30%" m="auto">
+    <Box className={styles.signup_wrapper}>
+      <Box className={styles.signup_box}>
+        <Typography m={2}>Create account</Typography>
       <Stepper alternativeLabel activeStep={activeStep}>
         {steps.map((step, index) => {
           const labelProps = {};
@@ -151,6 +169,7 @@ const SignUp = () => {
           </form>
         </FormProvider>
       )}
+      </Box>
     </Box>
   );
 };

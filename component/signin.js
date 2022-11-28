@@ -1,24 +1,20 @@
-import {
-  Avatar,
-  Button,
-  Grid,
-  InputBase,
-  TextField,
-  Typography,
-} from '@mui/material';
-import { Box } from '@mui/system';
-import { useRef, useState } from 'react';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { LogoSignIn } from './LogoSignIn';
-import { useCollection } from '../firebase/useFirebase';
-import Link from 'next/link';
+import { Button, InputBase, Typography } from "@mui/material";
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { auth, userSignIn } from "../firebase/useFirebase";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { Box } from "@mui/system";
+import { useEffect, useRef, useState } from "react";
+import { LogoSignIn } from "./svg/LogoSignIn";
+import { useCollection } from "../firebase/useFirebase";
+import styles from "../styles/login.module.css";
+
 const margintop = {
-  marginTop: '10px',
+  marginTop: "10px",
 };
-import SignUp from './signup';
+import SignUp from "./signup";
+import Image from "next/image";
 
 const Login = () => {
-  const { userSignIn } = useCollection('Users');
   const [isClicked, setIsClicked] = useState(false);
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -30,99 +26,76 @@ const Login = () => {
       console.log(error);
     }
   }
+  const [user, setUser] = useAuthState(auth);
+  const googleAuth = new GoogleAuthProvider();
+
+  const login = async () => {
+    const result = await signInWithPopup(auth, googleAuth);
+  };
+  useEffect(() => {}, [user]);
 
   return !isClicked ? (
-    <Grid container component='main' sx={{ height: '100vh' }}>
-      <Grid item xs={8}>
-        <Box
-          sx={{
-            my: 20,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
+    <Box className={styles.login_wrapper}>
+      <Box className={styles.login_middle_wrapp}>
+        <Box className={styles.login_inside}>
+          <Image
+            className={styles.login_top_img}
+            src="https://firebasestorage.googleapis.com/v0/b/petworldpinecone.appspot.com/o/banner%20image%2Fmagic_cut.png?alt=media&token=3c6a4129-4fa4-4aa2-a5b5-74239fa6369e"
+            alt="login top image"
+            height={210}
+            width={350}
+          />
           <LogoSignIn />
-        </Box>
-      </Grid>
-      <Grid item xs={4} backgroundColor='#dddd'>
-        <Box
-          sx={{
-            my: 20,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: 'adminColor.main' }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography variant='h5'>Sign In</Typography>
-          <Box sx={{ width: '80%' }}>
-            <Box
-              sx={{
-                display: 'flex',
-                gap: 2,
-                height: '8vh',
-                alignItems: 'center',
-              }}
-            >
-              <InputBase
-                fullWidth
-                placeholder='Username'
-                required
-                inputRef={emailRef}
-                sx={{
-                  borderRadius: '40px',
-                  height: '5vh',
-                  padding: 2,
-                  backgroundColor: '#EEEBEB',
-                  color: '#000',
-                }}
+          <Typography variant="h5">Login</Typography>
+          <Box className={styles.login_wrapp}>
+            <span>
+              <input
+                className={styles.balloon}
+                type="text"
+                placeholder=""
+                ref={emailRef}
               />
-            </Box>
-
-            <Box
-              sx={{
-                display: 'flex',
-                gap: 2,
-                height: '8vh',
-                alignItems: 'center',
-              }}
-            >
-              <InputBase
-                fullWidth
-                placeholder='Password'
-                required
-                type='password'
-                inputRef={passwordRef}
-                sx={{
-                  borderRadius: '40px',
-                  height: '5vh',
-                  padding: 2,
-                  backgroundColor: '#EEEBEB',
-                  color: '#000',
-                }}
+              <label for="Email">Email</label>
+            </span>
+            <span>
+              <input
+                className={styles.balloon}
+                type="password"
+                placeholder=""
+                ref={passwordRef}
               />
-            </Box>
-
-            <Button
-              sx={{ ...margintop, backgroundColor: 'buttonColor.main' }}
-              fullWidth
-              variant='contained'
-              color='secondary'
-              onClick={handleSignIn}
-            >
-              Sign in
-            </Button>
+              <label for="password">Password</label>
+            </span>
+            <button style={{ background: "orange" }} onClick={handleSignIn}>
+              Login
+            </button>
+            <Typography className={styles.text_google}>
+              <b></b>or login with<a></a>
+            </Typography>
+            <button className={styles.google_button} onClick={login}>
+              <Image
+                src="https://firebasestorage.googleapis.com/v0/b/petworldpinecone.appspot.com/o/icons%2Fgoogle-logo.png?alt=media&token=336a7af6-544a-4cc2-b881-a89be5434f32"
+                alt="google sign in"
+                width={20}
+                height={20}
+              />
+              Google login
+            </button>
           </Box>
-          <Typography sx={{ textAlign: 'center', marginTop: 2 }}>
-            Need an account?{' '}
+          <Typography
+            sx={{
+              textAlign: "center",
+              marginTop: 2,
+              fontWeight: "400",
+              fontSize: "15px",
+            }}
+          >
+            Need an account?{" "}
             <Button onClick={() => setIsClicked(!isClicked)}>SignUp</Button>
           </Typography>
         </Box>
-      </Grid>
-    </Grid>
+      </Box>
+    </Box>
   ) : (
     <SignUp />
   );

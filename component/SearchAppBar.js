@@ -21,7 +21,7 @@ export default function LimitTags() {
         )}
         sx={{ width: '500px' }}
       />
-      <Button variant="contained"><PetsIcon/></Button>
+      <Button sx={{height: "55px"}} variant="contained"><PetsIcon/></Button>
     </Stack>
   );
 }

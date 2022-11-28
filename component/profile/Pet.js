@@ -1,18 +1,16 @@
-import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Avatar, Typography, Stack, Divider } from '@mui/material';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import { useRouter } from 'next/router';
 import LoadingSpinner from '../Spinner';
-import { useFirebase } from '../../firebase/useFirebase';
-import { useGetUsersDataContext } from '../../context/UsersDataContext';
+import { auth, useFirebase, useSort } from '../../firebase/useFirebase';
+import { useAuth } from '../../providers';
 
-const Pet = ({ petNumber }) => {
+const Pet = () => {
   const router = useRouter();
-  const { getMultipleDataWithSort } = useFirebase('Pets');
-  const { getUsersData } = useGetUsersDataContext();
-  const [isLoading, setIsLoading] = useState(false);
-  const [petData, setPetData] = useState(null);
+  const { data: petData } = useSort("Pets", "ownerID", auth?.currentUser?.uid);
+  const { loading } = useAuth();
+
 
   // jump to the "localhost:3000/add-pet" page
   const openAddPetHandler = () => {
@@ -24,27 +22,10 @@ const Pet = ({ petNumber }) => {
     router.push(`/profile/${petId}`);
   };
 
-  useEffect(() => {
-    setIsLoading(true);
-    (async () => {
-      try {
-        const petCollection = await getMultipleDataWithSort(
-          'ownerID',
-          getUsersData.userId
-        );
-        setIsLoading(false);
-        setPetData(petCollection);
-
-        //parent element-ees function duudaad, data damjuulaw...
-        petNumber(petCollection.length);
-      } catch (error) {}
-    })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <div>
-      <LoadingSpinner open={isLoading} />
+      {loading && <LoadingSpinner open={loading} />}
       <PetProfile>
         <Typography
           variant='h6'
@@ -62,7 +43,7 @@ const Pet = ({ petNumber }) => {
         >
           <PetAvatarContainer>
             {petData &&
-              petData.map((pet, i) => (
+              petData?.map((pet, i) => (
                 <PetAvatar
                   key={i}
                   id={i}

@@ -1,31 +1,20 @@
 import styled from 'styled-components';
-import { Avatar, Typography, Stack, Button, Divider, Box } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { Avatar, Typography, Stack, Divider, Box, IconButton } from '@mui/material';
+import { useState } from 'react';
 import LoadingSpinner from '../../component/Spinner';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 import Pet from '../../component/profile/Pet';
 import Post from '../../component/profile/Post';
-import { useGetUsersDataContext } from '../../context/UsersDataContext';
 import { useRouter } from 'next/router';
+import { useAuth } from '../../providers';
 
 const Profile = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const { getUsersData } = useGetUsersDataContext();
+  const { userData, loading } = useAuth();
   const [totalPets, setTotalPets] = useState('');
   const router = useRouter();
-
-  useEffect(() => {
-    setIsLoading(true);
-
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 3000);
-
-    // clear interval on re-render to avoid memory leaks
-    return () => clearInterval(timer);
-  }, []);
 
   const getTotalPets = (number) => {
     setTotalPets(number);
@@ -38,24 +27,28 @@ const Profile = () => {
   return (
     <>
       <Container>
-        <LoadingSpinner open={isLoading} />
+        {loading && <LoadingSpinner open={loading} />}
         <Header>
-          <BackIconContainer onClick={goBackHandler}>
-            <ArrowBackIosNewOutlinedIcon fontSize='large' />
+          <BackIconContainer>
+            <IconButton onClick={goBackHandler}>
+              <ArrowBackIcon fontSize='large' />
+            </IconButton>
           </BackIconContainer>
           <SettingsIconContainer>
-            <SettingsOutlinedIcon fontSize='large' />
+            <IconButton onClick={() => router.push("/editprofile")}>
+              <SettingsOutlinedIcon fontSize='large' />
+            </IconButton>
           </SettingsIconContainer>
         </Header>
         <AvatarContainer>
-          <UserAvatar src={getUsersData?.avatar} />
+          <UserAvatar src={userData?.avatar} />
           <Stack direction='row'>
             <Typography
               variant='h6'
               mt={2}
               sx={{ fontSize: '1.5rem', fontWeight: 700, color: '#696969' }}
             >
-              {getUsersData?.firstName}
+              {userData?.firstName}
             </Typography>
             <Typography
               variant='h6'
@@ -63,7 +56,7 @@ const Profile = () => {
               ml={2}
               sx={{ fontSize: '1.5rem', fontWeight: 700, color: '#696969' }}
             >
-              {getUsersData?.lastName}
+              {userData?.lastName}
             </Typography>
           </Stack>
         </AvatarContainer>
@@ -74,7 +67,7 @@ const Profile = () => {
             consectetur illum?
           </Typography>
           <StyledTypography variant='body1' mt={5} mx={3}>
-            {getUsersData?.cityName}
+            {userData?.cityName}
           </StyledTypography>
           <Stack direction='row' justifyContent='space-between' my={5} mx={5}>
             <StyledTypography>{totalPets} pets</StyledTypography>
@@ -95,13 +88,13 @@ const Profile = () => {
           <Typography variant='body1' mt={2} mx={3}>
             Gender:
             <Box component='span' m={1} sx={{ fontWeight: 700 }}>
-              {getUsersData?.gender}
+              {userData?.gender}
             </Box>
           </Typography>
           <Typography variant='body1' mt={2} mx={3}>
             Birth date:
             <Box component='span' m={1} sx={{ fontWeight: 700 }}>
-              {getUsersData?.dateOfBirth}
+              {userData?.dateOfBirth}
             </Box>
           </Typography>
           <Typography variant='body1' mt={5} mx={3}>

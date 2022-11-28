@@ -10,24 +10,47 @@ import {
 import classes from '../../component/profile.module.css';
 import styled from 'styled-components';
 import PetInfo from './PetInfo';
+import { useCollection } from '../../firebase/useFirebase';
+import { useState } from 'react';
+import LoadingSpinner from '../Spinner';
+import { useEffect } from 'react';
 
 export const PetProfile = ({ petData }) => {
   const router = useRouter();
-
+  const petId = router.query.petId;
+  const {data} = useCollection("Pets", petId)
+  const [isLoading, setIsLoading] = useState(false);
+  useEffect(()=>{
+    if(data){
+      setIsLoading(false);
+    }
+  },[data])
   const goBackHandler = () => {
     router.back();
   };
   return (
     <>
       <Container>
+      <LoadingSpinner open={isLoading} />
         <Header>
           <Box sx={{ width: '100%', height: '400px' }}>
-            <Image
-              src={petData?.image}
-              alt='Picture of the cover'
+            {data?.image ? <Image
+              src={data?.image}
               fill
+              sizes="(max-width: 768px) 100vw,
+              (max-width: 1200px) 50vw,
+              33vw"
               style={{ objectFit: 'cover' }}
-            />
+              alt='Picture of the cover'
+            /> : <Image
+            src='https://firebasestorage.googleapis.com/v0/b/petworldpinecone.appspot.com/o/no-image%20(1).png?alt=media&token=a56e4cdf-5382-4c6f-8860-aaa004558de6'
+            fill
+            sizes="(max-width: 768px) 100vw,
+            (max-width: 1200px) 50vw,
+            33vw"
+            style={{ objectFit: 'cover' }}
+            alt='Picture'
+          />}
           </Box>
           <BackIconContainer onClick={goBackHandler}>
             <ArrowBackIosNewOutlined fontSize='large' />
@@ -45,10 +68,10 @@ export const PetProfile = ({ petData }) => {
             >
               <Stack direction='column'>
                 <Typography mt={1} sx={{ fontSize: '1.5rem', fontWeight: 700 }}>
-                  Name: {petData?.givenName || 'empty'}
+                  Name: {data?.petName || 'empty'}
                 </Typography>
               </Stack>
-              {petData?.sex === 'female' ? (
+              {data?.sex === 'female' ? (
                 <FemaleOutlined sx={{ fontSize: '3rem' }} />
               ) : (
                 <MaleOutlined sx={{ fontSize: '3rem' }} />
@@ -66,7 +89,7 @@ export const PetProfile = ({ petData }) => {
             About pet
           </Typography>
           {/* =========================================== */}
-          <PetInfo petData={petData} />
+          <PetInfo petData={data} />
           {/* =========================================== */}
         </UserProfile>
         <Divider sx={{ borderBottomWidth: 20, borderColor: '#d9d9d9' }} />
@@ -80,7 +103,7 @@ export const PetProfile = ({ petData }) => {
             Description
           </Typography>
           <Typography variant='body1' my={2} mx={3}>
-            {petData?.description}
+            {data?.description}
           </Typography>
         </UserProfile>
         <Divider sx={{ borderBottomWidth: 20, borderColor: '#d9d9d9' }} />
@@ -93,13 +116,22 @@ export const PetProfile = ({ petData }) => {
           >
             Pet photos
           </Typography>
-          <Image
-            src={petData?.image}
-            alt='Picture of the pet'
+          {data?.image ? <Image
+              src={data?.image}
+              width={150}
+              height={150}
+              alt='Picture of the cover'
+            className={classes.image}
+
+            /> : <Image
+            src='https://firebasestorage.googleapis.com/v0/b/petworldpinecone.appspot.com/o/no-image%20(1).png?alt=media&token=a56e4cdf-5382-4c6f-8860-aaa004558de6'
             width={150}
             height={150}
+            alt='Picture'
             className={classes.image}
-          />
+
+          />}
+
         </UserProfile>
       </Container>
     </>

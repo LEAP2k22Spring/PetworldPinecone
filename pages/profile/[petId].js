@@ -5,27 +5,27 @@ import { useRouter } from 'next/router';
 import { PetProfile } from '../../component/pet';
 
 const Pet = () => {
-  const router = useRouter();
-  const { getSingleData } = useFirebase('Pets');
+  // const router = useRouter();
+  // const { getSingleData } = useFirebase('Pets');
   const [petData, setPetData] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const petId = router.query.petId;
+  // const [isLoading, setIsLoading] = useState(false);
+  // const petId = router.query.petId;
 
-  useEffect(() => {
-    setIsLoading(true);
-    (async () => {
-      try {
-        const result = await getSingleData(petId);
-        setIsLoading(false);
-        setPetData(result);
-      } catch (error) {}
-    })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [petId]);
+  // useEffect(() => {
+  //   setIsLoading(true);
+  //   (async () => {
+  //     try {
+  //       const result = await getSingleData(petId);
+  //       setIsLoading(false);
+  //       setPetData(result);
+  //     } catch (error) {}
+  //   })();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [petId]);
 
   return (
     <div>
-      <LoadingSpinner open={isLoading} />
+      {/* <LoadingSpinner open={isLoading} /> */}
       <PetProfile petData={petData} />
     </div>
   );

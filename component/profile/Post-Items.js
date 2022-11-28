@@ -6,18 +6,20 @@ import classes from '../../component/profile.module.css';
 import { useRouter } from 'next/router';
 import { useGetPostsDataContext } from '../../context/PostsDataContext';
 import { useGetUsersDataContext } from '../../context/UsersDataContext';
+import { useAuth } from '../../providers';
+import { auth } from '../../firebase/useFirebase';
 
 const PostItems = ({ postData }) => {
   const { setPostOwner } = useGetPostsDataContext();
-  const { getUsersData } = useGetUsersDataContext();
-
+  // const { getUsersData } = useGetUsersDataContext();
+  const { userData } = useAuth();
   const router = useRouter();
 
   const openAddPetHandler = (docId) => {
     setPostOwner({
-      avatar: getUsersData.avatar,
-      name: getUsersData.firtName,
-      id: getUsersData.userId,
+      avatar: userData.avatar,
+      name: userData.firstName,
+      id: auth?.currentUser?.uid,
     });
     router.push(`/profile/posts/${docId}`);
   };
@@ -38,7 +40,7 @@ const PostItems = ({ postData }) => {
               <Image
                 onClick={() => openAddPetHandler(post.docId)}
                 key={i}
-                src={post.data?.image}
+                src={post?.data?.image}
                 alt='Picture of the author'
                 width={150}
                 height={150}
