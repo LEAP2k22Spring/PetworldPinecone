@@ -1,9 +1,13 @@
-.leafletContainer {
-  /* width: 100%; */
-  height: 400px;
+/* .wrapper {
+  height: 100vh;
   overflow: hidden;
-  margin: 10px;
-  border-radius: 10px;
+  margin-bottom: 120px;
+  background-color: antiquewhite;
+} */
+.leafletContainer {
+  height: 100vh;
+  overflow: hidden;
+  margin: 10px 0;
 }
 
 .icon {
