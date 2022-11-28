@@ -16,13 +16,9 @@ import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
 import MapOutlinedIcon from '@mui/icons-material/MapOutlined';
 import AddIcon from '@mui/icons-material/Add';
 import { useRouter } from 'next/router';
-import { useGetPostsDataContext } from '../../context/PostsDataContext';
-import { useEffect } from 'react';
-import { auth, useCollection, useFirebase } from '../firebase/useFirebase';
-import { useState } from 'react';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import Post from '../component/explorePost';
-import LoadingSpinner from '../component/Spinner';
+import { useFirebase } from '../../firebase/useFirebase';
+import Post from '../../component/explorePost';
+import LoadingSpinner from '../../component/Spinner';
 
 const ExplorePage = () => {
   const router = useRouter();
