@@ -7,10 +7,14 @@ import {
   Tooltip,
   useMapEvents,
 } from 'react-leaflet';
+import { useRouter } from 'next/router';
 import classes from '../../../styles/map.module.css';
 import 'leaflet/dist/leaflet.css';
 import { icon } from 'leaflet';
 import L from 'leaflet';
+import { Box, Divider, Typography, Button, Stack } from '@mui/material';
+import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
+import MapOutlinedIcon from '@mui/icons-material/MapOutlined';
 
 const getIcon = (url) => {
   return L.icon({
@@ -21,22 +25,16 @@ const getIcon = (url) => {
   });
 };
 
-const center = {
-  lat: 47.92,
-  lng: 106.87,
-};
-
 const people = [
   {
-    lat: 47.9081531533196,
-    lng: 106.78494677615218,
+    lat: 47.908,
+    lng: 106.94,
     location: 'Ulaanbaatar',
     url: 'https://firebasestorage.googleapis.com/v0/b/petworldpinecone.appspot.com/o/me.jpg?alt=media&token=1b82e3bf-656b-466a-a93c-a0cf17a70d26',
-    icon: getIcon,
   },
   {
     lat: 47.938867251788984,
-    lng: 106.82425723135128,
+    lng: 106.9,
     url: 'https://firebasestorage.googleapis.com/v0/b/petworldpinecone.appspot.com/o/me.jpg?alt=media&token=1b82e3bf-656b-466a-a93c-a0cf17a70d26',
 
     location: 'Ulaanbaatar',
@@ -55,53 +53,35 @@ const people = [
   },
 ];
 
-function DraggableMarker() {
-  const [draggable, setDraggable] = useState(false);
-  const [position, setPosition] = useState(center);
-  const markerRef = useRef(null);
-
-  const eventHandlers = useMemo(
-    () => ({
-      dragend() {
-        const marker = markerRef.current;
-        if (marker != null) {
-          setPosition(marker.getLatLng());
-        }
-      },
-    }),
-    []
-  );
-  const toggleDraggable = useCallback(() => {
-    setDraggable((d) => !d);
-  }, []);
-
-  console.log(position);
-
-  return (
-    <Marker
-      draggable={draggable}
-      eventHandlers={eventHandlers}
-      position={position}
-      ref={markerRef}
-      icon={icon({
-        iconUrl: '/marker.png',
-        iconSize: [25, 35],
-      })}
-    >
-      <Popup minWidth={90}>
-        <span onClick={toggleDraggable}>
-          {draggable
-            ? 'Marker is draggable'
-            : 'Click here to make marker draggable'}
-        </span>
-      </Popup>
-    </Marker>
-  );
-}
-
 const Map = () => {
-  const [coordinates, setCoordinates] = useState({});
+  const [coordinates, setCoordinates] = useState({
+    lat: 47.928,
+    lng: 106.9161,
+  });
+  const router = useRouter();
+  const center = {
+    lat: 47.918,
+    lng: 106.9148,
+  };
 
+  function ClickedMarker() {
+    const [position, setPosition] = useState(coordinates);
+    const markerRef = useRef(null);
+
+    return (
+      <Marker
+        draggable={true}
+        position={position}
+        ref={markerRef}
+        icon={icon({
+          iconUrl: '/marker.png',
+          iconSize: [25, 35],
+        })}
+      >
+        <Popup minWidth={60}>Your position</Popup>
+      </Marker>
+    );
+  }
   const MapEvents = () => {
     useMapEvents({
       click(e) {
@@ -113,12 +93,29 @@ const Map = () => {
     });
     return false;
   };
+  console.log(coordinates);
 
   return (
-    <div>
+    <div className={classes.wrapper}>
       <div className={classes.leafletContainer}>
+        <Box textAlign='center' component='span'>
+          <Typography fontWeight={800} mt={5}>
+            EXPLORE
+          </Typography>
+        </Box>
+        <Box display='flex' justifyContent='space-evenly' mx={6} my={2} sx={{}}>
+          <Stack direction='row' onClick={() => router.push('/explore')}>
+            <GroupsOutlinedIcon />
+            <Typography ml={2}>People</Typography>
+          </Stack>
+          <Divider orientation='vertical' flexItem />
+          <Stack direction='row' sx={{ color: '#00cc66' }}>
+            <MapOutlinedIcon />
+            <Typography ml={2}>Map</Typography>
+          </Stack>
+        </Box>
         <MapContainer
-          style={{ height: '100%', width: '100%' }}
+          style={{ height: '65%', width: '100%' }}
           center={center}
           zoom={12}
           scrollWheelZoom={true}
@@ -139,7 +136,7 @@ const Map = () => {
               </Marker>
             );
           })}
-          <DraggableMarker />
+          <ClickedMarker />
           <MapEvents />
         </MapContainer>
       </div>
