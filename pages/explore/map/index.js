@@ -1,10 +1,6 @@
-import React, { useState, useRef, useMemo, useCallback } from 'react';
+import React, { useState, useRef } from 'react';
 import LoadingSpinner from '../../../component/Spinner';
-import {
-  useCollection,
-  useDocument,
-  useFirebase,
-} from '../../../firebase/useFirebase';
+import { useCollection } from '../../../firebase/useFirebase';
 import {
   MapContainer,
   Marker,
@@ -40,32 +36,26 @@ const Map = () => {
     lat: 0,
     lng: 0,
   });
-  const { data: people, loading } = useFirebase('Location');
-  const { data, createUserData } = useDocument({
-    path: 'Location',
-    docId: userData?.userId,
-  });
+  const { data: people, getData, createUserData } = useCollection('Location'); //real-time listens
   const [openModal, setOpenModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [openMap, setOpenMap] = useState(false);
   const [disableSaveBtn, setDisableSaveBtn] = useState(true);
 
-  // useEffect(() => {
-  //   (async () => {
-  //     const result = await getData();
+  useEffect(() => {
+    (async () => {
+      const result = await getData(userData?.userId);
 
-  //     // 1) Check if user has no location info, then ask for permission to get location
-  //     if (result == undefined) {
-  //       setOpenModal(true);
-  //     } else if (userData) {
-  //       setOpenMap(true);
-  //       setDisableSaveBtn(false);
-  //     }
-  //   })();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
-
-  console.log(coordinates);
+      // 1) Check if user has no location info, then ask for permission to get location
+      if (result === undefined) {
+        setOpenModal(true);
+      } else if (result) {
+        setOpenMap(true);
+        setDisableSaveBtn(false);
+      }
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const ClickedMarker = () => {
     const markerRef = useRef(null);
@@ -86,20 +76,6 @@ const Map = () => {
     );
   };
 
-  //Click to get coordinates function
-  // const MapCoord = () => {
-  //   useMapEvents({
-  //     click(e) {
-  //       setCoordinates({
-  //         lat: e.latlng.lat,
-  //         lng: e.latlng.lng,
-  //       });
-  //     },
-  //   });
-  //   return false;
-  // };
-  // console.log(coordinates);
-
   const closeModalHandler = () => {
     setOpenModal(false);
   };
@@ -107,6 +83,8 @@ const Map = () => {
   const mapOpenHandler = async (bool) => {
     setOpenModal(false);
     setOpenMap(bool);
+
+    // Koordinat awdag heseg
     if ('geolocation' in navigator) {
       setIsLoading(true);
       navigator.geolocation.getCurrentPosition(
@@ -126,8 +104,7 @@ const Map = () => {
         }
       );
     } else {
-      // geolocation is not supported
-      // get your location some other way
+      // geolocation is not supported, get your location some other way
       console.log('geolocation is not enabled on this browser');
     }
   };
@@ -135,14 +112,13 @@ const Map = () => {
   //====================FINAL STEP======================
   const onSave = async () => {
     setIsLoading(true);
-    const result = await createUserData(userData?.userId, {
+    await createUserData(userData?.userId, {
       latitude: coordinates.lat,
       longitude: coordinates.lng,
       name: userData?.firstName,
       avatar: userData?.avatar,
       createdAt: serverTimestamp(),
     });
-    console.log(result);
     setIsLoading(false);
     setDisableSaveBtn(false);
     setCoordinates({
@@ -154,7 +130,7 @@ const Map = () => {
 
   return (
     <div className={classes.wrapper}>
-      <LoadingSpinner open={loading || isLoading} color='#000' />
+      <LoadingSpinner open={isLoading} color='#000' />
       <div className={classes.leafletContainer}>
         <Box textAlign='center' component='span'>
           <Typography fontWeight={800} mt={5}>
@@ -178,40 +154,36 @@ const Map = () => {
         </Box>
         {/* if user has coordinates data, then show MAP */}
 
-        <MapContainer
-          style={{ height: '65%', width: '100%' }}
-          center={{ lat: 47.918, lng: 106.9148 }}
-          zoom={13}
-          scrollWheelZoom={true}
-        >
-          <TileLayer
-            attribution='&copy; <a href="http://www.openstreetmap.org/copyright">Click to get coordinates</a>'
-            url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-          />
-          {people?.map((person, i) => {
-            return (
-              <Marker
-                key={i}
-                position={[person.latitude, person.longitude]}
-                icon={getIcon(person.avatar)}
-              >
-                <Tooltip>{person.name}</Tooltip>
-              </Marker>
-            );
-          })}
-
-          <ClickedMarker />
-          {/* <MapCoord /> */}
-        </MapContainer>
+        {openMap && (
+          <MapContainer
+            style={{ height: '65%', width: '100%' }}
+            center={{ lat: 47.918, lng: 106.9148 }}
+            zoom={12}
+            scrollWheelZoom={true}
+          >
+            <TileLayer
+              attribution='&copy; <a href="http://www.openstreetmap.org/copyright">Click to get coordinates</a>'
+              url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+            />
+            {people?.map((person, i) => {
+              return (
+                <Marker
+                  key={i}
+                  position={[person.latitude, person.longitude]}
+                  icon={getIcon(person.avatar)}
+                >
+                  <Tooltip>{person.name}</Tooltip>
+                </Marker>
+              );
+            })}
+            <ClickedMarker />
+            {/* <MapCoord /> */}
+          </MapContainer>
+        )}
 
         {/* 2.2) =========MODAL========================== */}
         <div>
-          <Modal
-            open={openModal}
-            onClose={false}
-            aria-labelledby='modal-modal-title'
-            aria-describedby='modal-modal-description'
-          >
+          <Modal open={openModal} onClose={false}>
             <Box sx={style}>
               <Typography
                 variant='h6'
@@ -276,3 +248,17 @@ const style = {
 //https://stackoverflow.com/questions/70392715/how-to-get-coordinates-of-current-mouse-click-in-leaflet-react-js
 
 //https://github.com/PaulLeCam/react-leaflet/issues/808
+
+//Click on the map to get coordinates function
+// const MapCoord = () => {
+//   useMapEvents({
+//     click(e) {
+//       setCoordinates({
+//         lat: e.latlng.lat,
+//         lng: e.latlng.lng,
+//       });
+//     },
+//   });
+//   return false;
+// };
+// console.log(coordinates);

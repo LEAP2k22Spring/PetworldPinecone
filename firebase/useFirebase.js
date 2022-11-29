@@ -52,17 +52,12 @@ export const useFirebase = (path) => {
         const querySnapshot = await getDocs(q);
         if (querySnapshot) {
           for (let doc of querySnapshot.docs) {
-            // const results = await userDataPost("Users", doc.data().ownerID);
             item.push({
               ...doc.data(),
-
-              // userName: results.firstName,
-              // userAvatar: results.avatar,
               id: doc.id,
             });
           }
           setPetData(item);
-          // console.log("item", item);
         }
       } catch (error) {
         console.log(error.message);
@@ -71,9 +66,6 @@ export const useFirebase = (path) => {
       }
     })();
   }, [path]);
-  // 1) get any single document data
-  // 2)
-  // 3)
 
   //4) Update document
   const updateData = async (data, id) => {
@@ -103,7 +95,6 @@ export const useFirebase = (path) => {
   };
 
   return {
-    // getSingleData,
     data,
     loading,
     imageUploadToFirestore,
@@ -113,39 +104,42 @@ export const useFirebase = (path) => {
 };
 
 export const useCollection = (collectionName) => {
-  const { postsData, setPostsData } = useGetPostsDataContext();
   const [loading, setLoading] = useState(false);
-  const colRef = collection(db, collectionName);
   const [data, setData] = useState();
+
+  //real time update listener
   useEffect(() => {
-    const unsubscribe = onSnapshot(
-      collection(db, collectionName),
-      (snapshot) => {
-        setData(snapshot.docs);
-      }
-    );
+    const colRef = collection(db, collectionName);
+    const unsubscribe = onSnapshot(colRef, (snapshot) => {
+      let result = [];
+      snapshot.docs.forEach((doc) => {
+        result.push({ ...doc.data() });
+      });
+      setData(result);
+    });
     return () => unsubscribe();
   }, [collectionName]);
 
-  // const getData = async () => {
-  //   try {
-  //     setLoading(true);
-  //     const docRef = doc(db, collectionName, docId);
-  //     const docSnap = await getDoc(docRef);
-  //     if (docSnap.exists()) {
-  //       return docSnap.data();
-  //     } else {
-  //       console.log('No such document!');
-  //     }
-  //   } catch (error) {
-  //     console.log(error.message);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+  const getData = async (docId) => {
+    try {
+      setLoading(true);
+      const docRef = doc(db, collectionName, docId);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        return docSnap.data();
+      } else {
+        console.log('No such document!');
+      }
+    } catch (error) {
+      console.log(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const createData = (userId, data) =>
     setDoc(doc(db, collectionName, userId), data);
-  const updateData = (data) => updateDoc(doc(db, collectionName, docId), data);
+  // const updateData = (data) => updateDoc(doc(db, collectionName, docId), data);
 
   const createUserData = async (userId, data) => {
     try {
@@ -175,7 +169,7 @@ export const useCollection = (collectionName) => {
   return {
     data,
     loading,
-    // getData,
+    getData,
     createUserData,
     createUser,
     createData,
