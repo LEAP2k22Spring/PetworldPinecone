@@ -112,32 +112,37 @@ export const useFirebase = (path) => {
   };
 };
 
-export const useCollection = (collectionName, docId) => {
+export const useCollection = (collectionName) => {
   const { postsData, setPostsData } = useGetPostsDataContext();
   const [loading, setLoading] = useState(false);
   const colRef = collection(db, collectionName);
   const [data, setData] = useState();
   useEffect(() => {
-    if (docId) {
-      (async () => {
-        try {
-          setLoading(true);
-          const docRef = doc(db, collectionName, docId);
-          const docSnap = await getDoc(docRef);
-          if (docSnap.exists()) {
-            setData(docSnap.data());
-          } else {
-            console.log('No such document!');
-          }
-        } catch (error) {
-          console.log(error.message);
-        } finally {
-          setLoading(false);
-        }
-      })();
-    }
-  }, [collectionName, docId]);
+    const unsubscribe = onSnapshot(
+      collection(db, collectionName),
+      (snapshot) => {
+        setData(snapshot.docs);
+      }
+    );
+    return () => unsubscribe();
+  }, [collectionName]);
 
+  // const getData = async () => {
+  //   try {
+  //     setLoading(true);
+  //     const docRef = doc(db, collectionName, docId);
+  //     const docSnap = await getDoc(docRef);
+  //     if (docSnap.exists()) {
+  //       return docSnap.data();
+  //     } else {
+  //       console.log('No such document!');
+  //     }
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
   const createData = (userId, data) =>
     setDoc(doc(db, collectionName, userId), data);
   const updateData = (data) => updateDoc(doc(db, collectionName, docId), data);
@@ -170,6 +175,7 @@ export const useCollection = (collectionName, docId) => {
   return {
     data,
     loading,
+    // getData,
     createUserData,
     createUser,
     createData,
@@ -291,4 +297,27 @@ export const imageUploadToFirestore = async (imageData) => {
     console.log('aldaa', error.message);
     return false;
   }
+};
+
+export const useCollection1 = (collectionName) => {
+  const [data, setData] = useState();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(
+      collection(db, collectionName),
+      (snapshot) => {
+        setData(snapshot.docs);
+        setLoading(false);
+      }
+    );
+    return () => unsubscribe();
+  }, [collectionName]);
+
+  const updateData = (docId, data) =>
+    setDoc(doc(db, collectionName, docId), data);
+  const createData = (data) => addDoc(collection(db, collectionName), data);
+
+  const deleteData = (docId) => deleteDoc(doc(db, collectionName, docId));
+  return { data, loading, updateData, createData, deleteData };
 };
