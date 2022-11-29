@@ -25,12 +25,16 @@ export const PetProfile = ({ petData }) => {
       setIsLoading(false);
     }
   },[data])
+  // console.log('data chine', data)
   const goBackHandler = () => {
     router.back();
   };
+  const capitalizeFirst = str => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
   return (
-    <>
-      <Container>
+    <Box className={classes.petProfile_wrapp}>
+      <Container className={classes.pet_container}>
       <LoadingSpinner open={isLoading} />
         <Header>
           <Box sx={{ width: '100%', height: '400px' }}>
@@ -40,23 +44,23 @@ export const PetProfile = ({ petData }) => {
               sizes="(max-width: 768px) 100vw,
               (max-width: 1200px) 50vw,
               33vw"
-              style={{ objectFit: 'cover' }}
+              style={{ objectFit: 'cover', borderRadius:'0 0 20px 20px' }}
               alt='Picture of the cover'
             /> : <Image
-            src='https://firebasestorage.googleapis.com/v0/b/petworldpinecone.appspot.com/o/no-image%20(1).png?alt=media&token=a56e4cdf-5382-4c6f-8860-aaa004558de6'
+            src='https://firebasestorage.googleapis.com/v0/b/petworldpinecone.appspot.com/o/paw_img.jpg?alt=media&token=587aacc2-2d55-4850-8bf7-36de3a25f6c3'
             fill
             sizes="(max-width: 768px) 100vw,
             (max-width: 1200px) 50vw,
             33vw"
-            style={{ objectFit: 'cover' }}
+            style={{ objectFit: 'cover', }}
             alt='Picture'
           />}
           </Box>
           <BackIconContainer onClick={goBackHandler}>
-            <ArrowBackIosNewOutlined fontSize='large' />
+            <ArrowBackIosNewOutlined fontSize='large' sx={{color:'white', background:'brown', borderRadius:'50%', padding:'5px'}} />
           </BackIconContainer>
           <SettingsIconContainer>
-            <SettingsOutlined fontSize='large' />
+            <SettingsOutlined fontSize='large' sx={{color:'white', background:'brown', borderRadius:'50%', padding:'5px'}}/>
           </SettingsIconContainer>
         </Header>
         <AvatarContainer>
@@ -65,16 +69,19 @@ export const PetProfile = ({ petData }) => {
               direction='row'
               justifyContent='space-between'
               alignItems='center'
+              p={1}
+              mt={1}
             >
-              <Stack direction='column'>
+              <Stack direction='column' >
                 <Typography mt={1} sx={{ fontSize: '1.5rem', fontWeight: 700 }}>
-                  Name: {data?.petName || 'empty'}
+                 { data?.petName || 'empty'}
                 </Typography>
+                <Typography>{data?.breed}</Typography>
               </Stack>
               {data?.sex === 'female' ? (
-                <FemaleOutlined sx={{ fontSize: '3rem' }} />
+                <FemaleOutlined sx={{ fontSize: '3rem', background:'pink',color:'white', borderRadius:'50%', padding:'5px' }} />
               ) : (
-                <MaleOutlined sx={{ fontSize: '3rem' }} />
+                <MaleOutlined sx={{ fontSize: '3rem', background:'#0057c2',color:'white', borderRadius:'50%', padding:'5px' }} />
               )}
             </Stack>
           </Box>
@@ -82,9 +89,10 @@ export const PetProfile = ({ petData }) => {
         <UserProfile>
           <Typography
             variant='h6'
+            width={155}
             mt={10}
             ml={2}
-            sx={{ fontSize: '1.5rem', fontWeight: 700 }}
+            sx={{ fontSize: '1.5rem', fontWeight: 700, backgroundColor: "green", padding:'0 20px', borderRadius:'15px', color:'white' }}
           >
             About pet
           </Typography>
@@ -92,13 +100,14 @@ export const PetProfile = ({ petData }) => {
           <PetInfo petData={data} />
           {/* =========================================== */}
         </UserProfile>
-        <Divider sx={{ borderBottomWidth: 20, borderColor: '#d9d9d9' }} />
+        <Divider sx={{ borderBottomWidth: 20, borderColor: '#d9d9d9', borderRadius:'10px' }} />
         <UserProfile>
           <Typography
             variant='h6'
+            width={170}
             mt={2}
             ml={2}
-            sx={{ fontSize: '1.5rem', fontWeight: 700 }}
+            sx={{ fontSize: '1.5rem', fontWeight: 700, backgroundColor: "orange", padding:'0 20px', borderRadius:'15px', color:'white' }}
           >
             Description
           </Typography>
@@ -106,13 +115,14 @@ export const PetProfile = ({ petData }) => {
             {data?.description}
           </Typography>
         </UserProfile>
-        <Divider sx={{ borderBottomWidth: 20, borderColor: '#d9d9d9' }} />
+        <Divider sx={{ borderBottomWidth: 20, borderColor: '#d9d9d9', borderRadius:'10px' }} />
         <UserProfile>
           <Typography
             variant='h6'
+            width={170}
             mt={2}
             ml={2}
-            sx={{ fontSize: '1.5rem', fontWeight: 700 }}
+            sx={{ fontSize: '1.5rem', fontWeight: 700, backgroundColor: "red", padding:'0 20px', borderRadius:'15px', color:'white' }}
           >
             Pet photos
           </Typography>
@@ -124,7 +134,7 @@ export const PetProfile = ({ petData }) => {
             className={classes.image}
 
             /> : <Image
-            src='https://firebasestorage.googleapis.com/v0/b/petworldpinecone.appspot.com/o/no-image%20(1).png?alt=media&token=a56e4cdf-5382-4c6f-8860-aaa004558de6'
+            src='https://firebasestorage.googleapis.com/v0/b/petworldpinecone.appspot.com/o/paw_img.jpg?alt=media&token=587aacc2-2d55-4850-8bf7-36de3a25f6c3'
             width={150}
             height={150}
             alt='Picture'
@@ -134,7 +144,7 @@ export const PetProfile = ({ petData }) => {
           <Box sx={{width:'100%', height:'100px'}}></Box>
         </UserProfile>
       </Container>
-    </>
+    </Box>
   );
 };
 
@@ -174,3 +184,6 @@ const UserProfile = styled.div`
   flex-direction: column;
   background: white;
 `;
+// const PetName = styled.div`
+//   text-transform: uppercase
+// `;

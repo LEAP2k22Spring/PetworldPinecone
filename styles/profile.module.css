@@ -1,3 +1,13 @@
+.petProfile_wrapp {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.pet_container {
+  width: 80%;
+}
+
+
 .buttonActive {
   background-color: #00cc66;
   color: #ffff;
@@ -130,6 +140,11 @@
 .petInfo_text {
   margin-top: 5px;
   text-align: center;
+}
+@media (max-width: 650px) {
+  .pet_container {
+    width: 100%;
+  }
 }
 @media (max-width: 415px) {
   .paper {

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useState, useRef } from 'react';
 import { useRouter } from 'next/router';
-import classes from '../../component/profile.module.css';
+import classes from '../../styles/profile.module.css';
 import {
   Avatar,
   Typography,
@@ -25,7 +25,7 @@ import {
 } from '@mui/icons-material';
 import { v4 as uuidv4 } from 'uuid';
 import { auth, imageUploadToFirestore, useDocument, useFirebase } from '../../firebase/useFirebase';
-import { useGetUsersDataContext } from '../../context/UsersDataContext';
+// import { useGetUsersDataContext } from '../../context/UsersDataContext';
 import { serverTimestamp } from 'firebase/firestore';
 
 const names = [
