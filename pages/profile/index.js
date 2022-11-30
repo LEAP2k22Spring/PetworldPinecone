@@ -5,7 +5,7 @@ import LoadingSpinner from '../../component/Spinner';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-
+import classes from '../../styles/profile.module.css';
 import Pet from '../../component/profile/Pet';
 import Post from '../../component/profile/Post';
 import { useRouter } from 'next/router';
@@ -25,11 +25,11 @@ const Profile = () => {
   };
 
   return (
-    <>
-      <Container>
+    <Box className={classes.petProfile_wrapp}>
+      <Container className={classes.pet_container}>
         {loading && <LoadingSpinner open={loading} />}
-        <Header>
-          <BackIconContainer>
+        <Header >
+          <BackIconContainer sx={{ borderRadius: '20px' }}>
             <IconButton onClick={goBackHandler}>
               <ArrowBackIcon fontSize='large' />
             </IconButton>
@@ -75,7 +75,7 @@ const Profile = () => {
             <StyledTypography>2 saved</StyledTypography>
           </Stack>
         </UserProfile>
-        <Divider sx={{ borderBottomWidth: 20, borderColor: '#d9d9d9' }} />
+        <Divider sx={{ borderBottomWidth: 20, borderColor: '#f0f0f0', borderRadius: '10px' }} />
         <UserProfile>
           <Typography
             variant='h6'
@@ -103,12 +103,12 @@ const Profile = () => {
             consectetur illum?
           </Typography>
         </UserProfile>
-        <Divider sx={{ borderBottomWidth: 20, borderColor: '#d9d9d9' }} />
+        <Divider sx={{ marginTop: '20px', borderBottomWidth: 20, borderColor: '#f0f0f0', borderRadius: '10px' }} />
         {/* CHILD COMPONENTS */}
         <Pet petNumber={getTotalPets} />
         <Post />
       </Container>
-    </>
+    </Box>
   );
 };
 
@@ -124,6 +124,7 @@ const Header = styled.div`
   justify-content: flex-start;
   align-items: flex-end;
   background-color: #d9d9d9;
+  border-radius: 0 0 20px 20px;
   height: 300px;
 `;
 

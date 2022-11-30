@@ -118,6 +118,7 @@ const Map = () => {
     <div>
       <div className={classes.leafletContainer}>
         <MapContainer
+          className={classes.leap_wrapp}
           style={{ height: '100%', width: '100%' }}
           center={center}
           zoom={12}
@@ -134,8 +135,8 @@ const Map = () => {
                 position={[person.lat, person.lng]}
                 icon={getIcon(person.url)}
               >
-                <Popup>{person.location}</Popup>{' '}
-                <Tooltip>Tooltip for Marker</Tooltip>
+                <Popup >{person.location}</Popup>{' '}
+                <Tooltip >Tooltip for Marker</Tooltip>
               </Marker>
             );
           })}
