@@ -1,9 +1,15 @@
 import styled from 'styled-components';
-import { Avatar, Typography, Stack, Divider, Box, IconButton } from '@mui/material';
+import {
+  Avatar,
+  Typography,
+  Stack,
+  Divider,
+  Box,
+  IconButton,
+} from '@mui/material';
 import { useState } from 'react';
 import LoadingSpinner from '../../component/Spinner';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
-import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 import Pet from '../../component/profile/Pet';
@@ -35,7 +41,7 @@ const Profile = () => {
             </IconButton>
           </BackIconContainer>
           <SettingsIconContainer>
-            <IconButton onClick={() => router.push("/editprofile")}>
+            <IconButton onClick={() => router.push('/editprofile')}>
               <SettingsOutlinedIcon fontSize='large' />
             </IconButton>
           </SettingsIconContainer>

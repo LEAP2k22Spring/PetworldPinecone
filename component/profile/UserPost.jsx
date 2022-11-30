@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import styled from 'styled-components';
 import {
@@ -16,32 +16,36 @@ import {
 } from '@mui/material';
 import PopupState, { bindToggle, bindPopper } from 'material-ui-popup-state';
 import classes from '../../component/profile.module.css';
-import { useGetUsersDataContext } from '../../context/UsersDataContext';
 import { useGetPostsDataContext } from '../../context/PostsDataContext';
-import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import { auth, useCollection, useDocument, useFirebase, useSubCollection } from '../../firebase/useFirebase';
+import {
+  MoreHorizOutlined,
+  ArrowBack,
+  Delete,
+  Edit,
+} from '@mui/icons-material';
+import {
+  auth,
+  useCollection,
+  useFirebase,
+  useSubCollection,
+} from '../../firebase/useFirebase';
 import { useRouter } from 'next/router';
 import LoadingSpinner from '../Spinner';
 import moment from 'moment';
-import { useAuth } from '../../providers';
 
 //pages/profile/[...slug].js-ees duudagdagj bga.
 const UserPost = ({ postId }) => {
   const router = useRouter();
-  // const { getUsersData } = useGetUsersDataContext();
   const { postOwner } = useGetPostsDataContext();
-  const {  deleteData } = useFirebase('Posts');
-  const { data: postData, updateData } = useCollection("Posts", postId)
-  const { data: likes} = useSubCollection("Posts", postId, "likes")
-  const { data: comments, deleteData: deleteComment, createData: createComment } = useSubCollection("Posts", postId, "comments")
-  // const { data: follows, deleteData: unfollow, updateData: updateFollow } = useSubCollection("Users", userID, "follows")
+  const { deleteData } = useFirebase('Posts');
+  const { data: postData, updateData } = useCollection('Posts', postId);
+  const { data: likes } = useSubCollection('Posts', postId, 'likes');
+  const {
+    data: comments,
+    deleteData: deleteComment,
+    createData: createComment,
+  } = useSubCollection('Posts', postId, 'comments');
 
-
-      // const { data: ownerData } = useDocument({ path: 'Users', docId:  ownerId});
   const [isLoading, setIsLoading] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [openEditModal, setOpenEditModal] = useState(false);
@@ -101,7 +105,6 @@ const UserPost = ({ postId }) => {
 
   // FINAL STEP 2. - Update data to the firestore
   const onSubmit = async () => {
-    
     //1) get doc ID from "localhost:3000/profile/posts/PGxpOpuxFpscgloxV62g" url
     const postId = router.query.slug[1];
 
@@ -111,11 +114,9 @@ const UserPost = ({ postId }) => {
       setOpenEditModal(false);
 
       try {
-        updateData(
-          {
-            desc: desc,
-          }
-        );
+        updateData({
+          desc: desc,
+        });
 
         if (updateData) {
           setInputEditButton(false);
@@ -138,7 +139,7 @@ const UserPost = ({ postId }) => {
         <Header>
           <BackIconContainer onClick={goBackHandler}>
             <IconButton>
-              <ArrowBackIcon fontSize='large' />
+              <ArrowBack fontSize='large' />
             </IconButton>
           </BackIconContainer>
           <Typography variant='h6' sx={{ fontSize: '1.5rem', fontWeight: 700 }}>
@@ -172,7 +173,7 @@ const UserPost = ({ postId }) => {
                 {(popupState) => (
                   <div>
                     <IconButton variant='contained' {...bindToggle(popupState)}>
-                      <MoreHorizOutlinedIcon fontSize='large' />
+                      <MoreHorizOutlined fontSize='large' />
                     </IconButton>
                     <Popper {...bindPopper(popupState)} transition>
                       {({ TransitionProps }) => (
@@ -180,7 +181,7 @@ const UserPost = ({ postId }) => {
                           <Paper elevation={3}>
                             <Stack direction='column' alignItems='flex-start'>
                               <Button
-                                startIcon={<DeleteIcon />}
+                                startIcon={<Delete />}
                                 onClick={handleOpen}
                                 id='delete'
                               >
@@ -188,7 +189,7 @@ const UserPost = ({ postId }) => {
                               </Button>{' '}
                               <Divider style={{ width: '100%' }} />
                               <Button
-                                startIcon={<EditIcon />}
+                                startIcon={<Edit />}
                                 onClick={onPostEditHandler}
                               >
                                 Edit post
@@ -205,26 +206,23 @@ const UserPost = ({ postId }) => {
           </AvatarContainer>
           {/* 2.2) ==========USER POST IMAGE========================= */}
           <PostImage>
-            {postData? <Image
-              src={postData?.image}
-              alt='Picture of the author'
-              width={600}
-              height={400}
-              className={classes.postImage}
-            />: <Image
-            src="https://firebasestorage.googleapis.com/v0/b/petworldpinecone.appspot.com/o/no-image%20(1).png?alt=media&token=a56e4cdf-5382-4c6f-8860-aaa004558de6"
-            alt='Picture of the'
-            width={600}
-            height={400}
-            className={classes.postImage}
-          />}
-            {/* <Image
-              src={postData?.image}
-              alt='Picture of the author'
-              width={600}
-              height={400}
-              className={classes.postImage}
-            />{' '} */}
+            {postData ? (
+              <Image
+                src={postData?.image}
+                alt='Picture of the author'
+                width={600}
+                height={400}
+                className={classes.postImage}
+              />
+            ) : (
+              <Image
+                src='https://firebasestorage.googleapis.com/v0/b/petworldpinecone.appspot.com/o/no-image%20(1).png?alt=media&token=a56e4cdf-5382-4c6f-8860-aaa004558de6'
+                alt='Picture of the'
+                width={600}
+                height={400}
+                className={classes.postImage}
+              />
+            )}
           </PostImage>
           {/* 2.3) ==========USER LIKES========================= */}
           <Typography
@@ -248,13 +246,13 @@ const UserPost = ({ postId }) => {
               >
                 {postOwner?.name}
                 <span style={{ fontWeight: '400', marginLeft: '10px' }}>
-                  {isReadMore ? postData?.desc.slice(0, 100) : postData?.desc}
+                  {isReadMore ? postData?.desc?.slice(0, 100) : postData?.desc}
                 </span>
                 <button
                   onClick={toggleReadMore}
                   className={classes.viewMoreBtn}
                 >
-                  {postData?.desc.length < 100
+                  {postData?.desc?.length < 100
                     ? ''
                     : isReadMore
                     ? '...read more'

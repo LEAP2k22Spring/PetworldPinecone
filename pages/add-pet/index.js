@@ -24,7 +24,12 @@ import {
   ArrowBackIosNewOutlined,
 } from '@mui/icons-material';
 import { v4 as uuidv4 } from 'uuid';
-import { auth, imageUploadToFirestore, useDocument, useFirebase } from '../../firebase/useFirebase';
+import {
+  auth,
+  imageUploadToFirestore,
+  useDocument,
+  useFirebase,
+} from '../../firebase/useFirebase';
 import { useGetUsersDataContext } from '../../context/UsersDataContext';
 import { serverTimestamp } from 'firebase/firestore';
 
@@ -39,7 +44,7 @@ const names = [
 ];
 const AddPet = () => {
   const router = useRouter();
-  const {createData:createPet}=useDocument({path:"Pets"});
+  const { createData: createPet } = useDocument({ path: 'Pets' });
   const [isLoading, setIsLoading] = useState(false);
   const [imageData, setImageData] = useState({
     url: '',
@@ -179,8 +184,7 @@ const AddPet = () => {
       clearAllInputs();
       alert('Pet data successfully created!');
     }
-    router.push("/profile")
-
+    router.push('/profile');
   };
 
   // if data saved, then clear all inputs, make everything default
