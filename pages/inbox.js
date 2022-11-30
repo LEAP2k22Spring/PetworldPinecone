@@ -16,7 +16,7 @@ export default function Inbox() {
           color: "#fff",
         }}
       >
-        Chat Coming Soon...
+        Chat Coming Soon... Scammed by CH
       </Box>
     </>
   );

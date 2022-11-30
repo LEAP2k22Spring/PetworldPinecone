@@ -49,8 +49,8 @@ const AddPost = () => {
   };
   const onSave = async () => {
     // Validation - 1;
-    if (imageData.url === '') {
-      alert('Please upload your image');
+    if (imageData.url === "") {
+      alert("Please upload your image");
       return;
     }
     const { uploaded, url } = await imageUploadToFirestore(imageData);

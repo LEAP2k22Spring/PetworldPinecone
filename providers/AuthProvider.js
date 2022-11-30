@@ -1,9 +1,9 @@
-import { onAuthStateChanged, signOut } from "firebase/auth";
-import { createContext, useContext, useEffect, useState } from "react";
-import { auth, useDocument } from "../firebase/useFirebase";
-import Login from "../component/signin";
-import LandingPage from "../component/landingPage";
-import LoadingSpinner from "../component/Spinner";
+import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { createContext, useContext, useEffect, useState } from 'react';
+import { auth, useDocument } from '../firebase/useFirebase';
+import Login from '../component/signin';
+import LandingPage from '../component/landingPage';
+import LoadingSpinner from '../component/Spinner';
 
 const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
   const [checking, setChecking] = useState(true);
   const [startBtnClick, setStartBtnClick] = useState(false);
   const { data: userData, loading } = useDocument({
-    path: "Users",
+    path: 'Users',
     docId: auth?.currentUser?.uid,
   });
   useEffect(() => {
@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }) => {
     setStartBtnClick(true);
     signOut(auth)
       .then(() => {
-        console.log("Log-out success");
+        console.log('Log-out success');
       })
       .catch((err) => {
         console.log(err);
@@ -44,18 +44,18 @@ export const AuthProvider = ({ children }) => {
       {checking && (
         <h1
           style={{
-            position: "absolute",
-            zIndex: "1300",
-            width: "100%",
-            height: "100vh",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            background: "#fff",
-            color: "#000",
+            position: 'absolute',
+            zIndex: '1300',
+            width: '100%',
+            height: '100vh',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            background: '#fff',
+            color: '#000',
           }}
         >
-          <LoadingSpinner open={true} color="#000" />
+          <LoadingSpinner open={true} color='#000' />
         </h1>
       )}
 
