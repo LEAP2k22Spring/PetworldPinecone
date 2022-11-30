@@ -10,31 +10,23 @@ import {
 import classes from '../../component/profile.module.css';
 import styled from 'styled-components';
 import PetInfo from './PetInfo';
-import { useCollection } from '../../firebase/useFirebase';
 import { useState } from 'react';
 import LoadingSpinner from '../Spinner';
-import { useEffect } from 'react';
+import { useCollection } from '../../firebase/useFirebase';
 
-export const PetProfile = ({ petData }) => {
+export const PetProfile = ({ data }) => {
   const router = useRouter();
-  const petId = router.query.petId;
-  const {data} = useCollection("Pets", petId)
-  const [isLoading, setIsLoading] = useState(false);
-  useEffect(()=>{
-    if(data){
-      setIsLoading(false);
-    }
-  },[data])
   const goBackHandler = () => {
     router.back();
   };
   return (
     <>
       <Container>
-      <LoadingSpinner open={isLoading} />
+      {/* <LoadingSpinner open={isLoading} /> */}
         <Header>
           <Box sx={{ width: '100%', height: '400px' }}>
-            {data?.image ? <Image
+            {data?.image ? <img src={data?.image} width="100%" height={400} style={{ objectFit: 'cover' }}/> : <img src="https://firebasestorage.googleapis.com/v0/b/petworldpinecone.appspot.com/o/no-image%20(1).png?alt=media&token=a56e4cdf-5382-4c6f-8860-aaa004558de6" width="100%" height={300} style={{ objectFit: 'cover' }}/>}
+            {/* {data?.image ? <Image
               src={data?.image}
               fill
               sizes="(max-width: 768px) 100vw,
@@ -50,7 +42,7 @@ export const PetProfile = ({ petData }) => {
             33vw"
             style={{ objectFit: 'cover' }}
             alt='Picture'
-          />}
+          />} */}
           </Box>
           <BackIconContainer onClick={goBackHandler}>
             <ArrowBackIosNewOutlined fontSize='large' />
@@ -116,7 +108,8 @@ export const PetProfile = ({ petData }) => {
           >
             Pet photos
           </Typography>
-          {data?.image ? <Image
+          {data?.image ? <img alt='Picture of the cover' src={data?.image} width={150} height={150} className={classes.image}/> : <img alt='Picture of the cover' src="https://firebasestorage.googleapis.com/v0/b/petworldpinecone.appspot.com/o/no-image%20(1).png?alt=media&token=a56e4cdf-5382-4c6f-8860-aaa004558de6" width={150} height={150} className={classes.image}/>}
+          {/* {data?.image ? <Image
               src={data?.image}
               width={150}
               height={150}
@@ -130,7 +123,7 @@ export const PetProfile = ({ petData }) => {
             alt='Picture'
             className={classes.image}
 
-          />}
+          />} */}
 
         </UserProfile>
       </Container>

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Avatar, Typography, Stack, Divider } from '@mui/material';
+import { Avatar, Typography, Stack, Divider, Box } from '@mui/material';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import { useRouter } from 'next/router';
 import LoadingSpinner from '../Spinner';
@@ -41,7 +41,8 @@ const Pet = () => {
           alignItems='center'
           mb={5}
         >
-          <PetAvatarContainer>
+          {/* <PetAvatarContainer> */}
+          <Box display="flex">
             {petData &&
               petData?.map((pet, i) => (
                 <PetAvatar
@@ -53,7 +54,8 @@ const Pet = () => {
                   onClick={() => editPetHandler(pet.docId)}
                 />
               ))}
-          </PetAvatarContainer>
+          </Box>
+          {/* </PetAvatarContainer> */}
           <Avatar sx={{ margin: '0 10px' }} onClick={openAddPetHandler}>
             <AddOutlinedIcon />
           </Avatar>

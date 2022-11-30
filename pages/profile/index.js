@@ -15,7 +15,6 @@ const Profile = () => {
   const { userData, loading } = useAuth();
   const [totalPets, setTotalPets] = useState('');
   const router = useRouter();
-
   const getTotalPets = (number) => {
     setTotalPets(number);
   };
@@ -28,17 +27,18 @@ const Profile = () => {
     <>
       <Container>
         {loading && <LoadingSpinner open={loading} />}
-        <Header>
-          <BackIconContainer>
-            <IconButton onClick={goBackHandler}>
-              <ArrowBackIcon fontSize='large' />
-            </IconButton>
-          </BackIconContainer>
-          <SettingsIconContainer>
-            <IconButton onClick={() => router.push("/editprofile")}>
-              <SettingsOutlinedIcon fontSize='large' />
-            </IconButton>
-          </SettingsIconContainer>
+        <Header >
+          <Box position="absolute" left={30} mt={1}>
+              <IconButton sx={{backgroundColor:"#f8aa08", color:"#fff"}} onClick={goBackHandler}>
+                <ArrowBackIcon fontSize='large' />
+              </IconButton>
+          </Box>
+          <Box position="absolute" right={30} mt={1}>
+                <IconButton sx={{backgroundColor:"#f8aa08", color:"#fff"}} onClick={() => router.push("/editprofile")} >
+                  <SettingsOutlinedIcon fontSize='large' />
+                </IconButton>
+          </Box>
+          <img alt='background_image' src={userData?.backgroundImage ? userData?.backgroundImage : "https://firebasestorage.googleapis.com/v0/b/petworldpinecone.appspot.com/o/no-image%20(1).png?alt=media&token=a56e4cdf-5382-4c6f-8860-aaa004558de6"} width="100%" height={300} style={{objectFit:"cover"}}/>
         </Header>
         <AvatarContainer>
           <UserAvatar src={userData?.avatar} />
@@ -119,17 +119,10 @@ const Container = styled.div`
   margin-bottom: 200px;
 `;
 const Header = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-end;
   background-color: #d9d9d9;
   height: 300px;
 `;
 
-const SettingsIconContainer = styled.div`
-  padding: 20px;
-`;
 
 const AvatarContainer = styled.div`
   display: flex;
@@ -156,9 +149,4 @@ const StyledTypography = styled(Typography)`
   color: #696969;
   font-weight: 700;
   font-size: 1rem;
-`;
-const BackIconContainer = styled.div`
-  padding: 20px;
-  position: absolute;
-  left: 10px;
 `;

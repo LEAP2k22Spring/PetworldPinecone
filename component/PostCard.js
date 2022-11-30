@@ -66,7 +66,7 @@ export default function RecipeReviewCard() {
                   <CardMedia
                     component="img"
                     height="200"
-                    src={`${pet.image}?w=248&fit=crop&auto=format`}
+                    src={`${pet?.image ? pet?.image : "https://firebasestorage.googleapis.com/v0/b/petworldpinecone.appspot.com/o/no-image%20(1).png?alt=media&token=a56e4cdf-5382-4c6f-8860-aaa004558de6"}?w=248&fit=crop&auto=format`}
                     alt="Pets image"
                   ></CardMedia>
                 </Link>

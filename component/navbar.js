@@ -15,7 +15,7 @@ import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 
 function Navbar() {
   const router = useRouter();
-  const { logout } = useAuth();
+  const { userData, logout } = useAuth();
   return (
     <Box className={styles.nav_wrapp}>
       <Box className={styles.nav}>
@@ -50,20 +50,20 @@ function Navbar() {
             <PopupState variant="popover" popupId="demo-popup-menu">
               {(popupState) => (
                 <Fragment >
-                  <span className={styles.list_item_name} {...bindTrigger(popupState)} >Profile</span>
+                  <span className={router.pathname === "/profile" ? styles.list_item_active : styles.list_item} {...bindTrigger(popupState)} >Profile</span>
                   <Avatar
-                    {...bindTrigger(popupState)}
+                    // {...bindTrigger(popupState)}
                     alt="Remy Sharp"
-                    src="https://images.unsplash.com/photo-1551963831-b3b1ca40c98e"
+                    src={userData?.avatar}
                     sx={{
                       width: "22px",
                       height: "22px",
                       marginTop: "1px",
                       fontSize: "12px",
-                      border: "1px solid black",
+                      // border: "1px solid black",
                       position: "absolute",
                     }}
-                    className={styles.icon}
+                    className={styles.icon_active}
                   />
 
                   <Menu {...bindMenu(popupState)}>

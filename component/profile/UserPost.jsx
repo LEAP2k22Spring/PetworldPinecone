@@ -23,7 +23,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { auth, useCollection, useDocument, useFirebase, useSubCollection } from '../../firebase/useFirebase';
+import { auth, useCollection, useDocument, useFirebase, useSort, useSubCollection } from '../../firebase/useFirebase';
 import { useRouter } from 'next/router';
 import LoadingSpinner from '../Spinner';
 import moment from 'moment';
@@ -38,6 +38,7 @@ const UserPost = ({ postId }) => {
   const { data: postData, updateData } = useCollection("Posts", postId)
   const { data: likes} = useSubCollection("Posts", postId, "likes")
   const { data: comments, deleteData: deleteComment, createData: createComment } = useSubCollection("Posts", postId, "comments")
+  const {deleteData:deleteImage} = useSort();
   // const { data: follows, deleteData: unfollow, updateData: updateFollow } = useSubCollection("Users", userID, "follows")
 
 
@@ -49,6 +50,8 @@ const UserPost = ({ postId }) => {
   const [inputEditButton, setInputEditButton] = useState(false);
   const [desc, setDesc] = useState('');
   const [isReadMore, setIsReadMore] = useState(true);
+
+  console.log("ddd", postData?.image);
   const handleOpen = (e) => {
     if (e.target.id === 'delete') {
       setOpenModal(true);
@@ -90,6 +93,8 @@ const UserPost = ({ postId }) => {
       const postId = router.query.slug[1];
       try {
         await deleteData(postId);
+        deleteImage(postData?.image)
+        console.log();
         setOpenModal(false);
         setIsLoading(false);
         // alert('таны пост устлаа.');

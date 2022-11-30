@@ -27,16 +27,18 @@ import {
   updateDoc,
   deleteDoc,
 } from "firebase/firestore";
-import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
+import { getStorage, ref, getDownloadURL, uploadBytes, deleteObject } from "firebase/storage";
 
 // import { db, app } from "../firebase.config";
 
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const auth = getAuth();
+const storage = getStorage(app);
+
 
 export const useFirebase = (path) => {
-  const [data, setPetData] = useState();
+  const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
 
   useEffect(()=>{
@@ -56,14 +58,10 @@ export const useFirebase = (path) => {
                 // const results = await userDataPost("Users", doc.data().ownerID);
                   item.push({
                     ...doc.data(),
-                    
-                    // userName: results.firstName,
-                    // userAvatar: results.avatar,
                     id: doc.id,
                   });
               }
-              setPetData(item)
-            // console.log("item", item);
+              setData(item)
             }
           } catch (error) {
             console.log(error.message);
@@ -169,6 +167,7 @@ export const useCollection = (collectionName, docId) => {
     return userId;
   };
 
+
   // const userDataPost = async (path, id) => {
   //   const docRef = doc(collection(db, path), id);
   //   const docSnap = await getDoc(docRef);
@@ -211,6 +210,7 @@ export const useCollection = (collectionName, docId) => {
     createUser,
     // getFireabasePostsData,
     createData,
+    updateData
   };
 };
 // const updateData = () => updateDoc
@@ -254,6 +254,7 @@ export const userSignIn = async (email, pass) => {
 };
 
 export const useSort = (path, sortField, id) => {
+  
   const [data, setData] = useState([]);
   useEffect(() => {
     if (id) {
@@ -279,7 +280,21 @@ export const useSort = (path, sortField, id) => {
       })();
     }
   }, [id, path, sortField]);
-  return { data };
+
+
+  const deleteData = (url) =>{
+    const httpsReference = ref(storage, url)
+    const imageName = ref(storage, `images/${httpsReference.name}`);
+    deleteObject(imageName).then(() => {
+      // File deleted successfully
+      console.log("ustgalaa");
+    }).catch((error) => {
+      // Uh-oh, an error occurred!
+    });
+  }
+
+
+  return { data, deleteData };
 };
 
 export const useDocument = ({ path, docId }) => {
@@ -315,20 +330,34 @@ export const useDocument = ({ path, docId }) => {
 export const imageUploadToFirestore = async (imageData) => {
   let isImageUploaded = "";
   try {
-    const storage = getStorage(app);
+    // const storage = getStorage(app);
     const storageRef = ref(storage, "images/" + imageData.imageName);
 
     await uploadBytes(storageRef, imageData.file);
 
     const downloadURL = await getDownloadURL(storageRef);
-
+    console.log("downloadURL", downloadURL);
     isImageUploaded = true;
     //add new key (URL) to addedFood object.
 
     return { uploaded: isImageUploaded, url: downloadURL };
   } catch (error) {
-    alert(error);
+    // alert(error);
     console.log("aldaa", error.message);
     return false;
   }
 };
+
+
+// const storage = getStorage();
+// export const deleteStorage =()=>{
+//   const httpsReference = ref(storage, 'https://firebasestorage.googleapis.com/v0/b/petworldpinecone.appspot.com/o/images%2Fsoftware.jpg?alt=media&token=d4c74b83-1915-4895-8acc-22efbb2b795f')
+//   const desertRef = ref(storage, `images/${httpsReference.name}`);
+//   console.log("httpsReference", httpsReference.name);
+//   deleteObject(desertRef).then(() => {
+//     // File deleted successfully
+//     console.log("ustgalaa");
+//   }).catch((error) => {
+//     // Uh-oh, an error occurred!
+//   });
+// }
