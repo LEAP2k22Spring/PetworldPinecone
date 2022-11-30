@@ -36,7 +36,11 @@ const Map = () => {
     lat: 0,
     lng: 0,
   });
-  const { data: people, getData, createUserData } = useCollection('Location'); //real-time listens
+  const {
+    snapData: people,
+    getData,
+    createUserData,
+  } = useCollection('Location'); //real-time listens
   const [openModal, setOpenModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [openMap, setOpenMap] = useState(false);

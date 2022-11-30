@@ -103,9 +103,31 @@ export const useFirebase = (path) => {
   };
 };
 
-export const useCollection = (collectionName) => {
+export const useCollection = (collectionName, docId) => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState();
+  const [snapData, setSnapData] = useState();
+
+  useEffect(() => {
+    if (docId) {
+      (async () => {
+        try {
+          setLoading(true);
+          const docRef = doc(db, collectionName, docId);
+          const docSnap = await getDoc(docRef);
+          if (docSnap.exists()) {
+            setData(docSnap.data());
+          } else {
+            console.log('No such document!');
+          }
+        } catch (error) {
+          console.log(error.message);
+        } finally {
+          setLoading(false);
+        }
+      })();
+    }
+  }, [collectionName, docId]);
 
   //real time update listener
   useEffect(() => {
@@ -115,7 +137,7 @@ export const useCollection = (collectionName) => {
       snapshot.docs.forEach((doc) => {
         result.push({ ...doc.data() });
       });
-      setData(result);
+      setSnapData(result);
     });
     return () => unsubscribe();
   }, [collectionName]);
@@ -167,6 +189,7 @@ export const useCollection = (collectionName) => {
 
   // image upload Component Firebase
   return {
+    snapData,
     data,
     loading,
     getData,
