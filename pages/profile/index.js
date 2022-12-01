@@ -10,23 +10,18 @@ import Pet from '../../component/profile/Pet';
 import Post from '../../component/profile/Post';
 import { useRouter } from 'next/router';
 import { useAuth } from '../../providers';
+import { auth, useDocument, useSort, useSubCollection } from '../../firebase/useFirebase';
 
 const Profile = () => {
-  const { userData, loading } = useAuth();
-  const [totalPets, setTotalPets] = useState('');
-  const router = useRouter();
-  const getTotalPets = (number) => {
-    setTotalPets(number);
-  };
-
+  const { userData, loading, petData } = useAuth();
   const goBackHandler = () => {
     router.back();
   };
 
   return (
     <>
-      <Container>
-        {loading && <LoadingSpinner open={loading} />}
+      {loading && <LoadingSpinner open={loading} />}
+       <Container>
         <Header >
           <Box position="absolute" left={30} mt={1}>
               <IconButton sx={{backgroundColor:"#f8aa08", color:"#fff"}} onClick={goBackHandler}>
@@ -70,9 +65,9 @@ const Profile = () => {
             {userData?.cityName}
           </StyledTypography>
           <Stack direction='row' justifyContent='space-between' my={5} mx={5}>
-            <StyledTypography>{totalPets} pets</StyledTypography>
-            <StyledTypography>25 friends</StyledTypography>
-            <StyledTypography>2 saved</StyledTypography>
+            <StyledTypography>{petData?.length} pets</StyledTypography>
+            {/* <StyledTypography>{userFollowers?.length} followers</StyledTypography> */}
+            <StyledTypography>2 following</StyledTypography>
           </Stack>
         </UserProfile>
         <Divider sx={{ borderBottomWidth: 20, borderColor: '#d9d9d9' }} />
@@ -105,7 +100,7 @@ const Profile = () => {
         </UserProfile>
         <Divider sx={{ borderBottomWidth: 20, borderColor: '#d9d9d9' }} />
         {/* CHILD COMPONENTS */}
-        <Pet petNumber={getTotalPets} />
+        <Pet />
         <Post />
       </Container>
     </>

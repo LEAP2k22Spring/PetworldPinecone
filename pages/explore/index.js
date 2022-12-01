@@ -1,14 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
-  Avatar,
-  AvatarGroup,
   Button,
-  Card,
-  CardActions,
-  CardHeader,
-  CardMedia,
   Divider,
-  IconButton,
   Typography,
 } from '@mui/material';
 import { Box } from '@mui/system';

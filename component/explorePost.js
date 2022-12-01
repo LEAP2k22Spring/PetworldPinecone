@@ -25,6 +25,8 @@ const Post = ({ id, userAvatar, createdAt, desc, userName, image, userID }) => {
     const { data: comments, deleteData: deleteComment, createData: createComment } = useSubCollection("Posts", id, "comments")
     const { data: follows, deleteData: unfollow, updateData: updateFollow } = useSubCollection("Users", userID, "follows")
 
+
+
     //Post likes deleteData and createData
     const likePost = async () => {
         try {
@@ -39,6 +41,7 @@ const Post = ({ id, userAvatar, createdAt, desc, userName, image, userID }) => {
     };
 
     const sendComment = async (e) => {
+
         e.preventDefault();
         /*     setLoading(true); */
         try {

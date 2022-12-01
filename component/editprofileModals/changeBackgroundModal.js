@@ -6,8 +6,9 @@ import CheckIcon from '@mui/icons-material/Check';
 import styled from "styled-components";
 import { useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
-import { auth, imageUploadToFirestore, useCollection, useSort } from "../../firebase/useFirebase";
 import { useAuth } from "../../providers";
+import { auth, imageUploadToFirestore, useCollection, useSort } from "../../firebase/useFirebase";
+
 
 const style = {
     position: 'fixed',
@@ -24,7 +25,7 @@ const style = {
 const Label = styled.label`
   position: absolute;
   top: 230px;
-  left: 210px;
+  left: 260px;
   width: 30px;
   height: 30px;
   border: 3px solid #fff;
@@ -32,7 +33,7 @@ const Label = styled.label`
   border-radius: 50%;
 `;
 
-const UploadImageModal = ({openProfile, onClose}) =>{
+const ChangeBackgroundModal = ({openBackground, onClose}) =>{
     const {updateData} = useCollection("Users", auth?.currentUser?.uid)
     const {deleteData} = useSort()
     const {userData} = useAuth(); 
@@ -64,28 +65,36 @@ const UploadImageModal = ({openProfile, onClose}) =>{
         }
         const { uploaded, url } = await imageUploadToFirestore(imageData);
         if (uploaded) {
-          updateData({avatar:url})
-          if(userData?.avatar){
-            deleteData(userData?.avatar)
+          updateData({backgroundImage:url})
+          if(userData?.backgroundImage){
+            deleteData(userData?.backgroundImage)
           }
           onClose(false)
+          alert("Амжилттай зураг солигдлоо")
         } else {
           alert("Could not upload image");
           return;
         }
       };
     return(
-            <Modal open={openProfile} onClose={onClose}>
+            <Modal open={openBackground} onClose={onClose}>
                 <Box sx={style}>
                     <Box sx={{display:'flex', flexDirection:"column", alignItems:'center', gap:2}}>
                         <IconButton onClick={()=>onClose(false)} sx={{border:"1px solid #000"}}>
                             <ArrowBackIcon/>
                         </IconButton>
                         <Typography id="modal-modal-title" variant="h6" component="h2">
-                        Add a profile photo
+                        Add a background photo
                         </Typography>
                         <Box sx={{margin: ' 10px', display:'flex', alignItems:'center', justifyContent:'center'}}>
-                            <Avatar alt="user_avatar" src={imageData.url ? imageData.url : userData?.avatar} sx={{ width: 106, height: 106 }}/>
+                            {/* <Avatar alt="user_avatar" src={imageData.url ? imageData.url : ""} sx={{ width: 106, height: 106 }}/> */}
+                            <img
+                                src={imageData.url ? imageData.url : userData?.backgroundImage}
+                                alt="test"
+                                width="200"
+                                height={100}
+                                style={{objectFit:"cover"}}
+                            />
                             <Label>
                                 <Input
                                     sx={{ display: 'none' }}
@@ -99,10 +108,9 @@ const UploadImageModal = ({openProfile, onClose}) =>{
                             <CheckIcon/>
                         </IconButton>
                     </Box>
-
                 </Box>
             </Modal>
     )
 }
 
-export default UploadImageModal;
+export default ChangeBackgroundModal;

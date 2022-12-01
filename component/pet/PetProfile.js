@@ -1,12 +1,13 @@
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { Typography, Stack, Divider, Box } from '@mui/material';
-import {
-  SettingsOutlined,
-  FemaleOutlined,
-  MaleOutlined,
-  ArrowBackIosNewOutlined,
-} from '@mui/icons-material';
+import { Typography, Stack, Divider, Box, IconButton } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import FemaleOutlined from '@mui/icons-material/FemaleOutlined';
+import MaleOutlined from '@mui/icons-material/MaleOutlined';
+
+
 import classes from '../../component/profile.module.css';
 import styled from 'styled-components';
 import PetInfo from './PetInfo';
@@ -14,42 +15,31 @@ import { useState } from 'react';
 import LoadingSpinner from '../Spinner';
 import { useCollection } from '../../firebase/useFirebase';
 
-export const PetProfile = ({ data }) => {
+const PetProfile = ({ data }) => {
   const router = useRouter();
+  const petId = router.query.petId;
+
   const goBackHandler = () => {
     router.back();
+  };
+  const editPetHandler = (id) => {
+    router.push(`/pet/${id}`);
   };
   return (
     <>
       <Container>
-      {/* <LoadingSpinner open={isLoading} /> */}
-        <Header>
-          <Box sx={{ width: '100%', height: '400px' }}>
-            {data?.image ? <img src={data?.image} width="100%" height={400} style={{ objectFit: 'cover' }}/> : <img src="https://firebasestorage.googleapis.com/v0/b/petworldpinecone.appspot.com/o/no-image%20(1).png?alt=media&token=a56e4cdf-5382-4c6f-8860-aaa004558de6" width="100%" height={300} style={{ objectFit: 'cover' }}/>}
-            {/* {data?.image ? <Image
-              src={data?.image}
-              fill
-              sizes="(max-width: 768px) 100vw,
-              (max-width: 1200px) 50vw,
-              33vw"
-              style={{ objectFit: 'cover' }}
-              alt='Picture of the cover'
-            /> : <Image
-            src='https://firebasestorage.googleapis.com/v0/b/petworldpinecone.appspot.com/o/no-image%20(1).png?alt=media&token=a56e4cdf-5382-4c6f-8860-aaa004558de6'
-            fill
-            sizes="(max-width: 768px) 100vw,
-            (max-width: 1200px) 50vw,
-            33vw"
-            style={{ objectFit: 'cover' }}
-            alt='Picture'
-          />} */}
+        <Header >
+          <Box position="absolute" left={30} mt={1}>
+              <IconButton sx={{backgroundColor:"#f8aa08", color:"#fff"}} onClick={goBackHandler}>
+                <ArrowBackIcon fontSize='large' />
+              </IconButton>
           </Box>
-          <BackIconContainer onClick={goBackHandler}>
-            <ArrowBackIosNewOutlined fontSize='large' />
-          </BackIconContainer>
-          <SettingsIconContainer>
-            <SettingsOutlined fontSize='large' />
-          </SettingsIconContainer>
+          <Box position="absolute" right={30} mt={1}>
+                <IconButton sx={{backgroundColor:"#f8aa08", color:"#fff"}} onClick={() => editPetHandler(petId)} >
+                  <SettingsOutlinedIcon fontSize='large' />
+                </IconButton>
+          </Box>
+          <img alt='background_image' src={ data?.image ? data?.image : "https://firebasestorage.googleapis.com/v0/b/petworldpinecone.appspot.com/o/no-image%20(1).png?alt=media&token=a56e4cdf-5382-4c6f-8860-aaa004558de6"} width="100%" height={400} style={{objectFit:"cover"}}/>
         </Header>
         <AvatarContainer>
           <Box className={classes.petProfileBox}>
@@ -130,17 +120,13 @@ export const PetProfile = ({ data }) => {
     </>
   );
 };
-
+export default PetProfile;
 const Container = styled.div`
   position: relative;
 `;
 const Header = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-end;
-  position: relative;
-  /* height: 300px; */
+background-color: #d9d9d9;
+height: 400px;
 `;
 
 const SettingsIconContainer = styled.div`

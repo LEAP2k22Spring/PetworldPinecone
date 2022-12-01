@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useCollection, useFirebase } from '../../firebase/useFirebase';
 import LoadingSpinner from '../../component/Spinner';
 import { useRouter } from 'next/router';
-import { PetProfile } from '../../component/pet';
+import PetProfile from '../../component/pet/petProfile';
 
 const Pet = () => {
   const router = useRouter();

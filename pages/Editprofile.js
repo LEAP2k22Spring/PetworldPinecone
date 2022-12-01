@@ -1,21 +1,27 @@
-import {Avatar, Box, Button, Divider, Fab, FormControl, FormControlLabel, IconButton, ImageList, ImageListItem, Input, Modal, Radio, RadioGroup, TextField, Typography,} from '@mui/material'
+import {Avatar, Box, Button, Divider, Fab,  IconButton, Typography,} from '@mui/material'
 import React, { useState } from 'react'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import styled from "styled-components";
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { useAuth } from '../providers';
 import { useRouter } from 'next/router';
-import { uuidv4 } from '@firebase/util';
-import UploadImageModal from '../component/editprofileModals/uploadImageModal';
-import UploadBackgroundModal from '../component/editprofileModals/uploadBackgroundModal';
+import ChangeGenderModal from '../component/editprofileModals/changeGenderModal';
+import ChangeBackgroundModal from '../component/editprofileModals/changeBackgroundModal';
+import ChangeImageModal from '../component/editprofileModals/changeImageModal';
+import { auth, useDocument } from '../firebase/useFirebase';
 
 function Editprofile() {
-    const {userData} = useAuth()
+    const {userData , loading} = useAuth()
+    
+    // const { data: userData, loading } = useDocument({
+    //     path: "Users",
+    //     docId: auth?.currentUser?.uid,
+    //   });
+ 
+
     const router = useRouter()
-    const [open, setOpen] = useState(false);
     const [openProfile, setOpenProfile] = useState(false);
     const [openBackground, setOpenBackground] = useState(false);
-
+    const [openGender, setOpenGender] = useState(false);
 
     const [petInputData, setPetInputData] = useState({
         // firstName:"",
@@ -36,16 +42,20 @@ function Editprofile() {
         if(e.currentTarget.id === "upload-background-image"){
             setOpenBackground(true)
         }
+        if(e.currentTarget.id === "change-gender"){
+            setOpenGender(true)
+        }
     }
 
     return(
         <>
+        {loading && <LoadingSpinner open={loading} />}
         <Box p={2} display="flex" justifyContent="space-between" alignItems="center" sx={{backgroundColor:"#ddd"}}> 
             <Fab variant='circular' size='small' sx={{display:'flex', justifyContent:'center', alignItems:'center'}} onClick={goBackHandler}>
                 <ArrowBackIcon/>
             </Fab>
             <Typography variant='h6'>Edit Profile</Typography>
-            <Button variant='contained' >Save</Button>
+            <Button variant='contained' onClick={()=>router.push("/profile")}>Save</Button>
         </Box>
         <Box>
             <Box p={2} display="flex" justifyContent="space-between" alignItems="center">
@@ -54,7 +64,7 @@ function Editprofile() {
                     <IconButton id='upload-profile-image'  onClick={clickOpen}>
                         <Typography fontSize={15} color="#ffbb00" id="sss" >Upload New</Typography>
                     </IconButton>
-                    <UploadImageModal openProfile={openProfile} onClose={()=>setOpenProfile(false)}/>
+                    <ChangeImageModal openProfile={openProfile} onClose={()=>setOpenProfile(false)}/>
                 </Box>
 
             </Box>
@@ -70,7 +80,7 @@ function Editprofile() {
                     <IconButton id='upload-background-image' onClick={clickOpen}>
                         <Typography fontSize={15} color="#ffbb00" >Upload New</Typography>
                     </IconButton>
-                    <UploadBackgroundModal openBackground={openBackground} onClose={()=>setOpenBackground(false)}/>
+                    <ChangeBackgroundModal openBackground={openBackground} onClose={()=>setOpenBackground(false)}/>
                 </Box>
             </Box>
             <Box ml={2} mr={2} display="flex" justifyContent="center" alignItems="center">
@@ -98,9 +108,10 @@ function Editprofile() {
             <Typography variant='h7' >Gender</Typography>
             <Box display="flex" justifyContent="space-between" alignItems="center">
                 <Typography variant='h7'> {petInputData?.gender ? petInputData?.gender : userData?.gender}</Typography>
-                <IconButton >
+                <IconButton id='change-gender' onClick={clickOpen}>
                     <NavigateNextIcon/>
                 </IconButton>
+                    <ChangeGenderModal openGender={openGender} onClose={()=>setOpenGender(false)}/>
             </Box>
         </Box>
         <Divider sx={{margin:'0 20px 0 20px'}}/>
