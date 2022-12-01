@@ -8,6 +8,7 @@ import {
   useMapEvents,
 } from 'react-leaflet';
 import classes from '../../../styles/map.module.css';
+import styled from 'styled-components';
 import 'leaflet/dist/leaflet.css';
 import { icon } from 'leaflet';
 import L from 'leaflet';
@@ -79,6 +80,7 @@ function DraggableMarker() {
 
   return (
     <Marker
+
       draggable={draggable}
       eventHandlers={eventHandlers}
       position={position}
@@ -131,6 +133,7 @@ const Map = () => {
           {people.map((person, i) => {
             return (
               <Marker
+                className={classes.molyZoly}
                 key={i}
                 position={[person.lat, person.lng]}
                 icon={getIcon(person.url)}
@@ -149,6 +152,10 @@ const Map = () => {
 };
 
 export default Map;
+
+const Border = styled.div`
+  border-radius: 50%;
+`;
 
 // https://stackoverflow.com/questions/67552020/how-to-fix-error-failed-to-compile-node-modules-react-leaflet-core-esm-pat
 
