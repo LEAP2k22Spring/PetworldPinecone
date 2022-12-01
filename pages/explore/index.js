@@ -57,7 +57,7 @@ const ExplorePage = () => {
           }}
         >
           {postsData?.map((el, i) => {
-            const userFilterData = userData.find(
+            const userFilterData = userData?.find(
               (data) => data.id === el.userID
             );
             return (

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import {Avatar, Box, Button, Divider, Fab,  IconButton, Typography,} from '@mui/material'
 import React, { useState } from 'react'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -8,6 +9,7 @@ import ChangeGenderModal from '../component/editprofileModals/changeGenderModal'
 import ChangeBackgroundModal from '../component/editprofileModals/changeBackgroundModal';
 import ChangeImageModal from '../component/editprofileModals/changeImageModal';
 import { auth, useDocument } from '../firebase/useFirebase';
+import LoadingSpinner from '../component/Spinner';
 
 function Editprofile() {
     const {userData , loading} = useAuth()

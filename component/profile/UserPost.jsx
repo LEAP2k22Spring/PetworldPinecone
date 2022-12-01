@@ -33,9 +33,9 @@ import { useAuth } from '../../providers';
 const UserPost = ({ postId }) => {
   const router = useRouter();
   // const { getUsersData } = useGetUsersDataContext();
-  const { postOwner } = useGetPostsDataContext();
   const {  deleteData } = useFirebase('Posts');
   const { data: postData, updateData } = useCollection("Posts", postId)
+  const {data:userData} = useCollection("Users", postData?.userID)
   const { data: likes} = useSubCollection("Posts", postId, "likes")
   const { data: comments, deleteData: deleteComment, createData: createComment } = useSubCollection("Posts", postId, "comments")
   const {deleteData:deleteImage} = useSort();
@@ -149,7 +149,7 @@ const UserPost = ({ postId }) => {
           <Typography variant='h6' sx={{ fontSize: '1.5rem', fontWeight: 700 }}>
             {auth?.currentUser?.uid === postData?.userID
               ? 'My posts'
-              : `${postOwner?.name}'s posts`}
+              : `${userData?.firstName}'s posts`}
           </Typography>
         </Header>
         <Divider sx={{ borderBottomWidth: 20, borderColor: '#d9d9d9' }} />
@@ -162,17 +162,17 @@ const UserPost = ({ postId }) => {
               justifyContent='space-between'
               alignItems='center'
             >
-              <UserAvatar src={postOwner?.avatar} />
+              <UserAvatar src={userData?.avatar} />
               <Typography
                 variant='h6'
                 ml={2}
                 sx={{ fontSize: '1.5rem', fontWeight: 700, color: '#696969' }}
               >
-                {postOwner?.name}
+                {userData?.firstName}
               </Typography>
             </Stack>
             {/* 2.1.1) =================================== */}
-            {auth?.currentUser?.uid === postOwner.id && (
+            {auth?.currentUser?.uid === postData?.userID && (
               <PopupState variant='popper' popupId='demo-popup-popper'>
                 {(popupState) => (
                   <div>
@@ -251,7 +251,7 @@ const UserPost = ({ postId }) => {
                   fontWeight: 700,
                 }}
               >
-                {postOwner?.name}
+                {userData?.firstName}
                 <span style={{ fontWeight: '400', marginLeft: '10px' }}>
                   {isReadMore ? postData?.desc.slice(0, 100) : postData?.desc}
                 </span>

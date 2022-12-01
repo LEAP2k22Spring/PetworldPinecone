@@ -18,15 +18,13 @@ import { useAuth } from "../providers";
 
 const Post = ({ id, userAvatar, createdAt, desc, userName, image, userID }) => {
     const {userData} = useAuth();
-    const { setPostOwner } = useGetPostsDataContext();
     const [comment, setComment] = useState("");
     const router = useRouter();
     const { data: likes, deleteData: deleteLike, updateData: updateLike } = useSubCollection("Posts", id, "likes")
     const { data: comments, deleteData: deleteComment, createData: createComment } = useSubCollection("Posts", id, "comments")
     const { data: follows, deleteData: unfollow, updateData: updateFollow } = useSubCollection("Users", userID, "follows")
 
-
-
+    console.log("Log");
     //Post likes deleteData and createData
     const likePost = async () => {
         try {
@@ -75,11 +73,6 @@ const Post = ({ id, userAvatar, createdAt, desc, userName, image, userID }) => {
 
 
     const openAddPetHandler = (docId) => {
-        setPostOwner({
-            avatar: userAvatar,
-            name: userName,
-            id: userID,
-        });
         router.push(`/profile/posts/${docId}`);
     };
     return (

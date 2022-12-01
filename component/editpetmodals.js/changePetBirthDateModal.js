@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import { IconButton, Modal, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';

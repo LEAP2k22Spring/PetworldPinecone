@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import styled from 'styled-components';
 import { Avatar, Typography, Stack, Divider, Box, IconButton } from '@mui/material';
 import { useState } from 'react';
@@ -13,6 +14,7 @@ import { useAuth } from '../../providers';
 import { auth, useDocument, useSort, useSubCollection } from '../../firebase/useFirebase';
 
 const Profile = () => {
+  const router = useRouter();
   const { userData, loading, petData } = useAuth();
   const goBackHandler = () => {
     router.back();
@@ -21,19 +23,19 @@ const Profile = () => {
   return (
     <>
       {loading && <LoadingSpinner open={loading} />}
-       <Container>
+      <Container>
         <Header >
           <Box position="absolute" left={30} mt={1}>
-              <IconButton sx={{backgroundColor:"#f8aa08", color:"#fff"}} onClick={goBackHandler}>
-                <ArrowBackIcon fontSize='large' />
-              </IconButton>
+            <IconButton sx={{ backgroundColor: "#f8aa08", color: "#fff" }} onClick={goBackHandler}>
+              <ArrowBackIcon fontSize='large' />
+            </IconButton>
           </Box>
           <Box position="absolute" right={30} mt={1}>
-                <IconButton sx={{backgroundColor:"#f8aa08", color:"#fff"}} onClick={() => router.push("/editprofile")} >
-                  <SettingsOutlinedIcon fontSize='large' />
-                </IconButton>
+            <IconButton sx={{ backgroundColor: "#f8aa08", color: "#fff" }} onClick={() => router.push("/editprofile")} >
+              <SettingsOutlinedIcon fontSize='large' />
+            </IconButton>
           </Box>
-          <img alt='background_image' src={userData?.backgroundImage ? userData?.backgroundImage : "https://firebasestorage.googleapis.com/v0/b/petworldpinecone.appspot.com/o/no-image%20(1).png?alt=media&token=a56e4cdf-5382-4c6f-8860-aaa004558de6"} width="100%" height={300} style={{objectFit:"cover"}}/>
+          <img alt='background_image' src={userData?.backgroundImage ? userData?.backgroundImage : "https://firebasestorage.googleapis.com/v0/b/petworldpinecone.appspot.com/o/no-image%20(1).png?alt=media&token=a56e4cdf-5382-4c6f-8860-aaa004558de6"} width="100%" height={300} style={{ objectFit: "cover" }} />
         </Header>
         <AvatarContainer>
           <UserAvatar src={userData?.avatar} />
