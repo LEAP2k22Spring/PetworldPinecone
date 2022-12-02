@@ -74,7 +74,7 @@ const Map = () => {
           iconSize: [25, 35],
         })}
       >
-        <Tooltip>You are here</Tooltip>
+        <Tooltip>You are here!</Tooltip>
         <Popup minWidth={60}>Your position</Popup>
       </Marker>
     );
