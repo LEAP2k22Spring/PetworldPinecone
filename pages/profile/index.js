@@ -1,9 +1,10 @@
 import styled from 'styled-components';
-import { Avatar, Typography, Stack, Divider, Box } from '@mui/material';
+import { Avatar, Typography, Stack, Divider, Box, IconButton } from '@mui/material';
 import { useState } from 'react';
 import LoadingSpinner from '../../component/Spinner';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 import Pet from '../../component/profile/Pet';
 import Post from '../../component/profile/Post';
@@ -14,7 +15,6 @@ const Profile = () => {
   const { userData, loading } = useAuth();
   const [totalPets, setTotalPets] = useState('');
   const router = useRouter();
-
 
   const getTotalPets = (number) => {
     setTotalPets(number);
@@ -29,11 +29,15 @@ const Profile = () => {
       <Container>
         {loading && <LoadingSpinner open={loading} />}
         <Header>
-          <BackIconContainer onClick={goBackHandler}>
-            <ArrowBackIosNewOutlinedIcon fontSize='large' />
+          <BackIconContainer>
+            <IconButton onClick={goBackHandler}>
+              <ArrowBackIcon fontSize='large' />
+            </IconButton>
           </BackIconContainer>
           <SettingsIconContainer>
-            <SettingsOutlinedIcon fontSize='large' />
+            <IconButton onClick={() => router.push("/editprofile")}>
+              <SettingsOutlinedIcon fontSize='large' />
+            </IconButton>
           </SettingsIconContainer>
         </Header>
         <AvatarContainer>

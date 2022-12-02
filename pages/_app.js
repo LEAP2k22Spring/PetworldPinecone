@@ -10,7 +10,6 @@ import { ChatContextProvider } from "../context/ChatContext";
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const showHeader = router.pathname === "/login" ? false : true;
-
   // const { data, loading, createData, deleteData } = userCollection('product')
 
   return (

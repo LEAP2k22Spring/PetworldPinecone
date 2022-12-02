@@ -34,48 +34,45 @@ export const db = getFirestore(app);
 export const auth = getAuth();
 
 export const useFirebase = (path) => {
-  const { getUsersData, setGetUsersData } = useGetUsersDataContext();
+  const [data, setPetData] = useState();
+  const [loading, setLoading] = useState(false);
 
+  useEffect(()=>{
+      (
+        async ()=>{
+          try {
+            setLoading(true);
+            let item = [];
+            const q = query(
+              collection(db, path),
+              orderBy("createdAt", "desc"),
+              // limit(5)
+            );
+            const querySnapshot = await getDocs(q);
+            if (querySnapshot) {
+              for (let doc of querySnapshot.docs) {
+                // const results = await userDataPost("Users", doc.data().ownerID);
+                  item.push({
+                    ...doc.data(),
+                    
+                    // userName: results.firstName,
+                    // userAvatar: results.avatar,
+                    id: doc.id,
+                  });
+              }
+              setPetData(item)
+            // console.log("item", item);
+            }
+          } catch (error) {
+            console.log(error.message);
+          } finally {
+            setLoading(false);
+          }
+        }
+      )()
+    
+  },[path])
   // 1) get any single document data
-
-  const getMultipleData = async (id, subCollection) => {
-    try {
-      const q = query(collection(db, path, id, subCollection));
-      let data = [];
-      const querySnapshot = await getDocs(q);
-      querySnapshot.forEach((doc) => {
-        data.push({
-          docId: doc.id,
-          data: doc.data(),
-        });
-      });
-      return data;
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
-  // const getMultipleDataWithSort = async (sortField, id) => {
-  //   try {
-  //     const q = query(
-  //       collection(db, path),
-  //       where(sortField, '==', id),
-  //       orderBy('createdAt', 'desc')
-  //     );
-  //     let data = [];
-  //     const querySnapshot = await getDocs(q);
-  //     querySnapshot.forEach((doc) => {
-  //       data.push({
-  //         docId: doc.id,
-  //         data: doc.data(),
-  //       });
-  //     });
-  //     return data;
-  //   } catch (error) {
-  //     console.log(error.message);
-  //   }
-  // };
-
   // 2)
   // 3)
 
@@ -108,8 +105,9 @@ export const useFirebase = (path) => {
 
   return {
     // getSingleData,
+    data,
+    loading,
     imageUploadToFirestore,
-    getMultipleData,
     updateData,
     deleteData,
   };
@@ -120,7 +118,6 @@ export const useCollection = (collectionName, docId) => {
   const [loading, setLoading] = useState(false);
   const colRef = collection(db, collectionName);
   const [data, setData] = useState();
-
   useEffect(() => {
     if (docId) {
       (async () => {
@@ -171,39 +168,39 @@ export const useCollection = (collectionName, docId) => {
     return userId;
   };
 
-  const userDataPost = async (path, id) => {
-    const docRef = doc(collection(db, path), id);
-    const docSnap = await getDoc(docRef);
-    const result = docSnap.data();
-    return result;
-  };
+  // const userDataPost = async (path, id) => {
+  //   const docRef = doc(collection(db, path), id);
+  //   const docSnap = await getDoc(docRef);
+  //   const result = docSnap.data();
+  //   return result;
+  // };
 
-  const getFireabasePostsData = async (postPath) => {
-    try {
-      let item = [];
-      const id = "";
-      const q = query(
-        collection(db, "Posts"),
-        orderBy("createdAt", "desc"),
-        limit(5)
-      );
-      const querySnapshot = await getDocs(q);
-      if (querySnapshot) {
-        for (let doc of querySnapshot.docs) {
-          const results = await userDataPost("Users", doc.data().userID);
-          item.push({
-            ...doc.data(),
-            userName: results.firstName,
-            userAvatar: results.avatar,
-            id: doc.id,
-          });
-        }
-        setPostsData(item);
-      }
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+  // const getFireabasePostsData = async (postPath) => {
+  //   try {
+  //     let item = [];
+  //     const id = "";
+  //     const q = query(
+  //       collection(db, "Posts"),
+  //       orderBy("createdAt", "desc"),
+  //       limit(5)
+  //     );
+  //     const querySnapshot = await getDocs(q);
+  //     if (querySnapshot) {
+  //       for (let doc of querySnapshot.docs) {
+  //         const results = await userDataPost("Users", doc.data().userID);
+  //         item.push({
+  //           ...doc.data(),
+  //           userName: results.firstName,
+  //           userAvatar: results.avatar,
+  //           id: doc.id,
+  //         });
+  //       }
+  //       setPostsData(item);
+  //     }
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // };
 
   // image upload Component Firebase
   return {
@@ -211,7 +208,7 @@ export const useCollection = (collectionName, docId) => {
     loading,
     createUserData,
     createUser,
-    getFireabasePostsData,
+    // getFireabasePostsData,
     createData,
   };
 };
@@ -285,7 +282,6 @@ export const useSort = (path, sortField, id) => {
 export const useDocument = ({ path, docId }) => {
   const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
-  console.log();
   useEffect(() => {
     if (docId) {
       (async () => {

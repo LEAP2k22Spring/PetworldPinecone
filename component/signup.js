@@ -12,6 +12,7 @@ import StepperComp from "./StepperComp";
 import { useCollection } from "../firebase/useFirebase";
 import { useDocument } from "../firebase/useFirebase";
 import styles from "../styles/login.module.css";
+import { serverTimestamp } from "firebase/firestore";
 
 //Sign Up Component
 const SignUp = () => {
@@ -40,6 +41,8 @@ const SignUp = () => {
     phoneNumber: "",
     gender: "",
     cityName: "",
+    createdAt: serverTimestamp(),
+    backgroundImage: "",
   };
   const petInputDataDefaultValue = {
     category: "",
