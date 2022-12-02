@@ -1,9 +1,11 @@
 import "../styles/globals.css";
+import "../styles/style.scss";
 import { useRouter } from "next/router";
 import { AuthProvider } from "../providers/AuthProvider";
 import Layout from "../component/layout";
 import { GetUsersDataProvider } from "../context/UsersDataContext";
 import { GetPostsDataProvider } from "../context/PostsDataContext";
+import { ChatContextProvider } from "../context/ChatContext";
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -15,10 +17,12 @@ function MyApp({ Component, pageProps }) {
     <GetUsersDataProvider>
       <GetPostsDataProvider>
         <AuthProvider>
-          <Layout>
-            {/* {showHeader && <Layout />} */}
-            <Component {...pageProps} />
-          </Layout>
+          <ChatContextProvider>
+            <Layout>
+              {/* {showHeader && <Layout />} */}
+              <Component {...pageProps} />
+            </Layout>
+          </ChatContextProvider>
         </AuthProvider>
       </GetPostsDataProvider>
     </GetUsersDataProvider>

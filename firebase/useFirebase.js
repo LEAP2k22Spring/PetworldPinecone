@@ -29,8 +29,6 @@ import {
 } from "firebase/firestore";
 import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
 
-// import { db, app } from "../firebase.config";
-
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const auth = getAuth();
@@ -166,6 +164,7 @@ export const useCollection = (collectionName, docId) => {
         password
       );
       userId = user.user.uid;
+      await setDoc(doc(db, "UserChats", userId), {});
       alert("Sign Up Successfully");
     } catch (error) {}
 
@@ -216,8 +215,6 @@ export const useCollection = (collectionName, docId) => {
     createData,
   };
 };
-// const updateData = () => updateDoc
-// const deleteData = () => deleteDoc
 
 export const useSubCollection = (collectionName, docId, subCollection) => {
   const [data, setData] = useState();

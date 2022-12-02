@@ -1,23 +1,12 @@
-import { Box } from "@mui/material";
-
+import Sidebar from "../component/inbox/Sidebar.jsx";
+import Chat from "../component/inbox/Chat.jsx";
 export default function Inbox() {
   return (
-    <>
-      <Box
-        sx={{
-          width: "100%",
-          height: "100vh",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          fontWeight: "bold",
-          fontSize: "2rem",
-          bgcolor: "#000",
-          color: "#fff",
-        }}
-      >
-        Chat Coming Soon...
-      </Box>
-    </>
+    <div className="home">
+      <div className="container">
+        <Sidebar />
+        <Chat />
+      </div>
+    </div>
   );
 }

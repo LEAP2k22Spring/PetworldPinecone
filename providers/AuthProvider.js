@@ -7,16 +7,18 @@ import LoadingSpinner from "../component/Spinner";
 
 const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
-  // const  = auth.currentUser;
-  const [user, setUser] = useState(false);
+  const [isUser, setUser] = useState(false);
   const [checking, setChecking] = useState(true);
   const [startBtnClick, setStartBtnClick] = useState(false);
+  const [currentUser, setCurrentUser] = useState({});
   const { data: userData, loading } = useDocument({
     path: "Users",
     docId: auth?.currentUser?.uid,
   });
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setCurrentUser(user);
       if (user) {
         setUser(true);
       } else {
@@ -24,7 +26,6 @@ export const AuthProvider = ({ children }) => {
       }
       setChecking(false);
     });
-
     return () => unsubscribe();
   }, []);
 
@@ -40,7 +41,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, logout, userData, loading }}>
+    <AuthContext.Provider
+      value={{ currentUser, isUser, logout, userData, loading }}
+    >
       {checking && (
         <h1
           style={{
@@ -59,7 +62,7 @@ export const AuthProvider = ({ children }) => {
         </h1>
       )}
 
-      {!checking && !user ? (
+      {!checking && !isUser ? (
         startBtnClick ? (
           <Login />
         ) : (

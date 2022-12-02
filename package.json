@@ -33,6 +33,7 @@
     "react-hook-form": "^7.39.1",
     "react-player": "^2.11.0",
     "styled-components": "^5.3.6",
+    "uuid": "^9.0.0",
     "uuidv4": "^6.2.13"
   },
   "devDependencies": {
