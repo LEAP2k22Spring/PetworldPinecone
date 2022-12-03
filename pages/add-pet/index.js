@@ -545,7 +545,7 @@ const AddPet = () => {
           </UserProfile>
         </Header>
 
-        <Divider sx={{ borderBottomWidth: 20, borderColor: '#d9d9d9' }} />
+        <Divider sx={{ borderBottomWidth: 20, borderColor: '#f0f0f0', borderRadius: '10px' }} />
       </Container>
     </Box>
   );

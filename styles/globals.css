@@ -1,4 +1,3 @@
-
 :root {
   --button-color: green;
 }
@@ -6,10 +5,14 @@
 
 html,
 body {
-  /* cursor: url(../image/paw_cursor.png),auto; */
+
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   /* background-color: #DEE9FF; */
+}
+
+body button {
+  cursor: url(../image/paw_cursor.png), auto;
 }
 
 a {

@@ -1,23 +1,25 @@
-import { Avatar, AvatarGroup, Box, Card, CardActions, CardHeader, CardMedia,  IconButton, TextField, Typography } from "@mui/material";
+import { Avatar, AvatarGroup, Box, Card, CardActions, CardHeader, CardMedia, IconButton, TextField, Typography } from "@mui/material";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import { red } from '@mui/material/colors';
 import moment from "moment"
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { auth, useSubCollection } from "../firebase/useFirebase";
-import {  serverTimestamp,  } from "firebase/firestore";
+import { serverTimestamp, } from "firebase/firestore";
 import PostAddIcon from '@mui/icons-material/PostAdd';
-import { useAuthState } from "react-firebase-hooks/auth";
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { useRouter } from "next/router";
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { useGetPostsDataContext } from "../context/PostsDataContext";
 import { useAuth } from "../providers";
+import RecommendIcon from '@mui/icons-material/Recommend';
+import TelegramIcon from '@mui/icons-material/Telegram';
 
 
 
 const Post = ({ id, userAvatar, createdAt, desc, userName, image, userID }) => {
-    const {userData} = useAuth();
+    const { userData } = useAuth();
     const { setPostOwner } = useGetPostsDataContext();
     const [comment, setComment] = useState("");
     const router = useRouter();
@@ -115,24 +117,13 @@ const Post = ({ id, userAvatar, createdAt, desc, userName, image, userID }) => {
                         ))}
                     </AvatarGroup>
                     {auth?.currentUser?.uid === userID ? "" : <IconButton aria-label="add to favorites" onClick={followUser} sx={{
-                        fontSize: '16px', gap: '5px', borderRadius: '15px', bgcolor: 'rgb(96 165 250)', color: 'white', '&:hover': {
+                        fontSize: '16px', padding: '5px 10px', gap: '5px', borderRadius: '11px', bgcolor: 'rgb(96 165 250)', color: 'white', '&:hover': {
                             backgroundColor: "rgb(0, 87, 194)"
                         }
                     }}>
                         {follows?.find((follow) => follow?.id === auth?.currentUser?.uid) ? "Unfollow" : "Follow"}
-                        <BookmarkIcon sx={{ color: 'white' }} />
+                        <PersonAddIcon sx={{ color: 'white', width: '20px' }} />
                     </IconButton>}
-                </CardActions>
-                <CardActions sx={{ justifyContent: 'space-between' }} >
-                    {/* <AddReactionIcon /> */}
-                    <TextField fullWidth size="small" placeholder="Add a comment..." value={comment} onChange={(e) => setComment(e.target.value)}></TextField>
-                    <IconButton onClick={sendComment}>
-                        <PostAddIcon sx={{
-                            '&:hover': {
-                                color: 'rgb(96 165 250)'
-                            }
-                        }} />
-                    </IconButton>
                 </CardActions>
                 {comments?.map((comment, i) => (
                     <CardActions key={i} sx={{ justifyContent: 'space-between', alignItems: "center", justifyItems: "center" }}>
@@ -151,6 +142,27 @@ const Post = ({ id, userAvatar, createdAt, desc, userName, image, userID }) => {
                         }} /> : ""}
                     </CardActions>
                 ))}
+                <CardActions sx={{ justifyContent: 'space-between', gap: '5px' }} >
+                    {/* <AddReactionIcon /> */}
+                    <TextField
+                        fullWidth size="small"
+                        placeholder="Add a comment..."
+                        value={comment}
+                        onChange={(e) => setComment(e.target.value)}
+                        sx={{ borderRadius: '11px', border: 'none' }}
+                    >
+
+                    </TextField>
+                    <IconButton onClick={sendComment} sx={{ background: 'orange', borderRadius: '11px' }}>
+                        <TelegramIcon sx={{
+                            color: 'white',
+                            '&:hover': {
+                                color: 'rgb(96 165 250)'
+                            }
+                        }} />
+                    </IconButton>
+                </CardActions>
+
             </Card>
         </Box>
     )
