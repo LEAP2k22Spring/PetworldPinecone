@@ -15,6 +15,7 @@ import { useGetPostsDataContext } from "../context/PostsDataContext";
 import { useAuth } from "../providers";
 import RecommendIcon from '@mui/icons-material/Recommend';
 import TelegramIcon from '@mui/icons-material/Telegram';
+import styles from '../styles/Home.module.css'
 
 
 
@@ -127,11 +128,16 @@ const Post = ({ id, userAvatar, createdAt, desc, userName, image, userID }) => {
                 </CardActions>
                 {comments?.map((comment, i) => (
                     <CardActions key={i} sx={{ justifyContent: 'space-between', alignItems: "center", justifyItems: "center" }}>
-                        <Box display="flex" gap={1} justifyContent="center" alignItems="center">
-                            <Avatar sx={{ bgcolor: red[500], width: '30px', height: '30px' }} aria-label="recipe" src={comment?.data().userAvatar}>
-                            </Avatar>
-                            <Typography fontSize={15} fontWeight={600}>{comment?.data().userName}</Typography>
-                            <Typography fontSize={15}>{comment?.data().comment}</Typography>
+                        <Box className={styles.comment_history}
+                             display="flex" 
+                             gap={1} 
+                             justifyContent="center" 
+                             alignItems="center"
+                        >
+                          <Avatar sx={{ bgcolor: red[500], width: '30px', height: '30px' }} aria-label="recipe" src={comment?.data().userAvatar}>
+                          </Avatar>
+                          <Typography className={styles.comment_userName} fontSize={15} fontWeight={600}>{comment?.data().userName}</Typography>
+                          <Typography fontSize={15}>{comment?.data().comment}</Typography>
 
                         </Box>
                         <Typography fontSize={13}>{moment(new Date(comment?.data().createdAt?.seconds * 1000)).fromNow()}</Typography>
@@ -142,14 +148,17 @@ const Post = ({ id, userAvatar, createdAt, desc, userName, image, userID }) => {
                         }} /> : ""}
                     </CardActions>
                 ))}
-                <CardActions sx={{ justifyContent: 'space-between', gap: '5px' }} >
+                <CardActions className={styles.comment_input} sx={{ justifyContent: 'space-between', gap: '5px' }} >
                     {/* <AddReactionIcon /> */}
                     <TextField
                         fullWidth size="small"
                         placeholder="Add a comment..."
                         value={comment}
                         onChange={(e) => setComment(e.target.value)}
-                        sx={{ borderRadius: '11px', border: 'none' }}
+                        variant="standard"
+                            InputProps={{
+                                disableUnderline: true,
+                            }}
                     >
 
                     </TextField>

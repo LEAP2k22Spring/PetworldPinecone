@@ -6,7 +6,6 @@ import CardMedia from "@mui/material/CardMedia";
 import CardActions from "@mui/material/CardActions";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 import ColorLensIcon from '@mui/icons-material/ColorLens';
 import AvatarGroup from "@mui/material/AvatarGroup";
 import PetsIcon from "@mui/icons-material/Pets";
@@ -19,12 +18,14 @@ import LoadingSpinner from "./Spinner";
 import styles from "../styles/Home.module.css";
 import Stack from "@mui/material/Stack";
 import { FemaleOutlined, MaleOutlined } from '@mui/icons-material';
+import { useRouter } from 'next/router';
 
 
 export default function RecipeReviewCard() {
   const { getMultipleData } = useFirebase("Pets");
   const { data: petData, loading } = useFirebase("Pets");
   const { data: userData } = useFirebase("Users");
+  const router = useRouter();
 
   // const [filteredList, setFilteredList] = useState()
 
@@ -39,6 +40,10 @@ export default function RecipeReviewCard() {
   //   setFilteredList(filterList)
   // }
 
+  const petHandleClick = (id) => {
+    router.push(`/profile/${id}`);
+  };
+
   const [anchorEl, setAnchorEl] = useState(null);
   let ownerData = []
 
@@ -46,6 +51,8 @@ export default function RecipeReviewCard() {
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
+  console.log("peteee", petData)
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -111,7 +118,7 @@ export default function RecipeReviewCard() {
             petData?.map((pet, i) => (
               <Box className={styles.home_card_wrapp} key={i} id={i}>
                 <Card className={styles.home_card} sx={{ width: "350px", borderRadius: "20px" }}>
-                  <Link href="/" underline="none">
+                  <Link onClick={() => petHandleClick(pet.id)}>
                     <CardMedia className={styles.home_img_wrapp}
                       component="img"
                       height="200"
@@ -140,12 +147,12 @@ export default function RecipeReviewCard() {
                   />
 
                   <CardActions sx={{ justifyContent: "space-between" }}>
-                    <IconButton aria-label="add to favorites">
-                      <ColorLensIcon />
-                      <Typography sx={{ fontWeight: "400", fontSize: "13px", ml: 1 }}>
+
+                      <ColorLensIcon sx={{color:'gray', ml: 1}}/>
+                      <Typography sx={{ fontWeight: "400", fontSize: "13px", ml: -2, color:'gray' }}>
                         {pet.color}
                       </Typography>
-                    </IconButton>
+
 
                     <AvatarGroup
                       max={6}

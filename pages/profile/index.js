@@ -3,7 +3,7 @@ import { Avatar, Typography, Stack, Divider, Box, IconButton } from '@mui/materi
 import { useState } from 'react';
 import LoadingSpinner from '../../component/Spinner';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
-import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined';
+import InfoIcon from '@mui/icons-material/Info';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import classes from '../../styles/profile.module.css';
 import Pet from '../../component/profile/Pet';
@@ -79,11 +79,17 @@ const Profile = () => {
         <UserProfile>
           <Typography
             variant='h6'
-            mt={2}
-            ml={2}
-            sx={{ fontSize: '1.5rem', fontWeight: 700, color: '#696969' }}
+            my={2}
+            mx={1}
+            width="fit-content"
+            sx={{ fontSize: '1.5rem', 
+                fontWeight: 700, 
+                color: '#fff', 
+                background:'orange',
+                padding:'0 10px 0 10px',
+                borderRadius:'11px' }}
           >
-            About me
+            About me <InfoIcon sx={{padding:'8px 0 0 0'}}/>
           </Typography>
           <Typography variant='body1' mt={2} mx={3}>
             Gender:

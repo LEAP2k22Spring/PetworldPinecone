@@ -9,7 +9,7 @@ import {
 import { useState } from "react";
 import { FormProvider } from "react-hook-form";
 import StepperComp from "./StepperComp";
-import { useCollection } from "../firebase/useFirebase";
+import { useCollection, useDocument } from "../firebase/useFirebase";
 import styles from "../styles/login.module.css"
 import { serverTimestamp } from "firebase/firestore";
 
@@ -20,7 +20,7 @@ const SignUp = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [skippedSteps, setSkippedSteps] = useState([]);
   const {createData:createUserData, createUser} = useCollection("Users");
-  const {createData:createPet}=useDocument({path:"Pets"});
+  const {createData:createPet} = useDocument({path:"Pets"});
 
   const { getStepContent, getSteps, userInputData } = StepperComp();
   const steps = getSteps();

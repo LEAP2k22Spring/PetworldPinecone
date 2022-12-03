@@ -5,6 +5,9 @@ import { useRouter } from 'next/router';
 import LoadingSpinner from '../Spinner';
 import { auth, useFirebase, useSort } from '../../firebase/useFirebase';
 import { useAuth } from '../../providers';
+import classes from '../../styles/profile.module.css'
+import PetsIcon from "@mui/icons-material/Pets";
+
 
 const Pet = () => {
   const router = useRouter();
@@ -29,11 +32,17 @@ const Pet = () => {
       <PetProfile>
         <Typography
           variant='h6'
-          mt={2}
-          ml={2}
-          sx={{ fontSize: '1.5rem', fontWeight: 700, color: '#696969' }}
+          my={2}
+          mx={1}
+          width="fit-content"
+          sx={{ fontSize: '1.5rem', 
+                fontWeight: 700, 
+                color: '#fff', 
+                background:'orange',
+                padding:'0 10px 0 10px',
+                borderRadius:'11px' }}
         >
-          Pets
+          Pets <PetsIcon sx={{padding:'7px 0 0 0'}}/>
         </Typography>
         <Stack
           direction='row'
@@ -41,7 +50,7 @@ const Pet = () => {
           alignItems='center'
           mb={5}
         >
-          <PetAvatarContainer>
+          <PetAvatarContainer className={classes.profile_pets}>
             {petData &&
               petData?.map((pet, i) => (
                 <PetAvatar
@@ -73,6 +82,8 @@ const PetAvatarContainer = styled.div`
   justify-content: flex-start;
   overflow-x: scroll;
   width: 500px;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 `;
 
 const PetAvatar = styled(Avatar)`

@@ -373,8 +373,11 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  
 }
-
+.home_card a {
+  cursor: url(../image/paw_cursor.png), auto;
+}
 .home_card .home_img_wrapp {
   overflow: hidden;
   margin: auto;
@@ -492,7 +495,31 @@
   background-repeat: no-repeat;
   background-position: center;
 }
-
+/* ============== Explore page ============= */
+.comment_input input {
+  border: none;
+  border-radius: 11px;
+  padding: 9px;
+  font-size: 14px;
+  border: 1px solid rgb(237, 237, 237);
+}
+.comment_history {
+  position: relative;
+}
+.comment_history:hover .comment_userName {
+  display: block;
+}
+.comment_userName {
+  position: absolute;
+  left: 15px;
+  top: -20px;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 2px 10px;
+  border-radius: 6px;
+  /* box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.1); */
+  display: none;
+}
 /* ============== Responsive =============== */
 @media (max-width: 1520px) {
   .landing_wrapp {

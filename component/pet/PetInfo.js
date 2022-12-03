@@ -22,7 +22,7 @@ const PetInfo = ({ petData }) => {
             />
             <Box className={classes.petInfo_text}>
               <Typography sx={{ color: '#696969', fontSize:'10px' }}>Weight (kg):</Typography>
-              <Typography sx={{ fontSize: '1rem', fontWeight: 700, fontSize:'14px' }}>
+              <Typography sx={{  fontSize:'14px' }}>
                 {petData?.weight}
               </Typography>
             </Box>
@@ -43,7 +43,7 @@ const PetInfo = ({ petData }) => {
             />
             <Box className={classes.petInfo_text}>
             <Typography sx={{ color: '#696969', fontSize:'10px', marginTop:'4px' }}>Height (cm):</Typography>
-            <Typography sx={{ fontSize: '1rem', fontWeight: 700, fontSize:'14px' }}>
+            <Typography sx={{  fontSize:'14px' }}>
               {petData?.height}
             </Typography>
             </Box>
@@ -64,7 +64,7 @@ const PetInfo = ({ petData }) => {
             />
             <Box className={classes.petInfo_text}>
             <Typography sx={{ color: '#696969', fontSize:'10px', marginTop:'4px' }}>Color:</Typography>
-            <Typography sx={{ fontSize: '1rem', fontWeight: 700, fontSize:'14px' }}>
+            <Typography sx={{  fontSize:'14px' }}>
               {petData?.color}
             </Typography>
             </Box>
@@ -85,7 +85,7 @@ const PetInfo = ({ petData }) => {
             />
             <Box className={classes.petInfo_text}>
             <Typography sx={{ color: '#696969', fontSize:'10px', marginTop:'4px' }}>Birth date:</Typography>
-            <Typography sx={{ fontSize: '1rem', fontWeight: 700, fontSize:'14px' }}>
+            <Typography sx={{  fontSize:'14px' }}>
               {petData?.birthDate}
             </Typography>
             </Box>
@@ -106,7 +106,7 @@ const PetInfo = ({ petData }) => {
             />
             <Box className={classes.petInfo_text}>
             <Typography sx={{ color: '#696969', fontSize:'10px', marginTop:'-5px' }}>Breed:</Typography>
-            <Typography sx={{ fontSize: '1rem', fontWeight: 700 , fontSize:'14px', lineHeight:'14px'}}>
+            <Typography sx={{ fontSize:'14px', lineHeight:'14px'}}>
               {petData?.breed}
             </Typography>
             </Box>
@@ -127,7 +127,7 @@ const PetInfo = ({ petData }) => {
             />
             <Box className={classes.petInfo_text}>
             <Typography sx={{ color: '#696969', fontSize:'10px', marginTop:'4px' }}>Vaccinated:</Typography>
-            <Typography sx={{ fontSize: '1rem', fontWeight: 700, fontSize:'14px' }}>
+            <Typography sx={{  fontSize:'14px' }}>
               {petData?.vaccinated ? 'yes' : 'no'}
             </Typography>
             </Box>
@@ -148,7 +148,7 @@ const PetInfo = ({ petData }) => {
             />
             <Box className={classes.petInfo_text}>
             <Typography sx={{ color: '#696969', fontSize:'10px', marginTop:'4px' }}>Microchipped:</Typography>
-            <Typography sx={{ fontSize: '1rem', fontWeight: 700, fontSize:'14px' }}>
+            <Typography sx={{  fontSize:'14px' }}>
               {petData?.microchipped ? 'yes' : 'no'}
             </Typography>
             </Box>
@@ -169,7 +169,7 @@ const PetInfo = ({ petData }) => {
             />
             <Box className={classes.petInfo_text}>
             <Typography sx={{ color: '#696969', fontSize:'10px', marginTop:'4px' }}>Sprayed:</Typography>
-            <Typography sx={{ fontSize: '1rem', fontWeight: 700, fontSize:'14px' }}>
+            <Typography sx={{  fontSize:'14px' }}>
               {petData?.sprayed ? 'yes' : 'no'}
             </Typography>
             </Box>
