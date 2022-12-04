@@ -35,7 +35,7 @@ const Profile = () => {
             </IconButton>
           </BackIconContainer>
           <SettingsIconContainer>
-            <IconButton onClick={() => router.push("/editprofile")}>
+            <IconButton onClick={() => router.push("/Editprofile")}>
               <SettingsOutlinedIcon fontSize='large' />
             </IconButton>
           </SettingsIconContainer>

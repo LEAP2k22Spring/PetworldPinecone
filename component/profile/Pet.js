@@ -5,22 +5,27 @@ import { useRouter } from 'next/router';
 import LoadingSpinner from '../Spinner';
 import { auth, useFirebase, useSort } from '../../firebase/useFirebase';
 import { useAuth } from '../../providers';
+import { Box } from '@mui/system';
 
 const Pet = () => {
   const router = useRouter();
   const { data: petData } = useSort("Pets", "ownerID", auth?.currentUser?.uid);
   const { loading } = useAuth();
 
-
+  const editPetProfile = () => {
+    router.push(`/editPetProfile`);
+  }
   // jump to the "localhost:3000/add-pet" page
   const openAddPetHandler = () => {
     router.push(`/add-pet`);
   };
 
+
   // jump to the "localhost:3000/profile/DsfLp8XF54PrVSozK1k4pet" pet profile page
   const editPetHandler = (petId) => {
     router.push(`/profile/${petId}`);
   };
+
 
 
   return (
@@ -37,7 +42,7 @@ const Pet = () => {
         </Typography>
         <Stack
           direction='row'
-          justifyContent='space-between'
+          justifyContent="flex-end"
           alignItems='center'
           mb={5}
         >
@@ -54,6 +59,9 @@ const Pet = () => {
                 />
               ))}
           </PetAvatarContainer>
+          <Box onClick={editPetProfile}>
+            <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
+          </Box>
           <Avatar sx={{ margin: '0 10px' }} onClick={openAddPetHandler}>
             <AddOutlinedIcon />
           </Avatar>
