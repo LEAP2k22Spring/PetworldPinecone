@@ -1,7 +1,7 @@
 /* ================== Landing page ======== */
-.search_box {
+/* .search_box {
   z-index: 9;
-}
+} */
 
 .landing_page {
   display: flex;
@@ -24,7 +24,7 @@
 
 .landing_text_wrapp button {
   background-image: linear-gradient(to right top, #f7ac08, #f89c00, #f98b00, #f97900, #f86608);
-  border-radius: 20px;
+  border-radius: 11px;
   padding: 8px 35px;
 }
 
@@ -281,6 +281,7 @@
 .nav {
   z-index: 10;
   margin-top: 20px;
+  max-width: 1425px;
   width: 80%;
   display: flex;
   justify-content: space-between;
@@ -343,6 +344,7 @@
   opacity: 1;
 }
 
+
 /* ================== Logo ================= */
 .logo {
   background-image: url(../public/Logo-1.png);
@@ -354,7 +356,6 @@
 
 /* ================= Home Page ============= */
 .home_wrapp {
-  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -364,9 +365,21 @@
 
 .home_main_wrapp {
   display: flex;
-  width: 100vw;
+  width: 100%;  
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+}
+.category_wrapp {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  max-width: 1425px;
+  width: 80%;
+}
+.categories {
+  display: flex;
+  flex-direction: column;
 }
 
 .home_card {
@@ -388,9 +401,12 @@
 
 /* ----------------- Categories ------------ */
 .categories_buttons {
-  width: 80%;
-  overflow: scroll;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 5px;
   height: 60px;
+  margin: 10px 0 30px 0;
 }
 
 .categories_buttons::-webkit-scrollbar {
@@ -554,6 +570,9 @@
     flex-direction: column;
     align-items: center;
   }
+  .categories_buttons p {
+    display: none;
+  }
 }
 
 @media (max-width: 650px) {
@@ -677,6 +696,13 @@
   .landing_text_wrapp p {
     font-size: 13px;
   }
+  .categories_buttons {
+    width: 100%;
+  }
+  .categories_buttons button {
+    border-radius: 50%;
+    width: 30px;
+  }
 }
 
 @media (max-width: 406px) {
@@ -739,8 +765,8 @@
     width: 190px;
     height: 250px;
   }
-
-  .categories_buttons {
-    width: 95%;
+  .home_card {
+    width: 320px;
   }
+
 }

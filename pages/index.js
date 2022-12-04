@@ -13,7 +13,7 @@ function HomePage() {
 
   return (
     <Box mt={5} className={styles.home_wrapp}>
-      <Box display="flex" justifyContent="flex-end" width="80%" zIndex={20}>
+      <Box display="flex" justifyContent="flex-start" width="80%" maxWidth="1425px" zIndex={20}>
         <LimitTags />
       </Box>
       <Banner />

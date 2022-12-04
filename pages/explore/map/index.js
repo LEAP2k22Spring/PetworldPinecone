@@ -6,12 +6,14 @@ import {
   TileLayer,
   Tooltip,
   useMapEvents,
+  Circle,
 } from 'react-leaflet';
 import classes from '../../../styles/map.module.css';
 import styled from 'styled-components';
 import 'leaflet/dist/leaflet.css';
 import { icon } from 'leaflet';
 import L from 'leaflet';
+import { Box } from '@mui/system';
 
 const getIcon = (url) => {
   return L.icon({
@@ -130,17 +132,21 @@ const Map = () => {
             attribution='&copy; <a href="http://www.openstreetmap.org/copyright">Click to get coordinates</a>'
             url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
           />
+          <Circle key="1" center={center} radius={1000} />
           {people.map((person, i) => {
             return (
+              <Box className={classes.moly_zoly}>
               <Marker
-                className={classes.molyZoly}
                 key={i}
                 position={[person.lat, person.lng]}
                 icon={getIcon(person.url)}
+                radius={20}
+
               >
                 <Popup >{person.location}</Popup>{' '}
                 <Tooltip >Tooltip for Marker</Tooltip>
               </Marker>
+              </Box>
             );
           })}
           <DraggableMarker />

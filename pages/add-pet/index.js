@@ -36,6 +36,8 @@ const names = [
   'Turtle',
   'Rabbit',
   'Snake',
+  'Humster',
+  'Raccoon',
 ];
 const AddPet = () => {
   const router = useRouter();
