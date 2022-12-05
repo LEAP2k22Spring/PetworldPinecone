@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
   const [isUser, setUser] = useState(false);
   const [checking, setChecking] = useState(true);
   const [startBtnClick, setStartBtnClick] = useState(false);
-  const [currentUser, setCurrentUser] = useState({});
+  const [currentUser, setCurrentUser] = useState();
   const { data: userData, loading } = useDocument({
     path: "Users",
     docId: auth?.currentUser?.uid,
@@ -43,7 +43,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ isUser, logout, userData, loading, petData }}
+      value={{ isUser, logout, userData, loading, petData, currentUser }}
     >
       {checking && (
         <h1
