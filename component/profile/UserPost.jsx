@@ -136,7 +136,7 @@ const UserPost = ({ postId }) => {
         <Header>
           <BackIconContainer onClick={goBackHandler}>
             <IconButton>
-              <ArrowBack fontSize='large' />
+              <ArrowBackIcon fontSize='large' />
             </IconButton>
           </BackIconContainer>
           <Typography variant='h6' sx={{ fontSize: '1.5rem', fontWeight: 700 }}>
@@ -170,7 +170,7 @@ const UserPost = ({ postId }) => {
                 {(popupState) => (
                   <div>
                     <IconButton variant='contained' {...bindToggle(popupState)}>
-                      <MoreHorizOutlined fontSize='large' />
+                      <MoreHorizOutlinedIcon fontSize='large' />
                     </IconButton>
                     <Popper {...bindPopper(popupState)} transition>
                       {({ TransitionProps }) => (
@@ -178,7 +178,7 @@ const UserPost = ({ postId }) => {
                           <Paper elevation={3}>
                             <Stack direction='column' alignItems='flex-start'>
                               <Button
-                                startIcon={<Delete />}
+                                startIcon={<DeleteIcon />}
                                 onClick={handleOpen}
                                 id='delete'
                               >
@@ -186,7 +186,7 @@ const UserPost = ({ postId }) => {
                               </Button>{' '}
                               <Divider style={{ width: '100%' }} />
                               <Button
-                                startIcon={<Edit />}
+                                startIcon={<EditIcon />}
                                 onClick={onPostEditHandler}
                               >
                                 Edit post
