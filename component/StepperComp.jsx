@@ -11,6 +11,7 @@ import {
   TextField,
 } from "@mui/material";
 import { Box } from "@mui/system";
+import { serverTimestamp } from "firebase/firestore";
 import { useRef } from "react";
 import { Controller, useForm, useFormContext } from "react-hook-form";
 let cityname = ["Архангай", "Баян-Өлгий", "Баянхонгор", "Булган", "Говь-Алтай", "Говьсүмбэр", "Дархан-Уул", "Дорноговь", "Дорнод", "Дундговь", "Завхан", "Орхон", "Өвөрхангай", "Өмнөговь", "Сүхбаатар", "Сэлэнгэ", "Төв", "Увс", "Улаанбаатар", "Ховд", "Хөвсгөл", "Хэнтий"]
@@ -237,9 +238,9 @@ const StepperComp = () => {
                   error={!!fieldState.error}
                   {...field}
                 >
-                {cityname.map((i)=> (<MenuItem value={i ?? ''} key={i}>
-                        {i}
-                </MenuItem>))}
+                  {cityname.map((i) => (<MenuItem value={i ?? ''} key={i}>
+                    {i}
+                  </MenuItem>))}
                 </Select>
                 {fieldState.error ? (
                   <FormHelperText error>
@@ -340,7 +341,7 @@ const StepperComp = () => {
           render={({ field }) => (
             <>
               <FormLabel id="demo-pet-gender">
-              sex
+                sex
               </FormLabel>
               <RadioGroup
                 row
@@ -368,7 +369,7 @@ const StepperComp = () => {
           render={({ field }) => (
             <>
               <FormLabel id="demo-pet-vaccined">
-              vaccinated
+                vaccinated
               </FormLabel>
               <RadioGroup
                 row
