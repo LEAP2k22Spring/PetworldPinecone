@@ -1,14 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
-  Avatar,
-  AvatarGroup,
   Button,
-  Card,
-  CardActions,
-  CardHeader,
-  CardMedia,
   Divider,
-  IconButton,
   Typography,
 } from '@mui/material';
 import { Box } from '@mui/system';
@@ -64,7 +57,7 @@ const ExplorePage = () => {
           }}
         >
           {postsData?.map((el, i) => {
-            const userFilterData = userData.find(
+            const userFilterData = userData?.find(
               (data) => data.id === el.userID
             );
             return (

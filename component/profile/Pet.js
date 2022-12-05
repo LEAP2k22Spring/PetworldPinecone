@@ -1,19 +1,17 @@
-import styled from 'styled-components';
-import { Avatar, Typography, Stack, Divider } from '@mui/material';
-import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
-import { useRouter } from 'next/router';
-import LoadingSpinner from '../Spinner';
-import { auth, useFirebase, useSort } from '../../firebase/useFirebase';
-import { useAuth } from '../../providers';
-import classes from '../../styles/profile.module.css'
+import styled from "styled-components";
+import { Avatar, Typography, Stack, Divider, Box } from "@mui/material";
+import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
+import { useRouter } from "next/router";
+import LoadingSpinner from "../Spinner";
+import { auth, useFirebase, useSort } from "../../firebase/useFirebase";
+import { useAuth } from "../../providers";
+import classes from "../../styles/profile.module.css";
 import PetsIcon from "@mui/icons-material/Pets";
-
 
 const Pet = () => {
   const router = useRouter();
   const { data: petData } = useSort("Pets", "ownerID", auth?.currentUser?.uid);
   const { loading } = useAuth();
-
 
   // jump to the "localhost:3000/add-pet" page
   const openAddPetHandler = () => {
@@ -25,50 +23,59 @@ const Pet = () => {
     router.push(`/profile/${petId}`);
   };
 
-
   return (
     <div>
       {loading && <LoadingSpinner open={loading} />}
       <PetProfile>
         <Typography
-          variant='h6'
+          variant="h6"
           my={2}
           mx={1}
           width="fit-content"
-          sx={{ fontSize: '1.5rem', 
-                fontWeight: 700, 
-                color: '#fff', 
-                background:'orange',
-                padding:'0 10px 0 10px',
-                borderRadius:'11px' }}
+          sx={{
+            fontSize: "1.5rem",
+            fontWeight: 700,
+            color: "#fff",
+            background: "orange",
+            padding: "0 10px 0 10px",
+            borderRadius: "11px",
+          }}
         >
-          Pets <PetsIcon sx={{padding:'7px 0 0 0'}}/>
+          Pets <PetsIcon sx={{ padding: "7px 0 0 0" }} />
         </Typography>
         <Stack
-          direction='row'
-          justifyContent='space-between'
-          alignItems='center'
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
           mb={5}
         >
-          <PetAvatarContainer className={classes.profile_pets}>
+          {/* <PetAvatarContainer> */}
+          <Box display="flex">
             {petData &&
               petData?.map((pet, i) => (
                 <PetAvatar
                   key={i}
                   id={i}
-                  alt='Remy Sharp'
+                  alt="Remy Sharp"
                   src={pet.data.image}
-                  sx={{ margin: '0 10px' }}
+                  sx={{ margin: "0 10px" }}
                   onClick={() => editPetHandler(pet.docId)}
                 />
               ))}
-          </PetAvatarContainer>
-          <Avatar sx={{ margin: '0 10px' }} onClick={openAddPetHandler}>
+          </Box>
+          {/* </PetAvatarContainer> */}
+          <Avatar sx={{ margin: "0 10px" }} onClick={openAddPetHandler}>
             <AddOutlinedIcon />
           </Avatar>
         </Stack>
       </PetProfile>
-      <Divider sx={{ borderBottomWidth: 20, borderColor: '#f0f0f0', borderRadius: '10px' }} />
+      <Divider
+        sx={{
+          borderBottomWidth: 20,
+          borderColor: "#f0f0f0",
+          borderRadius: "10px",
+        }}
+      />
     </div>
   );
 };

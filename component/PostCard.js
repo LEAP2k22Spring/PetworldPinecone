@@ -6,7 +6,7 @@ import CardMedia from "@mui/material/CardMedia";
 import CardActions from "@mui/material/CardActions";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
-import ColorLensIcon from '@mui/icons-material/ColorLens';
+import ColorLensIcon from "@mui/icons-material/ColorLens";
 import AvatarGroup from "@mui/material/AvatarGroup";
 import PetsIcon from "@mui/icons-material/Pets";
 import Link from "@mui/material/Link";
@@ -17,9 +17,8 @@ import { useFirebase } from "../firebase/useFirebase";
 import LoadingSpinner from "./Spinner";
 import styles from "../styles/Home.module.css";
 import Stack from "@mui/material/Stack";
-import { FemaleOutlined, MaleOutlined } from '@mui/icons-material';
-import { useRouter } from 'next/router';
-
+import { FemaleOutlined, MaleOutlined } from "@mui/icons-material";
+import { useRouter } from "next/router";
 
 export default function RecipeReviewCard() {
   const { getMultipleData } = useFirebase("Pets");
@@ -36,7 +35,6 @@ export default function RecipeReviewCard() {
   //     return Number(pet.category) > selectedPet
   //   })
 
-
   //   setFilteredList(filterList)
   // }
 
@@ -45,13 +43,11 @@ export default function RecipeReviewCard() {
   };
 
   const [anchorEl, setAnchorEl] = useState(null);
-  let ownerData = []
-
+  let ownerData = [];
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -63,22 +59,37 @@ export default function RecipeReviewCard() {
     <Box className={styles.home_main_wrapp}>
       <Box className={styles.category_wrapp}>
         <Box className={styles.categories}>
-            <Typography
-              fontSize={22}
-              fontWeight={500}
-            >
-              Categories
-            </Typography>
+          <Typography fontSize={22} fontWeight={500}>
+            Categories
+          </Typography>
           <Box className={styles.categories_buttons}>
-            <button><p>Dog</p></button>
-            <button><p>Cat</p></button>
-            <button><p>Bird</p></button>
-            <button><p>Fish</p></button>
-            <button><p>Humster</p></button>
-            <button><p>Raccoon</p></button>
-            <button><p>Turtle</p></button>
-            <button><p>Shimpanzee</p></button>
-            <button><p>Panda</p></button>
+            <button>
+              <p>Dog</p>
+            </button>
+            <button>
+              <p>Cat</p>
+            </button>
+            <button>
+              <p>Bird</p>
+            </button>
+            <button>
+              <p>Fish</p>
+            </button>
+            <button>
+              <p>Humster</p>
+            </button>
+            <button>
+              <p>Raccoon</p>
+            </button>
+            <button>
+              <p>Turtle</p>
+            </button>
+            <button>
+              <p>Shimpanzee</p>
+            </button>
+            <button>
+              <p>Panda</p>
+            </button>
           </Box>
         </Box>
       </Box>
@@ -87,7 +98,6 @@ export default function RecipeReviewCard() {
         justifyContent="center"
         sx={{ flexGrow: 1, marginBottom: "120px" }}
       >
-
         <LoadingSpinner open={loading} color="#000" />
 
         <Box
@@ -96,16 +106,20 @@ export default function RecipeReviewCard() {
             flexWrap: "wrap",
             justifyContent: "center",
             gap: "38px",
-            maxWidth:"1425px",
+            maxWidth: "1425px",
             width: "80%",
           }}
         >
           {petData &&
             petData?.map((pet, i) => (
               <Box className={styles.home_card_wrapp} key={i} id={i}>
-                <Card className={styles.home_card} sx={{ width: "350px", borderRadius: "20px" }}>
+                <Card
+                  className={styles.home_card}
+                  sx={{ width: "350px", borderRadius: "20px" }}
+                >
                   <Link onClick={() => petHandleClick(pet.id)}>
-                    <CardMedia className={styles.home_img_wrapp}
+                    <CardMedia
+                      className={styles.home_img_wrapp}
                       component="img"
                       height="200"
                       src={`${pet.image}?w=248&fit=crop&auto=format`}
@@ -120,10 +134,30 @@ export default function RecipeReviewCard() {
                         aria-describedby={id}
                         onClick={handleClick}
                       >
-                        {pet?.sex === 'female' ? (
-                          <FemaleOutlined sx={{ width: '30px', height: '30px', fontSize: '3rem', background: 'pink', color: 'white', borderRadius: '50%', padding: '5px' }} />
+                        {pet?.sex === "female" ? (
+                          <FemaleOutlined
+                            sx={{
+                              width: "30px",
+                              height: "30px",
+                              fontSize: "3rem",
+                              background: "pink",
+                              color: "white",
+                              borderRadius: "50%",
+                              padding: "5px",
+                            }}
+                          />
                         ) : (
-                          <MaleOutlined sx={{ width: '30px', height: '30px', fontSize: '3rem', background: '#0057c2', color: 'white', borderRadius: '50%', padding: '5px' }} />
+                          <MaleOutlined
+                            sx={{
+                              width: "30px",
+                              height: "30px",
+                              fontSize: "3rem",
+                              background: "#0057c2",
+                              color: "white",
+                              borderRadius: "50%",
+                              padding: "5px",
+                            }}
+                          />
                         )}
                       </IconButton>
                     }
@@ -132,12 +166,17 @@ export default function RecipeReviewCard() {
                   />
 
                   <CardActions sx={{ justifyContent: "space-between" }}>
-
-                      <ColorLensIcon sx={{color:'gray', ml: 1}}/>
-                      <Typography sx={{ fontWeight: "400", fontSize: "13px", ml: -2, color:'gray' }}>
-                        {pet.color}
-                      </Typography>
-
+                    <ColorLensIcon sx={{ color: "gray", ml: 1 }} />
+                    <Typography
+                      sx={{
+                        fontWeight: "400",
+                        fontSize: "13px",
+                        ml: -2,
+                        color: "gray",
+                      }}
+                    >
+                      {pet.color}
+                    </Typography>
 
                     <AvatarGroup
                       max={6}
@@ -187,7 +226,7 @@ export default function RecipeReviewCard() {
                     <IconButton
                       aria-label="add to favorites"
                       sx={{
-                        margin: '0 5px 5px 0',
+                        margin: "0 5px 5px 0",
                         fontSize: "16px",
                         borderRadius: "15px",
                         bgcolor: "rgb(255, 217, 0)",
@@ -201,14 +240,10 @@ export default function RecipeReviewCard() {
                     </IconButton>
                   </CardActions>
                 </Card>
-
               </Box>
-
             ))}
         </Box>
-
       </Box>
     </Box>
   );
 }
-
