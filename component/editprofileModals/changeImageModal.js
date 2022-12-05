@@ -6,7 +6,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import styled from "styled-components";
 import { useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
-import { auth, imageUploadToFirestore, useCollection, useDocument, useSort } from "../../firebase/useFirebase";
+import { auth, imageUploadToFirestore, useCollection, _useDocument, useSort } from "../../firebase/useFirebase";
 import { useAuth } from "../../providers";
 
 const style = {

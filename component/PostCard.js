@@ -19,6 +19,7 @@ import styles from "../styles/Home.module.css";
 import Stack from "@mui/material/Stack";
 import { FemaleOutlined, MaleOutlined } from "@mui/icons-material";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 export default function RecipeReviewCard() {
   const { getMultipleData } = useFirebase("Pets");
@@ -64,30 +65,84 @@ export default function RecipeReviewCard() {
           </Typography>
           <Box className={styles.categories_buttons}>
             <button>
+              <Image 
+                  width={20}
+                  height={20}
+                  alt="categories icon"
+                  src="https://firebasestorage.googleapis.com/v0/b/petworldpinecone.appspot.com/o/icons%2Fcategories%20icon%2Fhappy.png?alt=media&token=fe32ca51-ac62-4dbb-84c7-d9b3b4f608b7"
+              />
               <p>Dog</p>
             </button>
             <button>
+              <Image 
+                  width={20}
+                  height={20}
+                  alt="categories icon"
+                  src="https://firebasestorage.googleapis.com/v0/b/petworldpinecone.appspot.com/o/icons%2Fcategories%20icon%2Flaughing.png?alt=media&token=396c580c-e8eb-4a43-a0ad-ca1d7b5f12c4"
+              />
               <p>Cat</p>
             </button>
             <button>
+              <Image 
+                  width={20}
+                  height={20}
+                  alt="categories icon"
+                  src="https://firebasestorage.googleapis.com/v0/b/petworldpinecone.appspot.com/o/icons%2Fcategories%20icon%2Fbird.png?alt=media&token=9cce959d-2dca-41bc-ab7a-77be5e01e305"
+              />
               <p>Bird</p>
             </button>
             <button>
+              <Image 
+                  width={20}
+                  height={20}
+                  alt="categories icon"
+                  src="https://firebasestorage.googleapis.com/v0/b/petworldpinecone.appspot.com/o/icons%2Fcategories%20icon%2Ffish.png?alt=media&token=bebd65d5-2cb3-45b4-a311-c864f23e4929"
+              />
               <p>Fish</p>
             </button>
             <button>
+              <Image 
+                  width={20}
+                  height={20}
+                  alt="categories icon"
+                  src="https://firebasestorage.googleapis.com/v0/b/petworldpinecone.appspot.com/o/icons%2Fcategories%20icon%2Fhamster.png?alt=media&token=8327ce39-2520-4282-a47b-681d966f4112"
+              />
               <p>Humster</p>
             </button>
             <button>
+              <Image 
+                  width={20}
+                  height={20}
+                  alt="categories icon"
+                  src="https://firebasestorage.googleapis.com/v0/b/petworldpinecone.appspot.com/o/icons%2Fcategories%20icon%2Fraccoon1.png?alt=media&token=3389cbb7-a71c-4c23-b49d-33137fba86df"
+              />
               <p>Raccoon</p>
             </button>
             <button>
+              <Image 
+                  width={20}
+                  height={20}
+                  alt="categories icon"
+                  src="https://firebasestorage.googleapis.com/v0/b/petworldpinecone.appspot.com/o/icons%2Fcategories%20icon%2Ftortoise.png?alt=media&token=44bfbfd8-1cc4-4585-93a1-ac24dd041558"
+              />
               <p>Turtle</p>
             </button>
             <button>
+              <Image 
+                  width={20}
+                  height={20}
+                  alt="categories icon"
+                  src="https://firebasestorage.googleapis.com/v0/b/petworldpinecone.appspot.com/o/icons%2Fcategories%20icon%2Fmonkey1.png?alt=media&token=5ff2a2e9-0e19-4a3f-a515-9b7accfaaea0"
+              />
               <p>Shimpanzee</p>
             </button>
             <button>
+              <Image 
+                  width={20}
+                  height={20}
+                  alt="categories icon"
+                  src="https://firebasestorage.googleapis.com/v0/b/petworldpinecone.appspot.com/o/icons%2Fcategories%20icon%2Fpanda1.png?alt=media&token=ea0a6c55-a738-4004-9764-5bbe79e32714"
+              />
               <p>Panda</p>
             </button>
           </Box>

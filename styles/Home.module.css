@@ -406,7 +406,13 @@
   flex-wrap: wrap;
   gap: 5px;
   height: 60px;
-  margin: 10px 0 30px 0;
+  margin: 10px 0 40px 0;
+}
+/* .categories_buttons img {
+  display: none;
+} */
+.categories_buttons p {
+  padding: 2px 0 0 5px;
 }
 
 .categories_buttons::-webkit-scrollbar {
@@ -414,6 +420,7 @@
 }
 
 .categories_buttons button {
+  display:inline-flex;
   cursor: pointer;
   padding: 10px 20px;
   border: none;
@@ -700,8 +707,7 @@
     width: 100%;
   }
   .categories_buttons button {
-    border-radius: 50%;
-    width: 30px;
+    padding: 11px;
   }
 }
 
