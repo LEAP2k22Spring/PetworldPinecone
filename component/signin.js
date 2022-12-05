@@ -55,7 +55,7 @@ const Login = () => {
                 placeholder=""
                 ref={emailRef}
               />
-              <label for="Email">Email</label>
+              <label htmlFor="Email">Email</label>
             </span>
             <span>
               <input
@@ -64,7 +64,7 @@ const Login = () => {
                 placeholder=""
                 ref={passwordRef}
               />
-              <label for="password">Password</label>
+              <label htmlFor="password">Password</label>
             </span>
             <button style={{ background: "orange" }} onClick={handleSignIn}>
               Login

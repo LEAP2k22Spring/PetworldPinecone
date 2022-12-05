@@ -1,6 +1,6 @@
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { createContext, useContext, useEffect, useState } from "react";
-import { auth, useDocument } from "../firebase/useFirebase";
+import { auth, useDocument, useSort } from "../firebase/useFirebase";
 import Login from "../component/signin";
 import LandingPage from "../component/landingPage";
 import LoadingSpinner from "../component/Spinner";
@@ -15,6 +15,7 @@ export const AuthProvider = ({ children }) => {
     path: "Users",
     docId: auth?.currentUser?.uid,
   });
+  const { data: petData } = useSort("Pets", "ownerID", auth?.currentUser?.uid);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -42,7 +43,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ currentUser, isUser, logout, userData, loading }}
+      value={{ isUser, logout, userData, loading, petData }}
     >
       {checking && (
         <h1

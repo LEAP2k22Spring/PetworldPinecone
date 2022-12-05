@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useContext, useState } from "react";
 import {
   collection,
@@ -10,7 +11,7 @@ import {
   serverTimestamp,
   getDoc,
 } from "firebase/firestore";
-import { db } from "../../firebase/useFirebase";
+import { auth, db } from "../../firebase/useFirebase";
 import { useAuth } from "../../providers/AuthProvider";
 
 const Search = () => {
@@ -42,41 +43,42 @@ const Search = () => {
 
   const handleSelect = async () => {
     //check whether the group(chats in firestore) exists, if not create
+    console.log('selUser: ', user)
+    console.log('curUser: ', auth?.currentUser?.uid)
     const combinedId =
-      currentUser.uid > user.uid
-        ? currentUser.uid + user.uid
-        : user.uid + currentUser.uid;
+      auth?.currentUser?.uid > user?.uid
+        ? auth?.currentUser?.uid + user?.uid
+        : user?.uid + auth?.currentUser?.uid;
     try {
       const res = await getDoc(doc(db, "Chats", combinedId));
-      console.log(res.exists())
 
       if (!res.exists()) {
         //create a chat in chats collection
         await setDoc(doc(db, "Chats", combinedId), { messages: [] });
-        console.log("1: " + currentUser.uid)
+        console.log("1: " + auth?.currentUser?.uid)
         //create user chats
-        await updateDoc(doc(db, "UserChats", currentUser.uid), {
+        await updateDoc(doc(db, "UserChats", auth?.currentUser?.uid), {
           [combinedId + ".userInfo"]: {
             uid: user.uid,
-            firstName: user.firstName,
-            photoURL: user.avatar,
+            firstName: user?.firstName,
+            photoURL: user?.avatar,
           },
           [combinedId + ".date"]: serverTimestamp(),
         });
-        console.log("2: " + currentUser.uid)
-        console.log("2: " + user.uid)
+        console.log("2: " + auth?.currentUser?.uid)
+        console.log("2: " + user?.uid)
         console.log(userData)
-        await updateDoc(doc(db, "UserChats", user.uid), {
+        await updateDoc(doc(db, "UserChats", user?.uid), {
           [combinedId + ".userInfo"]: {
-            uid: currentUser.uid,
+            uid: auth?.currentUser?.uid,
             firstName: userData.firstName,
             photoURL: userData.avatar,
           },
           [combinedId + ".date"]: serverTimestamp(),
         });
 
-        console.log("3: " + currentUser.uid)
-        console.log("3: " + user.uid)
+        console.log("3: " + auth?.currentUser?.uid)
+        console.log("3: " + user?.uid)
 
       }
     } catch (err) { console.log(err) }
@@ -97,7 +99,7 @@ const Search = () => {
       {err && <span>User not found!</span>}
       {user && (
         <div className="userChat" onClick={handleSelect}>
-          <img src={user.avatar} alt="" />
+          <img src={user?.avatar} alt="" />
           <div className="userChatInfo">
             <span>{user.firstName}</span>
           </div>

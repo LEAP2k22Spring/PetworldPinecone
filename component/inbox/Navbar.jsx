@@ -5,7 +5,6 @@ import { useAuth } from "../../providers/AuthProvider";
 
 const Navbar = () => {
   const { userData } = useAuth()
-  console.log(userData)
   return (
     <div className='navbar'>
       <span className="logo">Chat</span>

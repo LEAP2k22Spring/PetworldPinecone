@@ -1,9 +1,40 @@
+.petProfile_wrapp {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.pet_container {
+  width: 80%;
+}
+
+.top_icon_btn {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.icon_btn {
+  background: orange;
+  color: white;
+  border-radius: 50%;
+  padding: 5px;
+}
+
+.top_button {
+  margin-top: 10px;
+  border: 1px solid #d1d1d1;
+  width: fit-content;
+  border-radius: 10px;
+}
+
 .buttonActive {
-  background-color: #00cc66;
-  color: #ffff;
+  background-color: #e8f0e4;
+  color: #298c16;
   padding: 0.9rem 2rem;
   font-weight: 600;
-  border-radius: 1rem;
+  border-radius: 5px;
+  border: none;
   font-size: 1rem;
   margin: 0.5rem 0.5rem 0 0;
   display: flex;
@@ -12,10 +43,11 @@
 }
 
 .button {
+  border: none;
   padding: 0.9rem 2rem;
-  background-color: #ffffff;
+  background-color: #ededed;
   font-weight: 600;
-  border-radius: 1rem;
+  border-radius: 5px;
   font-size: 1rem;
   margin: 0.5rem 0.5rem 0 0;
   display: flex;
@@ -23,16 +55,18 @@
   align-items: center;
   color: #000;
 }
+
 .label {
   margin: 0 10px;
 }
 
 .saveButton {
   cursor: pointer;
-  background: #00cc66;
-  border-radius: 1rem;
+  background: #298c16;
+  border-radius: 10px;
   padding: 0.85rem 2rem;
-  color: #ffffff;
+  color: #e8f0e4;
+  border: none;
   font-weight: 600;
   font-size: 1.25rem;
   width: 80%;
@@ -53,10 +87,13 @@
 }
 
 .paper {
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  width: 150px;
+  -webkit-box-shadow: 0px 2px 2px -1px rgb(155, 155, 157, 1);
+  -moz-box-shadow: 0px 2px 2px -1px rgb(155, 155, 157, 1);
+  box-shadow: 0px 2px 2px -1px rgb(155, 155, 157);
   margin: 10px;
   border-radius: 10px;
+  width: 100px;
+  height: 100px;
 }
 
 .image {
@@ -87,6 +124,7 @@
   justify-content: center;
   margin: 10px 20px;
 }
+
 .comment {
   border-radius: 10px;
   /* background-image: linear-gradient(to right, #0f0c29, #302b63, #24243e); */
@@ -103,6 +141,7 @@
   outline: none;
   border: none;
 }
+
 .commentInActive {
   width: 100%;
   /* padding: 10px; */
@@ -120,4 +159,57 @@
   text-decoration: none;
   /* display: inline-block;
   font-size: 16px; */
+}
+
+.profile_wrapp {
+  display: flex;
+}
+
+.petInfo_text {
+  margin-top: 5px;
+  text-align: center;
+}
+.petInfo_text p:nth-child(2) {
+  font-weight: 700;
+}
+/* =========== User profile ============ */
+
+/* --- Pets */
+.profile_pets::-webkit-scrollbar {
+  display: none;
+}
+/* ------------------------------------- */
+@media (max-width: 650px) {
+  .pet_container {
+    width: 100%;
+  }
+}
+
+@media (max-width: 450px) {
+  .top_button {
+    width: 350px;
+  }
+
+  .top_button button {
+    margin: 8px 0 8px 8px;
+  }
+}
+
+@media (max-width: 415px) {
+  .paper {
+    margin: 9px;
+    width: 80px;
+    height: 80px;
+  }
+  .petInfo_text p:nth-child(2) {
+    font-size: 10px;
+  }
+  .paper img {
+    width: 30px;
+    height: 30px;
+  }
+
+  .paper p {
+    margin: 0;
+  }
 }

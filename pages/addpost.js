@@ -14,6 +14,7 @@ import { useRouter } from "next/router";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import LoadingSpinner from "../component/Spinner";
 import { serverTimestamp } from "firebase/firestore";
+import { useAuth } from "../providers";
 
 const AddPost = () => {
   const { createData: createPost } = useDocument({ path: "Posts" });
@@ -30,7 +31,7 @@ const AddPost = () => {
   const Image = styled.img`
     object-fit: contain;
     width: 100% !important;
-    hieght: unset !important;
+    hieght: 300 !important;
   `;
   // 2) Image picker handler
   const imgUploadHandler = (e) => {
@@ -116,6 +117,8 @@ const AddPost = () => {
       <Box>
         <Box>
           <Image src={imageData.url} alt="" sizes="cover" />
+
+
         </Box>
         <Box
           display="flex"

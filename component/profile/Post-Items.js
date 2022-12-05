@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
 import { Typography, Stack, Button, Divider } from '@mui/material';
 import styled from 'styled-components';
-import classes from '../../component/profile.module.css';
+import classes from '../../styles/profile.module.css';
 import { useRouter } from 'next/router';
 import { useGetPostsDataContext } from '../../context/PostsDataContext';
 import { useGetUsersDataContext } from '../../context/UsersDataContext';

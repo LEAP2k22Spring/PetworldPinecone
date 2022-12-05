@@ -9,8 +9,7 @@ import {
 import { useState } from "react";
 import { FormProvider } from "react-hook-form";
 import StepperComp from "./StepperComp";
-import { useCollection } from "../firebase/useFirebase";
-import { useDocument } from "../firebase/useFirebase";
+import { useCollection, useDocument } from "../firebase/useFirebase";
 import styles from "../styles/login.module.css";
 import { serverTimestamp } from "firebase/firestore";
 

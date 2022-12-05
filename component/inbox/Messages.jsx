@@ -9,14 +9,14 @@ const Messages = () => {
   const { data } = useContext(ChatContext);
 
   useEffect(() => {
-    const unSub = onSnapshot(doc(db, "Chats", data.chatId), (doc) => {
+    const unSub = onSnapshot(doc(db, "Chats", data?.chatId), (doc) => {
       doc.exists() && setMessages(doc.data().messages);
     });
 
     return () => {
       unSub();
     };
-  }, [data.chatId]);
+  }, [data?.chatId]);
 
   console.log(messages)
 
