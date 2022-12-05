@@ -27,52 +27,51 @@ import {
   updateDoc,
   deleteDoc,
 } from "firebase/firestore";
-import { getStorage, ref, getDownloadURL, uploadBytes, deleteObject } from "firebase/storage";
+import {
+  getStorage,
+  ref,
+  getDownloadURL,
+  uploadBytes,
+  deleteObject,
+} from "firebase/storage";
 
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const auth = getAuth();
 const storage = getStorage(app);
 
-
 export const useFirebase = (path) => {
   const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
 
-  useEffect(()=>{
-      (
-        async ()=>{
-          try {
-            setLoading(true);
-            let item = [];
-            const q = query(
-              collection(db, path),
-              orderBy("createdAt", "desc"),
-              // limit(5)
-            );
-            const querySnapshot = await getDocs(q);
-            if (querySnapshot) {
-              for (let doc of querySnapshot.docs) {
-                // const results = await userDataPost("Users", doc.data().ownerID);
-                  item.push({
-                    ...doc.data(),
-                    id: doc.id,
-                  });
-              }
-              setData(item)
-            }
-          } catch (error) {
-            console.log(error.message);
-          } finally {
-            setLoading(false);
+  useEffect(() => {
+    (async () => {
+      try {
+        setLoading(true);
+        let item = [];
+        const q = query(
+          collection(db, path),
+          orderBy("createdAt", "desc")
+          // limit(5)
+        );
+        const querySnapshot = await getDocs(q);
+        if (querySnapshot) {
+          for (let doc of querySnapshot.docs) {
+            // const results = await userDataPost("Users", doc.data().ownerID);
+            item.push({
+              ...doc.data(),
+              id: doc.id,
+            });
           }
+          setData(item);
         }
-      )()
-    
-  },[path])
-  // 1) get any single document data
-  // 2)
-  // 3)
+      } catch (error) {
+        console.log(error.message);
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, [path]);
 
   //4) Update document
   const updateData = async (data, id) => {
@@ -102,7 +101,6 @@ export const useFirebase = (path) => {
   };
 
   return {
-    // getSingleData,
     data,
     loading,
     imageUploadToFirestore,
@@ -112,10 +110,10 @@ export const useFirebase = (path) => {
 };
 
 export const useCollection = (collectionName, docId) => {
-  const { postsData, setPostsData } = useGetPostsDataContext();
   const [loading, setLoading] = useState(false);
-  const colRef = collection(db, collectionName);
   const [data, setData] = useState();
+  const [snapData, setSnapData] = useState();
+
   useEffect(() => {
     if (docId) {
       (async () => {
@@ -137,9 +135,39 @@ export const useCollection = (collectionName, docId) => {
     }
   }, [collectionName, docId]);
 
+  //real time update listener
+  useEffect(() => {
+    const colRef = collection(db, collectionName);
+    const unsubscribe = onSnapshot(colRef, (snapshot) => {
+      let result = [];
+      snapshot.docs.forEach((doc) => {
+        result.push({ ...doc.data() });
+      });
+      setSnapData(result);
+    });
+    return () => unsubscribe();
+  }, [collectionName]);
+
+  const getData = async (docId) => {
+    try {
+      setLoading(true);
+      const docRef = doc(db, collectionName, docId);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        return docSnap.data();
+      } else {
+        console.log("No such document!");
+      }
+    } catch (error) {
+      console.log(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const createData = (userId, data) =>
     setDoc(doc(db, collectionName, userId), data);
-  const updateData = (data) => updateDoc(doc(db, collectionName, docId), data);
+  // const updateData = (data) => updateDoc(doc(db, collectionName, docId), data);
 
   const createUserData = async (userId, data) => {
     try {
@@ -166,50 +194,16 @@ export const useCollection = (collectionName, docId) => {
     return userId;
   };
 
-
-  // const userDataPost = async (path, id) => {
-  //   const docRef = doc(collection(db, path), id);
-  //   const docSnap = await getDoc(docRef);
-  //   const result = docSnap.data();
-  //   return result;
-  // };
-
-  // const getFireabasePostsData = async (postPath) => {
-  //   try {
-  //     let item = [];
-  //     const id = "";
-  //     const q = query(
-  //       collection(db, "Posts"),
-  //       orderBy("createdAt", "desc"),
-  //       limit(5)
-  //     );
-  //     const querySnapshot = await getDocs(q);
-  //     if (querySnapshot) {
-  //       for (let doc of querySnapshot.docs) {
-  //         const results = await userDataPost("Users", doc.data().userID);
-  //         item.push({
-  //           ...doc.data(),
-  //           userName: results.firstName,
-  //           userAvatar: results.avatar,
-  //           id: doc.id,
-  //         });
-  //       }
-  //       setPostsData(item);
-  //     }
-  //   } catch (error) {
-  //     console.log(error.message);
-  //   }
-  // };
-
   // image upload Component Firebase
   return {
+    snapData,
     data,
     loading,
+    getData,
     createUserData,
     createUser,
-    // getFireabasePostsData,
     createData,
-    updateData
+    // updateData,
   };
 };
 
@@ -251,7 +245,6 @@ export const userSignIn = async (email, pass) => {
 };
 
 export const useSort = (path, sortField, id) => {
-  
   const [data, setData] = useState([]);
   useEffect(() => {
     if (id) {
@@ -278,18 +271,18 @@ export const useSort = (path, sortField, id) => {
     }
   }, [id, path, sortField]);
 
-
-  const deleteData = (url) =>{
-    const httpsReference = ref(storage, url)
+  const deleteData = (url) => {
+    const httpsReference = ref(storage, url);
     const imageName = ref(storage, `images/${httpsReference.name}`);
-    deleteObject(imageName).then(() => {
-      // File deleted successfully
-      console.log("ustgalaa");
-    }).catch((error) => {
-      // Uh-oh, an error occurred!
-    });
-  }
-
+    deleteObject(imageName)
+      .then(() => {
+        // File deleted successfully
+        console.log("ustgalaa");
+      })
+      .catch((error) => {
+        // Uh-oh, an error occurred!
+      });
+  };
 
   return { data, deleteData };
 };
@@ -344,7 +337,6 @@ export const imageUploadToFirestore = async (imageData) => {
     return false;
   }
 };
-
 
 // const storage = getStorage();
 // export const deleteStorage =()=>{
