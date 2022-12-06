@@ -18,7 +18,8 @@ const PetCare = () => {
       m={5}
       sx={{
         maxWidth: { sm: '40rem', md: '60rem', lg: '80rem' },
-        margin: '0 auto',
+        marginLeft: ' auto',
+        marginRight: 'auto',
       }}
     >
       {/* TITLE */}
@@ -26,7 +27,11 @@ const PetCare = () => {
         <h1>SERVICE</h1>
       </div>
       <div className=''>
-        <Typography mt={5}>
+        <Typography
+          mt={5}
+          mx={3}
+          sx={{ fontSize: { sm: '1rem', md: '1.5rem' } }}
+        >
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua.
         </Typography>
@@ -38,10 +43,11 @@ const PetCare = () => {
             className={classes.card_container}
             sx={{
               display: 'flex',
-              width: { xs: '20rem', sm: '40rem', md: '60rem' },
+              width: { xs: '20rem', sm: '30rem', md: '50rem' },
               height: { xs: '20rem', sm: 'auto', md: 'auto' },
               flexDirection: { xs: 'column', sm: 'row' },
               alignItems: { xs: 'center' },
+              justifyContent: { xs: 'center' },
             }}
           >
             <div>
@@ -76,7 +82,7 @@ const PetCare = () => {
                   <Typography
                     ml={1}
                     sx={{
-                      fontSize: { xs: '0.75rem', sm: '1rem', md: '1.5rem' },
+                      fontSize: { xs: '0.75rem', sm: '1rem', md: '1.25rem' },
                     }}
                   >
                     2022 Nov 23
@@ -84,7 +90,7 @@ const PetCare = () => {
                 </Stack>
               </Stack>
               <Typography
-                sx={{ fontSize: { xs: '0.75rem', sm: '1rem', md: '1.5rem' } }}
+                sx={{ fontSize: { xs: '0.75rem', sm: '1rem', md: '1.25rem' } }}
               >
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Mollitia deleniti nostrum numquam ex impedit eum assumenda,
@@ -93,27 +99,44 @@ const PetCare = () => {
               <Stack direction='row' alignItems={'center'}>
                 <LocationOn
                   sx={{
-                    fontSize: { xs: '1rem', sm: '1.25rem', md: '1.5rem' },
+                    fontSize: { xs: '1rem', sm: '1.25rem', md: '2rem' },
                   }}
                 />
                 <Typography
                   fontWeight={600}
                   ml={2}
-                  sx={{ fontSize: { xs: '0.75rem', sm: '1rem', md: '1.5rem' } }}
+                  sx={{
+                    fontSize: { xs: '0.75rem', sm: '1rem', md: '1.25rem' },
+                  }}
                 >
                   Ulaanbaatar, KHU Duureg 17-r khoroo King tower 135
                 </Typography>
               </Stack>
             </Stack>
-            <Stack gap={2} ml={2}>
-              <div
-                className={classes.call_icon}
-                style={{ width: { xs: '30px' }, height: { xs: '30px' } }}
-              >
-                <Call sx={{ width: 30, height: 30, color: 'white' }} />
+            <Stack
+              gap={2}
+              ml={2}
+              sx={{
+                flexDirection: { xs: 'row', sm: 'column' },
+              }}
+            >
+              <div className={classes.call_icon}>
+                <Call
+                  sx={{
+                    width: { xs: 20, sm: 25, md: 40 },
+                    height: { xs: 20, sm: 25, md: 40 },
+                    color: 'white',
+                  }}
+                />
               </div>
               <div className={classes.trash_icon}>
-                <DeleteForever sx={{ width: 30, height: 30, color: 'white' }} />
+                <DeleteForever
+                  sx={{
+                    width: { xs: 20, sm: 25, md: 40 },
+                    height: { xs: 20, sm: 25, md: 40 },
+                    color: 'white',
+                  }}
+                />
               </div>
             </Stack>
           </Box>

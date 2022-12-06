@@ -70,6 +70,8 @@
   border-radius: 50%;
   padding: 10px;
   transition: all 0.2s ease-out;
+  display: flex;
+  align-items: center;
 }
 .trash_icon {
   background-color: rgb(194, 0, 0);
@@ -77,6 +79,24 @@
   padding: 10px;
   transition: all 0.2s ease-out;
 }
+
+@media screen and (max-width: 600px) {
+  .call_icon,.trash_icon  {
+    padding: 5px;
+    height: 30px;
+
+  }
+}
+@media screen and (min-width: 600px) {
+  .call_icon {
+      padding: 10px;
+  }
+}
+/* @media screen and (min-width: 900px) {
+  .call_icon,.trash_icon  {
+      padding: 10px;
+  }
+} */
 
 .call_icon:hover,
 .trash_icon:hover {
