@@ -6,15 +6,20 @@ import {
   AccessTime,
   Call,
   DeleteForever,
+  AddCircle,
 } from '@mui/icons-material';
+import { useState } from 'react';
+import { useRouter } from 'next/router';
 
 const PetCare = () => {
+  const router = useRouter();
+
   return (
     <Stack
       className=''
       direction='column'
       justifyContent='center'
-      alignItems={'center'}
+      alignItems='center'
       m={5}
       sx={{
         maxWidth: { sm: '40rem', md: '60rem', lg: '80rem' },
@@ -139,6 +144,41 @@ const PetCare = () => {
                 />
               </div>
             </Stack>
+          </Box>
+        </Stack>
+        <Stack direction='row' justifyContent={'center'}>
+          <Box
+            mt={5}
+            sx={{
+              width: { xs: '20rem', sm: '30rem', md: '30rem' },
+              height: { xs: '2rem', sm: '2.5rem', md: '3rem' },
+              '&:hover': { backgroundColor: '#ffce30' },
+              backgroundColor: '#ffce30',
+              borderRadius: 50,
+              position: 'relative',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+            }}
+            className={classes.btn_wrapper}
+            onClick={() => router.push('/service/pet-care/announcement')}
+          >
+            <AddCircle
+              sx={{
+                position: 'absolute',
+                left: '0',
+                color: '#fff',
+                width: { xs: '2rem', sm: '2.5rem', md: '3rem' },
+                height: { xs: '2rem', sm: '2.5rem', md: '3rem' },
+              }}
+            />
+            <Typography
+              className={classes.btn}
+              sx={{ fontSize: { xs: '1rem', sm: '1.25rem', md: '1.5rem' } }}
+            >
+              Зар оруулах
+            </Typography>
           </Box>
         </Stack>
       </main>
