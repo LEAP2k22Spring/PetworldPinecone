@@ -1,6 +1,5 @@
-import React, { useContext } from 'react'
-import { signOut } from "firebase/auth"
-import { auth } from '../../firebase/useFirebase'
+/* eslint-disable @next/next/no-img-element */
+import React from 'react'
 import { useAuth } from "../../providers/AuthProvider";
 
 const Navbar = () => {

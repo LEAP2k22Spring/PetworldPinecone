@@ -4,7 +4,7 @@ import { ChatContext } from "../../context/ChatContext";
 import { auth } from "../../firebase/useFirebase";
 
 const Message = ({ message }) => {
-  const { currentUser, userData } = useAuth();
+  const { userData } = useAuth();
   const { data } = useContext(ChatContext);
 
   const ref = useRef();

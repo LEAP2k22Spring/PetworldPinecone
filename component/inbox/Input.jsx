@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import Img from "../../img/img.png";
 import Attach from "../../img/attach.png";
-import { useAuth } from "../../providers/AuthProvider";
 import { ChatContext } from "../../context/ChatContext";
 import {
   arrayUnion,
@@ -17,8 +16,6 @@ import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 const Input = () => {
   const [text, setText] = useState("");
   const [img, setImg] = useState(null);
-
-  const { currentUser } = useAuth();
   const { data } = useContext(ChatContext);
 
   const handleSend = async () => {
