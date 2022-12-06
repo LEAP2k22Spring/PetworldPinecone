@@ -1,27 +1,26 @@
-import { Button, Fab, Input, TextField, Typography } from "@mui/material";
-import { Box } from "@mui/system";
-import { useRef, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
-import styled from "styled-components";
+import { Button, Fab, Input, TextField, Typography } from '@mui/material';
+import { Box } from '@mui/system';
+import { useRef, useState } from 'react';
+import styled from 'styled-components';
 import {
   auth,
   imageUploadToFirestore,
   useCollection,
   useDocument,
-} from "../firebase/useFirebase";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { useRouter } from "next/router";
-import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
-import LoadingSpinner from "../component/Spinner";
-import { serverTimestamp } from "firebase/firestore";
-import { useAuth } from "../providers";
+} from '../firebase/useFirebase';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useRouter } from 'next/router';
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+import LoadingSpinner from '../component/Spinner';
+import { serverTimestamp } from 'firebase/firestore';
+import { useAuth } from '../providers';
 
 const AddPost = () => {
-  const { createData: createPost } = useDocument({ path: "Posts" });
+  const { createData: createPost } = useDocument({ path: 'Posts' });
   const [imageData, setImageData] = useState({
-    url: "",
-    file: "",
-    imageName: "",
+    url: '',
+    file: '',
+    imageName: '',
   });
   const descRef = useRef();
   const router = useRouter();
@@ -36,7 +35,7 @@ const AddPost = () => {
   // 2) Image picker handler
   const imgUploadHandler = (e) => {
     const file = e.target.files[0];
-    const fileName = `${file.name}-${uuidv4()}`;
+    const fileName = `${file.name}`;
     const reader = new FileReader();
     reader.onload = (event) => {
       setImageData({
@@ -59,7 +58,7 @@ const AddPost = () => {
       await saveData(url);
       setIsLoading(false);
     } else {
-      alert("Could not upload image");
+      alert('Could not upload image');
       return;
     }
   };
@@ -73,41 +72,41 @@ const AddPost = () => {
       createdAt: serverTimestamp(),
     });
     if (successfullyUploaded) {
-      alert("Post successfully created!");
-      router.push("/explore");
+      alert('Post successfully created!');
+      router.push('/explore');
     }
   };
 
   return (
     <Box>
       <LoadingSpinner open={isLoading} />
-      <Box display="flex" alignItems="center">
+      <Box display='flex' alignItems='center'>
         <ArrowBackIcon
-          fontSize="large"
+          fontSize='large'
           sx={{
-            position: "absolute",
-            ml: "20px",
-            border: "1px solid #000",
-            borderRadius: "50%",
-            p: "5px",
+            position: 'absolute',
+            ml: '20px',
+            border: '1px solid #000',
+            borderRadius: '50%',
+            p: '5px',
           }}
-          onClick={() => router.push("/explore")}
+          onClick={() => router.push('/explore')}
         />
         <Box
-          width="100%"
-          height="50px"
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          sx={{ backgroundColor: "#ddd" }}
+          width='100%'
+          height='50px'
+          display='flex'
+          justifyContent='center'
+          alignItems='center'
+          sx={{ backgroundColor: '#ddd' }}
         >
           <Typography>Share post</Typography>
         </Box>
       </Box>
       <TextField
-        sx={{ "& fieldset": { border: "none" } }}
+        sx={{ '& fieldset': { border: 'none' } }}
         inputRef={descRef}
-        placeholder="Таны оройн зай"
+        placeholder='Таны оройн зай'
         multiline
         fullWidth
         rows={2}
@@ -116,27 +115,25 @@ const AddPost = () => {
       </TextField>
       <Box>
         <Box>
-          <Image src={imageData.url} alt="" sizes="cover" />
-
-
+          <Image src={imageData.url} alt='' sizes='cover' />
         </Box>
         <Box
-          display="flex"
-          alignItems="center"
+          display='flex'
+          alignItems='center'
           p={2}
-          justifyContent="space-between"
+          justifyContent='space-between'
         >
           <Label>
             <Input
-              sx={{ display: "none" }}
-              type="file"
+              sx={{ display: 'none' }}
+              type='file'
               onChange={imgUploadHandler}
             />
-            <Fab component="span" size="small">
-              <AddPhotoAlternateIcon fontSize="small" />
+            <Fab component='span' size='small'>
+              <AddPhotoAlternateIcon fontSize='small' />
             </Fab>
           </Label>
-          <Button variant="contained" onClick={onSave}>
+          <Button variant='contained' onClick={onSave}>
             submit
           </Button>
         </Box>

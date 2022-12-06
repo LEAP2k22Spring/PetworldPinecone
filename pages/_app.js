@@ -1,5 +1,5 @@
 import "../styles/globals.css";
-import "../styles/style.scss";
+import "../styles/inbox.css";
 import { useRouter } from "next/router";
 import { AuthProvider } from "../providers/AuthProvider";
 import Layout from "../component/layout";

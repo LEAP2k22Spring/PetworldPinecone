@@ -1,10 +1,10 @@
-import Box from "@mui/material/Box";
-import { useRouter } from "next/router";
-import styles from "../styles/Home.module.css";
-import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
-import EmailRoundedIcon from "@mui/icons-material/EmailRounded";
-import QueueRoundedIcon from "@mui/icons-material/QueueRounded";
-import ExploreRoundedIcon from "@mui/icons-material/ExploreRounded";
+import Box from '@mui/material/Box';
+import { useRouter } from 'next/router';
+import styles from '../styles/Home.module.css';
+import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
+import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
+import QueueRoundedIcon from '@mui/icons-material/QueueRounded';
+import ExploreRoundedIcon from '@mui/icons-material/ExploreRounded';
 import {
   Avatar,
   Button,
@@ -13,13 +13,13 @@ import {
   MenuList,
   Paper,
   Popper,
-} from "@mui/material";
-import { useAuth } from "../providers/AuthProvider";
-import MenuItem from "@mui/material/MenuItem";
-import { useEffect, useRef, useState } from "react";
+} from '@mui/material';
+import { useAuth } from '../providers/AuthProvider';
+import MenuItem from '@mui/material/MenuItem';
+import { useEffect, useRef, useState } from 'react';
 // import { useLocation } from 'react-router-dom'
-import LogoutIcon from "@mui/icons-material/Logout";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import LogoutIcon from '@mui/icons-material/Logout';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 function Navbar() {
   const router = useRouter();
@@ -40,10 +40,10 @@ function Navbar() {
   };
 
   function handleListKeyDown(event) {
-    if (event.key === "Tab") {
+    if (event.key === 'Tab') {
       event.preventDefault();
       setOpen(false);
-    } else if (event.key === "Escape") {
+    } else if (event.key === 'Escape') {
       setOpen(false);
     }
   }
@@ -61,35 +61,35 @@ function Navbar() {
   return (
     <Box className={styles.nav_wrapp}>
       <Box className={styles.nav}>
-        <b className={styles.logo} onClick={() => router.push("/")}></b>
-        <Box className={styles.menu} sx={{ cursor: "pointer" }}>
+        <b className={styles.logo} onClick={() => router.push('/')}></b>
+        <Box className={styles.menu} sx={{ cursor: 'pointer' }}>
           <li
             className={
-              router.pathname === "/"
+              router.pathname === '/'
                 ? styles.list_item_active
                 : styles.list_item
             }
-            onClick={() => router.push("/")}
+            onClick={() => router.push('/')}
           >
             <span className={styles.list_item_name}>Home</span>
             <HomeRoundedIcon
               className={
-                router.pathname === "/" ? styles.icon_active : styles.icon
+                router.pathname === '/' ? styles.icon_active : styles.icon
               }
             />
           </li>
           <li
             className={
-              router.pathname === "/explore"
+              router.pathname === '/explore'
                 ? styles.list_item_active
                 : styles.list_item
             }
-            onClick={() => router.push("/explore")}
+            onClick={() => router.push('/explore')}
           >
             <span className={styles.list_item_name}>Explore</span>
             <ExploreRoundedIcon
               className={
-                router.pathname === "/explore"
+                router.pathname === '/explore'
                   ? styles.icon_active
                   : styles.icon
               }
@@ -97,16 +97,16 @@ function Navbar() {
           </li>
           <li
             className={
-              router.pathname === "/addpost"
+              router.pathname === '/service'
                 ? styles.list_item_active
                 : styles.list_item
             }
-            onClick={() => router.push("/addpost")}
+            onClick={() => router.push('/service')}
           >
-            <span className={styles.list_item_name}>Pet Care</span>
+            <span className={styles.list_item_name}>Service</span>
             <QueueRoundedIcon
               className={
-                router.pathname === "/addpost"
+                router.pathname === '/service'
                   ? styles.icon_active
                   : styles.icon
               }
@@ -114,39 +114,39 @@ function Navbar() {
           </li>
           <li
             className={
-              router.pathname === "/inbox"
+              router.pathname === '/inbox'
                 ? styles.list_item_active
                 : styles.list_item
             }
-            onClick={() => router.push("/inbox")}
+            onClick={() => router.push('/inbox')}
           >
             <span className={styles.list_item_name}>Inbox</span>
             <EmailRoundedIcon
               className={
-                router.pathname === "/inbox" ? styles.icon_active : styles.icon
+                router.pathname === '/inbox' ? styles.icon_active : styles.icon
               }
             />
           </li>
           <li
             className={styles.list_item}
             ref={anchorRef}
-            id="composition-button"
-            aria-controls={open ? "composition-menu" : undefined}
-            aria-expanded={open ? "true" : undefined}
-            aria-haspopup="true"
+            id='composition-button'
+            aria-controls={open ? 'composition-menu' : undefined}
+            aria-expanded={open ? 'true' : undefined}
+            aria-haspopup='true'
             onClick={handleToggle}
           >
             <span className={styles.list_item_name}>Profile</span>
             <Avatar
-              alt="Remy Sharp"
+              alt='Remy Sharp'
               src={userData?.avatar}
               sx={{
-                width: "22px",
-                height: "22px",
-                marginTop: "1px",
-                fontSize: "12px",
+                width: '22px',
+                height: '22px',
+                marginTop: '1px',
+                fontSize: '12px',
                 // border: "1px solid black",
-                position: "absolute",
+                position: 'absolute',
               }}
               className={styles.icon_active}
             />
@@ -154,7 +154,7 @@ function Navbar() {
               open={open}
               anchorEl={anchorRef.current}
               role={undefined}
-              placement="bottom-start"
+              placement='bottom-start'
               transition
               disablePortal
             >
@@ -163,28 +163,28 @@ function Navbar() {
                   {...TransitionProps}
                   style={{
                     transformOrigin:
-                      placement === "bottom-start" ? "left top" : "left bottom",
+                      placement === 'bottom-start' ? 'left top' : 'left bottom',
                   }}
                 >
                   <Paper>
                     <ClickAwayListener onClickAway={handleClose}>
                       <MenuList
                         autoFocusItem={open}
-                        id="composition-menu"
-                        aria-labelledby="composition-button"
+                        id='composition-menu'
+                        aria-labelledby='composition-button'
                         onKeyDown={handleListKeyDown}
                       >
                         <MenuItem
                           onClick={() => {
-                            router.push("/profile");
+                            router.push('/profile');
                           }}
                         >
                           Profile
-                          <AccountCircleIcon sx={{ padding: "3px" }} />
+                          <AccountCircleIcon sx={{ padding: '3px' }} />
                         </MenuItem>
                         <MenuItem onClick={() => logout()}>
                           Logout
-                          <LogoutIcon sx={{ padding: "3px" }} />
+                          <LogoutIcon sx={{ padding: '3px' }} />
                         </MenuItem>
                       </MenuList>
                     </ClickAwayListener>
