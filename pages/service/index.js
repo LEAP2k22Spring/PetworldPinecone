@@ -24,7 +24,7 @@ const Service = () => {
       </div>
       <div className=''>
         <Typography mt={5}>
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua.
         </Typography>
       </div>
