@@ -1,19 +1,14 @@
-import { initializeApp } from 'firebase/app';
+import { initializeApp } from "firebase/app";
 import {
   createUserWithEmailAndPassword,
   getAuth,
   signInWithEmailAndPassword,
-  signInWithPopup,
-  GoogleAuthProvider,
-} from 'firebase/auth';
-import { useGetUsersDataContext } from '../context/UsersDataContext';
-import { useGetPostsDataContext } from '../context/PostsDataContext';
-import { useEffect, useState } from 'react';
-import { firebaseConfig } from './firebaseKeyAdminPage';
+} from "firebase/auth";
+import { useEffect, useState } from "react";
+import { firebaseConfig } from "./firebaseKeyAdminPage";
 import {
   doc,
   getDoc,
-  serverTimestamp,
   addDoc,
   collection,
   query,
@@ -23,20 +18,24 @@ import {
   getFirestore,
   setDoc,
   onSnapshot,
-  limit,
   updateDoc,
   deleteDoc,
-} from 'firebase/firestore';
-import { getStorage, ref, getDownloadURL, uploadBytes } from 'firebase/storage';
-
-// import { db, app } from "../firebase.config";
+} from "firebase/firestore";
+import {
+  getStorage,
+  ref,
+  getDownloadURL,
+  uploadBytes,
+  deleteObject,
+} from "firebase/storage";
 
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const auth = getAuth();
+export const storage = getStorage(app);
 
 export const useFirebase = (path) => {
-  const [data, setPetData] = useState();
+  const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -46,18 +45,19 @@ export const useFirebase = (path) => {
         let item = [];
         const q = query(
           collection(db, path),
-          orderBy('createdAt', 'desc')
+          orderBy("createdAt", "desc")
           // limit(5)
         );
         const querySnapshot = await getDocs(q);
         if (querySnapshot) {
           for (let doc of querySnapshot.docs) {
+            // const results = await userDataPost("Users", doc.data().ownerID);
             item.push({
               ...doc.data(),
               id: doc.id,
             });
           }
-          setPetData(item);
+          setData(item);
         }
       } catch (error) {
         console.log(error.message);
@@ -66,6 +66,16 @@ export const useFirebase = (path) => {
       }
     })();
   }, [path]);
+
+  const createDataWithoutSpecificID = async (data) => {
+    try {
+      await addDoc(collection(db, path), data);
+      return true;
+    } catch (error) {
+      console.log(error.message);
+      return false;
+    }
+  };
 
   //4) Update document
   const updateData = async (data, id) => {
@@ -77,7 +87,7 @@ export const useFirebase = (path) => {
       });
       return true;
     } catch (error) {
-      console.log('error from firebase', error);
+      console.log("error from firebase", error);
       return false;
     }
   };
@@ -89,7 +99,7 @@ export const useFirebase = (path) => {
       await deleteDoc(docRef);
       return true;
     } catch (error) {
-      console.log('error from firebase', error);
+      console.log("error from firebase", error);
       return false;
     }
   };
@@ -98,6 +108,7 @@ export const useFirebase = (path) => {
     data,
     loading,
     imageUploadToFirestore,
+    createDataWithoutSpecificID,
     updateData,
     deleteData,
   };
@@ -118,7 +129,7 @@ export const useCollection = (collectionName, docId) => {
           if (docSnap.exists()) {
             setData(docSnap.data());
           } else {
-            console.log('No such document!');
+            console.log("No such document!");
           }
         } catch (error) {
           console.log(error.message);
@@ -150,7 +161,7 @@ export const useCollection = (collectionName, docId) => {
       if (docSnap.exists()) {
         return docSnap.data();
       } else {
-        console.log('No such document!');
+        console.log("No such document!");
       }
     } catch (error) {
       console.log(error.message);
@@ -161,19 +172,20 @@ export const useCollection = (collectionName, docId) => {
 
   const createData = (userId, data) =>
     setDoc(doc(db, collectionName, userId), data);
-  // const updateData = (data) => updateDoc(doc(db, collectionName, docId), data);
+
+  const updateData = (data) => updateDoc(doc(db, collectionName, docId), data);
 
   const createUserData = async (userId, data) => {
     try {
       await setDoc(doc(db, collectionName, userId), data);
     } catch (error) {
-      console.log('error', error);
+      console.log("error", error);
     }
   };
 
   const createUser = async (data) => {
     const { emailAddress, password } = data;
-    let userId = '';
+    let userId = "";
     try {
       const user = await createUserWithEmailAndPassword(
         auth,
@@ -181,7 +193,8 @@ export const useCollection = (collectionName, docId) => {
         password
       );
       userId = user.user.uid;
-      alert('Sign Up Successfully');
+      await setDoc(doc(db, "UserChats", userId), {});
+      alert("Sign Up Successfully");
     } catch (error) {}
 
     return userId;
@@ -196,6 +209,7 @@ export const useCollection = (collectionName, docId) => {
     createUserData,
     createUser,
     createData,
+    updateData,
   };
 };
 
@@ -224,13 +238,13 @@ export const useSubCollection = (collectionName, docId, subCollection) => {
 };
 
 export const userSignIn = async (email, pass) => {
-  let userId = '';
+  let userId = "";
   try {
     const user = await signInWithEmailAndPassword(auth, email, pass);
     userId = user.user.uid;
     // eslint-disable-next-line react-hooks/rules-of-hooks
     // getUsersDatabase(useCollection("Users", userId));
-    alert('Sign in Success');
+    alert("Sign in Success");
   } catch (error) {
     console.log(error);
   }
@@ -244,8 +258,8 @@ export const useSort = (path, sortField, id) => {
         try {
           const q = query(
             collection(db, path),
-            where(sortField, '==', id),
-            orderBy('createdAt', 'desc')
+            where(sortField, "==", id),
+            orderBy("createdAt", "desc")
           );
           const result = [];
           const querySnapshot = await getDocs(q);
@@ -262,7 +276,21 @@ export const useSort = (path, sortField, id) => {
       })();
     }
   }, [id, path, sortField]);
-  return { data };
+
+  const deleteData = (url) => {
+    const httpsReference = ref(storage, url);
+    const imageName = ref(storage, `images/${httpsReference.name}`);
+    deleteObject(imageName)
+      .then(() => {
+        // File deleted successfully
+        console.log("ustgalaa");
+      })
+      .catch((error) => {
+        // Uh-oh, an error occurred!
+      });
+  };
+
+  return { data, deleteData };
 };
 
 export const useDocument = ({ path, docId }) => {
@@ -278,7 +306,7 @@ export const useDocument = ({ path, docId }) => {
           if (docSnap.exists()) {
             setData(docSnap.data());
           } else {
-            console.log('No such document!');
+            console.log("No such document!");
           }
         } catch (error) {
           console.log(error);
@@ -296,45 +324,35 @@ export const useDocument = ({ path, docId }) => {
 };
 
 export const imageUploadToFirestore = async (imageData) => {
-  let isImageUploaded = '';
+  let isImageUploaded = "";
   try {
-    const storage = getStorage(app);
-    const storageRef = ref(storage, 'images/' + imageData.imageName);
+    // const storage = getStorage(app);
+    const storageRef = ref(storage, "images/" + imageData.imageName);
 
     await uploadBytes(storageRef, imageData.file);
 
     const downloadURL = await getDownloadURL(storageRef);
-
+    console.log("downloadURL", downloadURL);
     isImageUploaded = true;
     //add new key (URL) to addedFood object.
 
     return { uploaded: isImageUploaded, url: downloadURL };
   } catch (error) {
-    alert(error);
-    console.log('aldaa', error.message);
+    // alert(error);
+    console.log("aldaa", error.message);
     return false;
   }
 };
 
-export const useCollection1 = (collectionName) => {
-  const [data, setData] = useState();
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const unsubscribe = onSnapshot(
-      collection(db, collectionName),
-      (snapshot) => {
-        setData(snapshot.docs);
-        setLoading(false);
-      }
-    );
-    return () => unsubscribe();
-  }, [collectionName]);
-
-  const updateData = (docId, data) =>
-    setDoc(doc(db, collectionName, docId), data);
-  const createData = (data) => addDoc(collection(db, collectionName), data);
-
-  const deleteData = (docId) => deleteDoc(doc(db, collectionName, docId));
-  return { data, loading, updateData, createData, deleteData };
-};
+// const storage = getStorage();
+// export const deleteStorage =()=>{
+//   const httpsReference = ref(storage, 'https://firebasestorage.googleapis.com/v0/b/petworldpinecone.appspot.com/o/images%2Fsoftware.jpg?alt=media&token=d4c74b83-1915-4895-8acc-22efbb2b795f')
+//   const desertRef = ref(storage, `images/${httpsReference.name}`);
+//   console.log("httpsReference", httpsReference.name);
+//   deleteObject(desertRef).then(() => {
+//     // File deleted successfully
+//     console.log("ustgalaa");
+//   }).catch((error) => {
+//     // Uh-oh, an error occurred!
+//   });
+// }

@@ -1,14 +1,16 @@
-import { useState, useEffect, useCallback } from 'react';
-import { useFirebase } from '../../firebase/useFirebase';
-import LoadingSpinner from '../../component/Spinner';
-import { useRouter } from 'next/router';
-import { PetProfile } from '../../component/pet';
+import { useCollection } from "../../firebase/useFirebase";
+import { useRouter } from "next/router";
+import PetProfile from "../../component/pet/petProfile";
 
 const Pet = () => {
+  const router = useRouter();
+  const petId = router.query.petId;
+  const { data } = useCollection("Pets", petId);
+
   return (
     <div>
       {/* <LoadingSpinner open={isLoading} /> */}
-      <PetProfile />
+      <PetProfile data={data} />
     </div>
   );
 };

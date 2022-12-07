@@ -15,36 +15,25 @@ import {
   Paper,
 } from '@mui/material';
 import PopupState, { bindToggle, bindPopper } from 'material-ui-popup-state';
-import classes from '../../component/profile.module.css';
-import { useGetPostsDataContext } from '../../context/PostsDataContext';
-import {
-  MoreHorizOutlined,
-  ArrowBack,
-  Delete,
-  Edit,
-} from '@mui/icons-material';
-import {
-  auth,
-  useCollection,
-  useFirebase,
-  useSubCollection,
-} from '../../firebase/useFirebase';
+import classes from '../../styles/profile.module.css';
+import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import { auth, useCollection, useDocument, useFirebase, useSort, useSubCollection } from '../../firebase/useFirebase';
 import { useRouter } from 'next/router';
 import LoadingSpinner from '../Spinner';
 import moment from 'moment';
 
-//pages/profile/[...slug].js-ees duudagdagj bga.
 const UserPost = ({ postId }) => {
   const router = useRouter();
-  const { postOwner } = useGetPostsDataContext();
   const { deleteData } = useFirebase('Posts');
-  const { data: postData, updateData } = useCollection('Posts', postId);
-  const { data: likes } = useSubCollection('Posts', postId, 'likes');
-  const {
-    data: comments,
-    deleteData: deleteComment,
-    createData: createComment,
-  } = useSubCollection('Posts', postId, 'comments');
+  const { data: postData, updateData } = useCollection("Posts", postId)
+  const { data: userData } = useCollection("Users", postData?.userID)
+  const { data: likes } = useSubCollection("Posts", postId, "likes")
+  const { data: comments, deleteData: deleteComment, createData: createComment } = useSubCollection("Posts", postId, "comments")
+  const { deleteData: deleteImage } = useSort();
 
   const [isLoading, setIsLoading] = useState(false);
   const [openModal, setOpenModal] = useState(false);
@@ -53,6 +42,8 @@ const UserPost = ({ postId }) => {
   const [inputEditButton, setInputEditButton] = useState(false);
   const [desc, setDesc] = useState('');
   const [isReadMore, setIsReadMore] = useState(true);
+
+  console.log("ddd", postData?.image);
   const handleOpen = (e) => {
     if (e.target.id === 'delete') {
       setOpenModal(true);
@@ -94,11 +85,13 @@ const UserPost = ({ postId }) => {
       const postId = router.query.slug[1];
       try {
         await deleteData(postId);
+        deleteImage(postData?.image)
+        console.log();
         setOpenModal(false);
         setIsLoading(false);
         // alert('таны пост устлаа.');
         router.push('/profile');
-      } catch (error) {}
+      } catch (error) { }
     }
     setOpenModal(false);
   };
@@ -122,9 +115,8 @@ const UserPost = ({ postId }) => {
           setInputEditButton(false);
           setIsLoading(false);
           alert('doc updated!');
-          // router.refresh();
         }
-      } catch (error) {}
+      } catch (error) { }
     } else {
       setOpenEditModal(true);
       alert('nothing changed!');
@@ -139,13 +131,13 @@ const UserPost = ({ postId }) => {
         <Header>
           <BackIconContainer onClick={goBackHandler}>
             <IconButton>
-              <ArrowBack fontSize='large' />
+              <ArrowBackIcon fontSize='large' />
             </IconButton>
           </BackIconContainer>
           <Typography variant='h6' sx={{ fontSize: '1.5rem', fontWeight: 700 }}>
             {auth?.currentUser?.uid === postData?.userID
               ? 'My posts'
-              : `${postOwner?.name}'s posts`}
+              : `${userData?.firstName}'s posts`}
           </Typography>
         </Header>
         <Divider sx={{ borderBottomWidth: 20, borderColor: '#d9d9d9' }} />
@@ -158,22 +150,22 @@ const UserPost = ({ postId }) => {
               justifyContent='space-between'
               alignItems='center'
             >
-              <UserAvatar src={postOwner?.avatar} />
+              <UserAvatar src={userData?.avatar} />
               <Typography
                 variant='h6'
                 ml={2}
                 sx={{ fontSize: '1.5rem', fontWeight: 700, color: '#696969' }}
               >
-                {postOwner?.name}
+                {userData?.firstName}
               </Typography>
             </Stack>
             {/* 2.1.1) =================================== */}
-            {auth?.currentUser?.uid === postOwner.id && (
+            {auth?.currentUser?.uid === postData?.userID && (
               <PopupState variant='popper' popupId='demo-popup-popper'>
                 {(popupState) => (
                   <div>
                     <IconButton variant='contained' {...bindToggle(popupState)}>
-                      <MoreHorizOutlined fontSize='large' />
+                      <MoreHorizOutlinedIcon fontSize='large' />
                     </IconButton>
                     <Popper {...bindPopper(popupState)} transition>
                       {({ TransitionProps }) => (
@@ -181,7 +173,7 @@ const UserPost = ({ postId }) => {
                           <Paper elevation={3}>
                             <Stack direction='column' alignItems='flex-start'>
                               <Button
-                                startIcon={<Delete />}
+                                startIcon={<DeleteIcon />}
                                 onClick={handleOpen}
                                 id='delete'
                               >
@@ -189,7 +181,7 @@ const UserPost = ({ postId }) => {
                               </Button>{' '}
                               <Divider style={{ width: '100%' }} />
                               <Button
-                                startIcon={<Edit />}
+                                startIcon={<EditIcon />}
                                 onClick={onPostEditHandler}
                               >
                                 Edit post
@@ -244,7 +236,7 @@ const UserPost = ({ postId }) => {
                   fontWeight: 700,
                 }}
               >
-                {postOwner?.name}
+                {userData?.firstName}
                 <span style={{ fontWeight: '400', marginLeft: '10px' }}>
                   {isReadMore ? postData?.desc?.slice(0, 100) : postData?.desc}
                 </span>
@@ -255,8 +247,8 @@ const UserPost = ({ postId }) => {
                   {postData?.desc?.length < 100
                     ? ''
                     : isReadMore
-                    ? '...read more'
-                    : ' show less'}
+                      ? '...read more'
+                      : ' show less'}
                 </button>
                 {inputEditButton && (
                   <Button id='edit' onClick={handleOpen}>

@@ -6,16 +6,19 @@
     width: 100vw;
     height: 100vh;
 }
+
 .login_middle_wrapp {
     display: flex;
     height: 670px;
     width: 100%;
     justify-content: center;
 }
+
 .login_top_img {
     position: absolute;
     top: -147px;
 }
+
 .login_inside {
     position: relative;
     margin-top: 120px;
@@ -30,18 +33,22 @@
     box-shadow: 0px 1px 3px -1px rgba(66, 68, 90, 1);
     border-radius: 15px;
 }
+
 .login_inside svg {
     width: 100px;
     margin-top: -90px;
 }
+
 .login_inside h5 {
     margin-top: -80px;
 }
+
 .login_wrapp {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
+
 .login_wrapp button {
     cursor: pointer;
     width: 300px;
@@ -51,6 +58,16 @@
     border-radius: 20px;
     color: white;
 }
+
+.login_btn {
+    background: #ffc024;
+}
+
+.login_btn:active {
+    transform: scale(1.3);
+    transition: all 0.4s ease-in-out;
+}
+
 .text_google {
     margin-top: 30px;
     font-size: 13px;
@@ -58,6 +75,7 @@
     position: relative;
     color: rgb(121, 121, 121);
 }
+
 .text_google b {
     position: absolute;
     top: 10px;
@@ -66,6 +84,7 @@
     width: 80px;
     background-color: rgb(151, 151, 151);
 }
+
 .text_google a {
     position: absolute;
     top: 10px;
@@ -74,15 +93,18 @@
     width: 80px;
     background-color: rgb(151, 151, 151);
 }
+
 .google_button {
     position: relative;
-    background: #aaa;
+    background: rgb(214, 214, 214);
 }
+
 .google_button img {
     position: absolute;
     left: 80px;
     top: 10px;
 }
+
 /* ----------- input ------------- */
 .balloon {
     width: 300px;
@@ -97,19 +119,21 @@
     text-indent: 70px;
     transition: all 0.3s ease-in-out;
 }
+
 .balloon::-webkit-input-placeholder {
     color: #f8f8f8;
     text-indent: 0;
     font-weight: 300;
 }
-.balloon + label {
+
+.balloon+label {
 
     position: absolute;
     top: 8px;
     left: 0;
     bottom: 8px;
     padding: 5px 15px;
-    color: #f89900;
+    color: #ffc024;
     font-size: 11px;
     font-weight: 500;
     text-transform: uppercase;
@@ -117,7 +141,8 @@
     border-radius: 3px;
     background: rgba(122, 184, 147, 0);
 }
-.balloon + label:after {
+
+.balloon+label:after {
     position: absolute;
     content: "";
     width: 0;
@@ -133,24 +158,27 @@
 
 .balloon:focus,
 .balloon:active {
-    color: #f89900;
+    color: #ffc024;
     text-indent: 0;
     background: none;
     border: 0.5px solid rgb(232, 232, 232);
 }
+
 .balloon:focus::-webkit-input-placeholder,
 .balloon:active::-webkit-input-placeholder {
     color: #aaa;
 }
-.balloon:focus + label,
-.balloon:active + label {
+
+.balloon:focus+label,
+.balloon:active+label {
     color: #fff;
-    background: #f89900;
+    background: #ffc024;
     transform: translateY(-40px);
 }
-.balloon:focus + label:after,
-.balloon:active + label:after {
-    border-top: 4px solid #f89900;
+
+.balloon:focus+label:after,
+.balloon:active+label:after {
+    border-top: 4px solid #ffc024;
 }
 
 
@@ -168,6 +196,7 @@
     align-items: center;
     width: 100vw;
 }
+
 .signup_box {
     width: 375px;
     padding: 20px;

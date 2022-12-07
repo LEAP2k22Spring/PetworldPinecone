@@ -1,101 +1,77 @@
-import {Avatar, Box, Button, Divider, Fab, IconButton, ImageList, ImageListItem, Input, Modal, TextField, Typography,} from '@mui/material'
+/* eslint-disable @next/next/no-img-element */
+import {Avatar, Box, Button, Divider, Fab,  IconButton, Typography,} from '@mui/material'
 import React, { useState } from 'react'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import styled from "styled-components";
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { useAuth } from '../providers';
 import { useRouter } from 'next/router';
-import { uuidv4 } from '@firebase/util';
-import CheckIcon from '@mui/icons-material/Check';
-import { useRef } from 'react';
+import ChangeGenderModal from '../component/editprofileModals/changeGenderModal';
+import ChangeBackgroundModal from '../component/editprofileModals/changeBackgroundModal';
+import ChangeImageModal from '../component/editprofileModals/changeImageModal';
+import { auth, useDocument } from '../firebase/useFirebase';
+import LoadingSpinner from '../component/Spinner';
 
 function Editprofile() {
-    const [selectedProfileImage, setSelectedProfileImage] = useState();
-    const [selectedBackgroundImage, setSelectedBackgroundImage] = useState();
-    const [imageData, setImageData] = useState();
-    const userNameRef = useRef(null)
-    console.log("userNameRef", userNameRef.current);
+    const {userData , loading} = useAuth()
+    
+    // const { data: userData, loading } = useDocument({
+    //     path: "Users",
+    //     docId: auth?.currentUser?.uid,
+    //   });
+ 
 
-    const {userData} = useAuth()
     const router = useRouter()
+    const [openProfile, setOpenProfile] = useState(false);
+    const [openBackground, setOpenBackground] = useState(false);
+    const [openGender, setOpenGender] = useState(false);
 
-
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
-  
-
-    const imgUploadHandler = (e) => {
-        const file = e.target.files[0];
-        const fileName = `${file.name}-${uuidv4()}`;
-        const reader = new FileReader();
-        reader.onload = (event) => {
-            if (e.target.id === "profileImage") {
-                setSelectedProfileImage({
-                    ...imageData,
-                    url: event.target.result,
-                    imageName: fileName,
-                    file: file,
-                  })
-            } else {
-                setSelectedBackgroundImage({
-                    ...imageData,
-                    url: event.target.result,
-                    imageName: fileName,
-                    file: file,
-                })
-            }
-        };
-        reader.readAsDataURL(file);
-      };
+    const [petInputData, setPetInputData] = useState({
+        // firstName:"",
+        gender:"",
+        avatar:"",
+        backgroundImage:""
+      });
     
     const goBackHandler = () => {
         router.back();
     };
-    const tests = () =>{
-        console.log("hey");
+    const clickOpen = (e) =>{
+        console.log("e", e.currentTarget.id);
+        // setOpen(true)
+        if(e.currentTarget.id === "upload-profile-image"){
+            setOpenProfile(true)
+        }
+        if(e.currentTarget.id === "upload-background-image"){
+            setOpenBackground(true)
+        }
+        if(e.currentTarget.id === "change-gender"){
+            setOpenGender(true)
+        }
     }
 
-    
-
-    const Label = styled.label``;
-    const style = {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: 400,
-        bgcolor: 'background.paper',
-        border: '2px solid #000',
-        boxShadow: 24,
-        p: 2,
-        display:'flex',
-        flexDirection:'column',
-        alignItems:"center",
-        gap:3
-      };
     return(
         <>
+        {loading && <LoadingSpinner open={loading} />}
         <Box p={2} display="flex" justifyContent="space-between" alignItems="center" sx={{backgroundColor:"#ddd"}}> 
             <Fab variant='circular' size='small' sx={{display:'flex', justifyContent:'center', alignItems:'center'}} onClick={goBackHandler}>
                 <ArrowBackIcon/>
             </Fab>
             <Typography variant='h6'>Edit Profile</Typography>
-            <Button variant='contained'>Save</Button>
+            <Button variant='contained' onClick={()=>router.push("/profile")}>Save</Button>
         </Box>
         <Box>
             <Box p={2} display="flex" justifyContent="space-between" alignItems="center">
                 <Typography fontSize={15}>Profile picture</Typography>
                 <Box >
-                        <Label>
-                            <Input sx={{ display: "none",  }} type="file" id='profileImage' onChange={imgUploadHandler}/>
-                            <Typography fontSize={15} color="#ffbb00">Upload New</Typography>
-                        </Label>
+                    <IconButton id='upload-profile-image'  onClick={clickOpen}>
+                        <Typography fontSize={15} color="#ffbb00" id="sss" >Upload New</Typography>
+                    </IconButton>
+                    <ChangeImageModal openProfile={openProfile} onClose={()=>setOpenProfile(false)}/>
                 </Box>
 
             </Box>
             <Box display="flex" justifyContent="center" alignItems="center">
-                <Avatar alt="user_avatar" src={selectedProfileImage ? selectedProfileImage.url : userData?.avatar} sx={{ width: 106, height: 106 }}/>
+                <Avatar alt="user_avatar" src={userData?.avatar} sx={{ width: 106, height: 106 }}/>
             </Box>
             <Divider sx={{margin:'20px 20px 0 20px'}}/>
         </Box>
@@ -103,63 +79,41 @@ function Editprofile() {
             <Box p={2} display="flex" justifyContent="space-between" alignItems="center">
                 <Typography fontSize={15}>Background picture</Typography>
                 <Box>
-                    <Label>
-                        <Input type='file' sx={{display:'none'}} id='backgroundImage' onChange={imgUploadHandler} >Upload New</Input>
-                        <Typography fontSize={15} color="#ffbb00">Upload New</Typography>
-                    </Label>
+                    <IconButton id='upload-background-image' onClick={clickOpen}>
+                        <Typography fontSize={15} color="#ffbb00" >Upload New</Typography>
+                    </IconButton>
+                    <ChangeBackgroundModal openBackground={openBackground} onClose={()=>setOpenBackground(false)}/>
                 </Box>
             </Box>
             <Box ml={2} mr={2} display="flex" justifyContent="center" alignItems="center">
-                <ImageList sx={{ width: '100%', height: "150px" }} cols={1} rowHeight={164}>
-                        <ImageListItem >
                             <img
-                                src={selectedBackgroundImage ? selectedBackgroundImage.url : userData?.backgroundImage}
+                                src={userData?.backgroundImage}
                                 alt="test"
+                                width="100%"
+                                height={300}
+                                style={{objectFit:"cover"}}
                             />
-                        </ImageListItem>
-                </ImageList>
-
             </Box>
             <Divider sx={{margin:'20px 20px 0 20px'}}/>
         </Box>
         <Box p={2} display="flex" justifyContent="space-between" alignItems="center" > 
             <Typography variant='h7' >Name</Typography>
             <Box display="flex" justifyContent="space-between" alignItems="center">
-                <Typography variant='h7'> {userData?.firstName}</Typography>
-                <IconButton onClick={handleOpen}>
+                <Typography variant='h7'> {petInputData?.firstName ? petInputData?.firstName : userData?.firstName}</Typography>
+                <IconButton >
                     <NavigateNextIcon />
                 </IconButton>
             </Box>
-            <Modal
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-            >
-                <Box sx={style}>
-                    <Box>
-                        <IconButton sx={{border:"1px solid #000"}}>
-                            <ArrowBackIcon/>
-                        </IconButton>
-                    </Box>
-                    <Typography id="modal-modal-title" variant="h6" component="h2">
-                    What's your name?
-                    </Typography>
-                    <TextField placeholder={userData?.firstName} inputRef={userNameRef}></TextField>
-                    <IconButton color='success'>
-                        <CheckIcon/>
-                    </IconButton>
-                </Box>
-            </Modal>
         </Box>
         <Divider sx={{margin:'0 20px 0 20px'}}/>
         <Box p={2} display="flex" justifyContent="space-between" alignItems="center" > 
             <Typography variant='h7' >Gender</Typography>
             <Box display="flex" justifyContent="space-between" alignItems="center">
-                <Typography variant='h7'> {userData?.gender}</Typography>
-                <IconButton onClick={tests}>
+                <Typography variant='h7'> {petInputData?.gender ? petInputData?.gender : userData?.gender}</Typography>
+                <IconButton id='change-gender' onClick={clickOpen}>
                     <NavigateNextIcon/>
                 </IconButton>
+                    <ChangeGenderModal openGender={openGender} onClose={()=>setOpenGender(false)}/>
             </Box>
         </Box>
         <Divider sx={{margin:'0 20px 0 20px'}}/>
@@ -167,9 +121,10 @@ function Editprofile() {
             <Typography variant='h7' >Date of birth</Typography>
             <Box display="flex" justifyContent="space-between" alignItems="center">
                 <Typography variant='h7'> {userData?.dateOfBirth}</Typography>
-                <IconButton onClick={tests}>
+                <IconButton onClick={clickOpen}>
                     <NavigateNextIcon />
                 </IconButton>
+                
             </Box>
         </Box>
         <Divider sx={{margin:'0 20px 0 20px'}}/>
@@ -177,7 +132,7 @@ function Editprofile() {
             <Typography variant='h7' >Email address</Typography>
             <Box display="flex" justifyContent="space-between" alignItems="center">
                 <Typography variant='h7'> {userData?.emailAddress}</Typography>
-                <IconButton onClick={tests}>
+                <IconButton onClick={clickOpen}>
                     <NavigateNextIcon />
                 </IconButton>
             </Box>
@@ -187,7 +142,7 @@ function Editprofile() {
             <Typography variant='h7' >City</Typography>
             <Box display="flex" justifyContent="space-between" alignItems="center">
                 <Typography variant='h7'> {userData?.cityName}</Typography>
-                <IconButton onClick={tests}>
+                <IconButton onClick={clickOpen}>
                     <NavigateNextIcon />
                 </IconButton>
             </Box>
@@ -197,7 +152,7 @@ function Editprofile() {
             <Typography variant='h7' >Phone</Typography>
             <Box display="flex" justifyContent="space-between" alignItems="center">
                 <Typography variant='h7'> {userData?.phoneNumber}</Typography>
-                <IconButton onClick={tests}>
+                <IconButton onClick={clickOpen}>
                     <NavigateNextIcon />
                 </IconButton>
             </Box>

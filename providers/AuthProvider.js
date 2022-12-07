@@ -1,22 +1,25 @@
-import { onAuthStateChanged, signOut } from 'firebase/auth';
-import { createContext, useContext, useEffect, useState } from 'react';
-import { auth, useDocument } from '../firebase/useFirebase';
-import Login from '../component/signin';
-import LandingPage from '../component/landingPage';
-import LoadingSpinner from '../component/Spinner';
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { createContext, useContext, useEffect, useState } from "react";
+import { auth, useDocument, useSort } from "../firebase/useFirebase";
+import Login from "../component/signin";
+import LandingPage from "../component/landingPage";
+import LoadingSpinner from "../component/Spinner";
 
 const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
-  // const  = auth.currentUser;
-  const [user, setUser] = useState(false);
+  const [isUser, setUser] = useState(false);
   const [checking, setChecking] = useState(true);
   const [startBtnClick, setStartBtnClick] = useState(false);
+  const [currentUser, setCurrentUser] = useState();
   const { data: userData, loading } = useDocument({
-    path: 'Users',
+    path: "Users",
     docId: auth?.currentUser?.uid,
   });
+  const { data: petData } = useSort("Pets", "ownerID", auth?.currentUser?.uid);
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setCurrentUser(user);
       if (user) {
         setUser(true);
       } else {
@@ -24,7 +27,6 @@ export const AuthProvider = ({ children }) => {
       }
       setChecking(false);
     });
-
     return () => unsubscribe();
   }, []);
 
@@ -32,7 +34,7 @@ export const AuthProvider = ({ children }) => {
     setStartBtnClick(true);
     signOut(auth)
       .then(() => {
-        console.log('Log-out success');
+        console.log("Log-out success");
       })
       .catch((err) => {
         console.log(err);
@@ -40,26 +42,28 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, logout, userData, loading }}>
+    <AuthContext.Provider
+      value={{ isUser, logout, userData, loading, petData, currentUser }}
+    >
       {checking && (
         <h1
           style={{
-            position: 'absolute',
-            zIndex: '1300',
-            width: '100%',
-            height: '100vh',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            background: '#fff',
-            color: '#000',
+            position: "absolute",
+            zIndex: "1300",
+            width: "100%",
+            height: "100vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            background: "#fff",
+            color: "#000",
           }}
         >
-          <LoadingSpinner open={true} color='#000' />
+          <LoadingSpinner open={true} color="#000" />
         </h1>
       )}
 
-      {!checking && !user ? (
+      {!checking && !isUser ? (
         startBtnClick ? (
           <Login />
         ) : (

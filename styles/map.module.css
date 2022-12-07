@@ -13,6 +13,13 @@
 .icon {
   border-radius: 50%;
 }
+.leafletContainer.leaflet-bottom,
+.leafletContainer.leaflet-right {
+  background-color: red;
+  height: 100px;
+  width: 100px;
+  overflow: hidden;
+}
 
 .saveButton {
   cursor: pointer;

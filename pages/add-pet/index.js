@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useState, useRef } from 'react';
 import { useRouter } from 'next/router';
-import classes from '../../component/profile.module.css';
+import classes from '../../styles/profile.module.css';
 import {
   Avatar,
   Typography,
@@ -23,14 +23,13 @@ import {
   CameraAltOutlined,
   ArrowBackIosNewOutlined,
 } from '@mui/icons-material';
-import { v4 as uuidv4 } from 'uuid';
 import {
   auth,
   imageUploadToFirestore,
   useDocument,
   useFirebase,
 } from '../../firebase/useFirebase';
-import { useGetUsersDataContext } from '../../context/UsersDataContext';
+// import { useGetUsersDataContext } from '../../context/UsersDataContext';
 import { serverTimestamp } from 'firebase/firestore';
 
 const names = [
@@ -41,6 +40,8 @@ const names = [
   'Turtle',
   'Rabbit',
   'Snake',
+  'Humster',
+  'Raccoon',
 ];
 const AddPet = () => {
   const router = useRouter();
@@ -100,7 +101,7 @@ const AddPet = () => {
   // 2) Image picker handler
   const imgUploadHandler = (e) => {
     const file = e.target.files[0];
-    const fileName = `${file.name}-${uuidv4()}`;
+    const fileName = `${file.name}`;
     const reader = new FileReader();
     reader.onload = (event) => {
       setImageData({
@@ -217,16 +218,18 @@ const AddPet = () => {
     router.back();
   };
   return (
-    <>
-      <Container>
+    <Box className={classes.petProfile_wrapp}>
+      <Container className={classes.pet_container}>
         <LoadingSpinner open={isLoading} />
         <Header>
-          <BackIconContainer onClick={goBackHandler}>
-            <ArrowBackIosNewOutlined fontSize='large' />
-          </BackIconContainer>
-          <SettingsIconContainer>
-            <SettingsOutlined fontSize='large' />
-          </SettingsIconContainer>
+          <Box className={classes.top_icon_btn}>
+            <ArrowBackIosNewOutlined
+              onClick={goBackHandler}
+              className={classes.icon_btn}
+              fontSize='large'
+            />
+            <SettingsOutlined className={classes.icon_btn} fontSize='large' />
+          </Box>
           <UserProfile>
             <Typography variant='body1' mt={5} mx={3}>
               Lorem, ipsum dolor sit amet consectetur adipisicing elit. Velit
@@ -237,8 +240,16 @@ const AddPet = () => {
             <StyledTitleTypography variant='body1' mt={5} mx={3}>
               Choose pet category
             </StyledTitleTypography>
-            <Box sx={{ '& button': { m: 1 } }}>
-              <Stack direction='row' justifyContent='center'>
+            <Box
+              display='flex'
+              justifyContent='center'
+              sx={{ '& button': { m: 1 } }}
+            >
+              <Stack
+                className={classes.top_button}
+                direction='row'
+                justifyContent='center'
+              >
                 <button
                   variant='outlined'
                   size='large'
@@ -273,7 +284,11 @@ const AddPet = () => {
                       background:
                         (category === 'dog') | (category === 'cat')
                           ? ''
-                          : '#00cc66',
+                          : '#e8f0e4',
+                      color:
+                        (category === 'dog') | (category === 'cat')
+                          ? ''
+                          : '#298c16',
                     }}
                     input={<OutlinedInput label='Name' />}
                   >
@@ -313,16 +328,19 @@ const AddPet = () => {
               alignItems='center'
               sx={{ margin: '20 auto' }}
             >
-              <FormControl sx={{ m: 1, width: 222.4 }}>
+              <FormControl sx={{ m: 2, width: 223 }}>
                 <InputLabel>Sex</InputLabel>
                 <Select
                   value={sex}
                   onChange={handleChange}
                   label='sex'
                   name='sex'
+                  color='success'
                   sx={{
                     background:
-                      (sex === 'female') | (sex === 'male') ? '#00cc66' : '',
+                      (sex === 'female') | (sex === 'male') ? '#e8f0e4' : '',
+                    color:
+                      (sex === 'female') | (sex === 'male') ? '#298c16' : '',
                   }}
                 >
                   <MenuItem value='male'>Male</MenuItem>
@@ -330,9 +348,12 @@ const AddPet = () => {
                 </Select>
               </FormControl>
               <TextField
+                sx={{ width: '223px' }}
                 error={false}
                 name='petName'
                 label='name*'
+                color='success'
+                focused
                 // defaultValue='Hello World'
                 inputRef={petNameRef}
                 onBlur={handleChange}
@@ -340,29 +361,35 @@ const AddPet = () => {
                 // helperText='Incorrect entry.'
               />
               <TextField
+                sx={{ width: '223px' }}
                 error={false}
                 name='birthDate'
                 label='date of birth*'
                 margin='normal'
+                color='success'
                 // defaultValue='Hello World'
                 // helperText='Incorrect entry.'
                 inputRef={birthRef}
                 onBlur={handleChange}
               />
               <TextField
+                sx={{ width: '223px', m: 1 }}
                 error={false}
                 name='breed'
                 label='breed*'
+                color='success'
                 // defaultValue='Hello World'
                 // helperText='Incorrect entry.'
                 inputRef={breedRef}
                 onBlur={handleChange}
               />
               <TextField
+                sx={{ width: '223px' }}
                 error={false}
                 name='color'
                 label='color*'
                 margin='normal'
+                color='success'
                 // defaultValue='Hello World'
                 // helperText='Incorrect entry.'
                 inputRef={colorRef}
@@ -373,10 +400,15 @@ const AddPet = () => {
                 justifyContent='center'
                 alignItems='center'
               >
-                <FormControl sx={{ m: 1, width: '15ch' }} variant='outlined'>
-                  <InputLabel>Weight</InputLabel>
+                <FormControl
+                  className={classes.input_btn}
+                  sx={{ m: 1, width: '15ch' }}
+                  variant='outlined'
+                >
+                  <InputLabel color='success'>Weight</InputLabel>
                   <OutlinedInput
                     name='weight'
+                    color='success'
                     value={weight}
                     onChange={handleChange}
                     endAdornment={
@@ -385,9 +417,10 @@ const AddPet = () => {
                   />
                 </FormControl>
                 <FormControl sx={{ m: 1, width: '15ch' }} variant='outlined'>
-                  <InputLabel>Height</InputLabel>
+                  <InputLabel color='success'>Height</InputLabel>
                   <OutlinedInput
                     name='height'
+                    color='success'
                     value={height}
                     onChange={handleChange}
                     endAdornment={
@@ -412,6 +445,7 @@ const AddPet = () => {
                 multiline
                 placeholder='... add some description'
                 rows={3}
+                color='success'
                 variant='outlined'
                 inputRef={descriptionRef}
                 onBlur={handleChange}
@@ -448,7 +482,7 @@ const AddPet = () => {
                     onClick={onMutate}
                     value={true}
                   >
-                    YES
+                    Yes
                   </button>
                   <button
                     variant='outlined'
@@ -461,7 +495,7 @@ const AddPet = () => {
                     value={false}
                     onClick={onMutate}
                   >
-                    NO
+                    No
                   </button>
                 </Stack>
                 <Stack
@@ -479,7 +513,7 @@ const AddPet = () => {
                     onClick={onMutate}
                     value={true}
                   >
-                    YES
+                    Yes
                   </button>
                   <button
                     variant='outlined'
@@ -492,7 +526,7 @@ const AddPet = () => {
                     value={false}
                     onClick={onMutate}
                   >
-                    NO
+                    No
                   </button>
                 </Stack>
                 <Stack
@@ -508,7 +542,7 @@ const AddPet = () => {
                     onClick={onMutate}
                     value={true}
                   >
-                    YES
+                    Yes
                   </button>
                   <button
                     variant='outlined'
@@ -521,7 +555,7 @@ const AddPet = () => {
                     value={false}
                     onClick={onMutate}
                   >
-                    NO
+                    No
                   </button>
                 </Stack>
               </Stack>
@@ -532,9 +566,15 @@ const AddPet = () => {
           </UserProfile>
         </Header>
 
-        <Divider sx={{ borderBottomWidth: 20, borderColor: '#d9d9d9' }} />
+        <Divider
+          sx={{
+            borderBottomWidth: 20,
+            borderColor: '#f0f0f0',
+            borderRadius: '10px',
+          }}
+        />
       </Container>
-    </>
+    </Box>
   );
 };
 
@@ -544,12 +584,13 @@ const Container = styled.div`
   background: white;
   position: relative;
   margin-bottom: 120px;
+  margin-top: 10px;
 `;
 const Header = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-end;
+  align-items: center;
+  padding: 10px;
 `;
 const SettingsIconContainer = styled.div`
   padding: 20px;
@@ -568,9 +609,13 @@ const UploadImageContainer = styled.div`
 `;
 
 const StyledTitleTypography = styled(Typography)`
-  color: #000;
+  color: #fff;
   font-weight: 700;
   font-size: 1rem;
+  background: orange;
+  width: fit-content;
+  padding: 0 20px;
+  border-radius: 5px;
 `;
 
 const UserAvatar = styled(Avatar)`
