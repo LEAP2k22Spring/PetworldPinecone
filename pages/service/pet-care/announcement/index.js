@@ -2,16 +2,76 @@ import { Stack, Box, TextField, InputLabel, Typography } from '@mui/material';
 import { useState } from 'react';
 import classes from '../../../../styles/service.module.css';
 import { Save } from '@mui/icons-material';
+import { auth, useFirebase } from '../../../../firebase/useFirebase';
+import LoadingSpinner from '../../../../component/Spinner';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useRouter } from 'next/router';
+import { useAuth } from '../../../../providers/AuthProvider';
+import { serverTimestamp } from 'firebase/firestore';
 
 const Announcement = () => {
-  const [phone, setPhone] = useState(null);
+  const router = useRouter();
+  const { userData } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
+  const { createDataWithoutSpecificID } = useFirebase('PetCare');
+  const [inputs, setInputs] = useState({
+    description: '',
+    phone: '',
+    address: '',
+  });
 
   const handleChange = (event) => {
-    setPhone(event.target.value);
+    const { name, value } = event.target;
+    setInputs({
+      ...inputs,
+      [name]: value,
+    });
+  };
+
+  const clearAllInputs = () => {
+    setInputs({
+      description: '',
+      phone: '',
+      address: '',
+    });
+  };
+
+  // save all inputs
+  const saveInputHandler = async () => {
+    setIsLoading(true);
+    if (
+      inputs.phone.trim().length === 8 &&
+      inputs.description.trim() !== '' &&
+      inputs.address.trim() !== ''
+    ) {
+      const result = await createDataWithoutSpecificID({
+        ...inputs,
+        avatar: userData?.avatar,
+        name: userData?.firstName,
+        phone: userData?.phoneNumber,
+        createdAt: serverTimestamp(),
+        userId: auth?.currentUser?.uid,
+      });
+      if (result) {
+        setIsLoading(false);
+        alert('Successfully saved data');
+        clearAllInputs();
+      }
+    } else {
+      alert('Please enter valid inputs');
+    }
   };
 
   return (
     <div>
+      <LoadingSpinner open={isLoading} />
+      <header className={classes.header}>
+        <ArrowBackIcon
+          sx={{ fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' } }}
+          className={classes.backIcon}
+          onClick={() => router.back()}
+        />
+      </header>
       <Stack
         className=''
         direction='column'
@@ -27,7 +87,15 @@ const Announcement = () => {
         {/* INPUT SECTION */}
         <Stack direction='column' justifyContent={'center'}>
           <Box mb={2}>
-            <h1 style={{ textAlign: 'center' }}>Зар оруулах хэсэг</h1>
+            <Typography
+              sx={{
+                textAlign: 'center',
+                fontWeight: 'bold',
+                fontSize: { xs: '1.5rem', sm: '1.75rem', md: '2rem' },
+              }}
+            >
+              Зар оруулах хэсэг
+            </Typography>
           </Box>
           <Box
             className={classes.card1_container}
@@ -45,9 +113,7 @@ const Announcement = () => {
                   Description*
                 </InputLabel>
                 <TextField
-                  id='outlined-name'
-                  //   label='Phone number*'
-                  value={phone}
+                  value={inputs.description}
                   name='description'
                   multiline
                   placeholder='... add some description'
@@ -65,13 +131,12 @@ const Announcement = () => {
                   Phone number*
                 </InputLabel>
                 <TextField
-                  id='outlined-name'
                   type='number'
-                  //   label='Phone number*'
-                  value={phone}
+                  name='phone'
+                  value={inputs.phone}
                   onChange={handleChange}
                   sx={{
-                    width: { xs: '15rem', sm: '25rem', md: '45rem' },
+                    width: { xs: '18rem', sm: '25rem', md: '45rem' },
                   }}
                 />
               </Box>
@@ -83,12 +148,11 @@ const Announcement = () => {
                   Address*
                 </InputLabel>
                 <TextField
-                  id='outlined-name'
-                  //   label='Phone number*'
-                  value={phone}
+                  name='address'
+                  value={inputs.address}
                   onChange={handleChange}
                   sx={{
-                    width: { xs: '15rem', sm: '25rem', md: '45rem' },
+                    width: { xs: '18rem', sm: '25rem', md: '45rem' },
                   }}
                 />
               </Box>
@@ -96,7 +160,11 @@ const Announcement = () => {
           </Box>
         </Stack>
         {/* SAVE BUTTON */}
-        <Stack direction='row' justifyContent={'center'}>
+        <Stack
+          direction='row'
+          justifyContent={'center'}
+          onClick={saveInputHandler}
+        >
           <Box
             mt={5}
             sx={{
@@ -112,7 +180,6 @@ const Announcement = () => {
               cursor: 'pointer',
             }}
             className={classes.btn_wrapper}
-            // onClick={() => router.push('/service/pet-care/announcement')}
           >
             <Save
               sx={{

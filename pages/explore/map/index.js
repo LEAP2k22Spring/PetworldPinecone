@@ -1,6 +1,6 @@
-import React, { useState, useRef } from "react";
-import LoadingSpinner from "../../../component/Spinner";
-import { useCollection } from "../../../firebase/useFirebase";
+import React, { useState, useRef } from 'react';
+import LoadingSpinner from '../../../component/Spinner';
+import { auth, useCollection } from '../../../firebase/useFirebase';
 import {
   MapContainer,
   Marker,
@@ -9,23 +9,23 @@ import {
   Tooltip,
   useMapEvents,
   Circle,
-} from "react-leaflet";
-import { useRouter } from "next/router";
-import classes from "../../../styles/map.module.css";
-import styled from "styled-components";
-import "leaflet/dist/leaflet.css";
-import L, { icon } from "leaflet";
-import { Box, Divider, Typography, Button, Stack, Modal } from "@mui/material";
-import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
-import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
-import { useAuth } from "../../../providers";
-import { useEffect } from "react";
-import { serverTimestamp } from "firebase/firestore";
+} from 'react-leaflet';
+import { useRouter } from 'next/router';
+import classes from '../../../styles/map.module.css';
+import styled from 'styled-components';
+import 'leaflet/dist/leaflet.css';
+import L, { icon } from 'leaflet';
+import { Box, Divider, Typography, Button, Stack, Modal } from '@mui/material';
+import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
+import MapOutlinedIcon from '@mui/icons-material/MapOutlined';
+import { useAuth } from '../../../providers';
+import { useEffect } from 'react';
+import { serverTimestamp } from 'firebase/firestore';
 
 const getIcon = (url) => {
   return L.icon({
-    iconUrl: url === "" ? "/marker-icon.png" : url,
-    iconSize: url === "" ? [30, 40] : [40, 40],
+    iconUrl: url === '' ? '/marker-icon.png' : url,
+    iconSize: url === '' ? [30, 40] : [40, 40],
     popupAnchor: [0, -26],
   });
 };
@@ -42,7 +42,7 @@ const Map = () => {
     snapData: people,
     getData,
     createUserData,
-  } = useCollection("Location"); //real-time listens
+  } = useCollection('Location'); //real-time listens
   const [openModal, setOpenModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [openMap, setOpenMap] = useState(false);
@@ -50,7 +50,7 @@ const Map = () => {
 
   useEffect(() => {
     (async () => {
-      const result = await getData(userData?.userId);
+      const result = await getData(auth?.currentUser?.uid);
 
       // 1) Check if user has no location info, then ask for permission to get location
       if (result === undefined) {
@@ -72,7 +72,7 @@ const Map = () => {
         position={coordinates}
         ref={markerRef}
         icon={icon({
-          iconUrl: "/marker.png",
+          iconUrl: '/marker.png',
           iconSize: [25, 35],
         })}
       >
@@ -91,7 +91,7 @@ const Map = () => {
     setOpenMap(bool);
 
     // Koordinat awdag heseg
-    if ("geolocation" in navigator) {
+    if ('geolocation' in navigator) {
       setIsLoading(true);
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -104,21 +104,21 @@ const Map = () => {
         function error(error_message) {
           // for when getting location results in an error
           console.error(
-            "An error has occured while retrieving location",
+            'An error has occured while retrieving location',
             error_message
           );
         }
       );
     } else {
       // geolocation is not supported, get your location some other way
-      console.log("geolocation is not enabled on this browser");
+      console.log('geolocation is not enabled on this browser');
     }
   };
 
   //====================FINAL STEP======================
   const onSave = async () => {
     setIsLoading(true);
-    await createUserData(userData?.userId, {
+    await createUserData(auth?.currentUser?.uid, {
       latitude: coordinates.lat,
       longitude: coordinates.lng,
       name: userData?.firstName,
@@ -131,29 +131,29 @@ const Map = () => {
       lat: 0,
       lng: 0,
     });
-    alert("Амжилттай хадгалагдлаа.");
+    alert('Амжилттай хадгалагдлаа.');
   };
 
   return (
     <div className={classes.wrapper}>
-      <LoadingSpinner open={isLoading} color="#000" />
+      <LoadingSpinner open={isLoading} color='#000' />
       <div className={classes.leafletContainer}>
-        <Box textAlign="center" component="span">
+        <Box textAlign='center' component='span'>
           <Typography fontWeight={800} mt={5}>
             EXPLORE
           </Typography>
         </Box>
-        <Box display="flex" justifyContent="space-evenly" mx={6} my={2} sx={{}}>
+        <Box display='flex' justifyContent='space-evenly' mx={6} my={2} sx={{}}>
           <Stack
-            direction="row"
-            onClick={() => router.push("/explore")}
-            sx={{ cursor: "pointer" }}
+            direction='row'
+            onClick={() => router.push('/explore')}
+            sx={{ cursor: 'pointer' }}
           >
             <GroupsOutlinedIcon />
             <Typography ml={2}>People</Typography>
           </Stack>
-          <Divider orientation="vertical" flexItem />
-          <Stack direction="row" sx={{ color: "#00cc66", cursor: "pointer" }}>
+          <Divider orientation='vertical' flexItem />
+          <Stack direction='row' sx={{ color: '#00cc66', cursor: 'pointer' }}>
             <MapOutlinedIcon />
             <Typography ml={2}>Map</Typography>
           </Stack>
@@ -162,14 +162,14 @@ const Map = () => {
 
         {openMap && (
           <MapContainer
-            style={{ height: "65%", width: "100%" }}
+            style={{ height: '65%', width: '100%' }}
             center={{ lat: 47.918, lng: 106.9148 }}
             zoom={12}
             scrollWheelZoom={true}
           >
             <TileLayer
               attribution='&copy; <a href="http://www.openstreetmap.org/copyright">Click to get coordinates</a>'
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
             />
             {people?.map((person, i) => {
               return (
@@ -192,29 +192,29 @@ const Map = () => {
           <Modal open={openModal} onClose={false}>
             <Box sx={style}>
               <Typography
-                variant="h6"
+                variant='h6'
                 mb={1}
                 fontSize={14}
-                sx={{ textAlign: "center", fontWeight: 700 }}
+                sx={{ textAlign: 'center', fontWeight: 700 }}
               >
                 Та байршилын координатаа өгөхийг зөвшөөрч байна уу?
-              </Typography>{" "}
-              <Stack direction="row">
+              </Typography>{' '}
+              <Stack direction='row'>
                 <Button
-                  variant="contained"
+                  variant='contained'
                   onClick={async () => await mapOpenHandler(true)}
-                  sx={{ width: "100%", marginTop: "10px" }}
+                  sx={{ width: '100%', marginTop: '10px' }}
                 >
                   Тийм
                 </Button>
                 <Button
-                  variant="contained"
+                  variant='contained'
                   onClick={() => {
                     closeModalHandler();
                     mapOpenHandler(false);
                     router.back();
                   }}
-                  sx={{ width: "100%", margin: "10px 20px 0" }}
+                  sx={{ width: '100%', margin: '10px 20px 0' }}
                 >
                   Үгүй
                 </Button>
@@ -235,12 +235,12 @@ const Map = () => {
 export default Map;
 
 const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
   width: 400,
-  bgcolor: "background.paper",
+  bgcolor: 'background.paper',
   boxShadow: 24,
   p: 4,
 };

@@ -48,7 +48,6 @@ const Post = ({ id, userAvatar, createdAt, desc, userName, image, userID }) => {
     updateData: updateFollow,
   } = useSubCollection("Users", userID, "follows");
 
-  console.log("Log");
   //Post likes deleteData and createData
   const likePost = async () => {
     try {

@@ -1,10 +1,13 @@
 import { Backdrop, Stack } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 
-const LoadingSpinner = ({ open, bgcolor, color = '#fff' }) => {
+const LoadingSpinner = ({ open }) => {
   return (
     <Backdrop
-      sx={{ backgroundColor: bgcolor || 'inherit', color: color, zIndex: (theme) => theme.zIndex.drawer + 1 }}
+      sx={{
+        color: '#000',
+        zIndex: (theme) => theme.zIndex.drawer + 1,
+      }}
       open={open}
     >
       <Stack>

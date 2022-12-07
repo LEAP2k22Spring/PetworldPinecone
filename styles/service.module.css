@@ -120,6 +120,9 @@
 }
 
 /* ===========SERVICE/PET_CARE/ANNOUNCEMENT page============ */
+.header {
+  margin: 20px
+}
 .card1_container {
   border-radius: 20px;
   padding: 10px 20px;
@@ -142,4 +145,10 @@
   color: aliceblue;
   width: 300px;
   margin-bottom: 20px;
+}
+.header .backIcon {
+  background-color: #f8aa08;
+  color:#fff;
+border-radius: 50px;
+padding: 5px;
 }
