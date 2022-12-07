@@ -17,7 +17,7 @@ export default function LandingPage() {
       <Box className={styles.landing_wrapp}>
         <Box className={styles.landing_text_wrapp}>
           <Typography fontWeight={500} variant="h1">Create Your </Typography>
-          <Typography fontWeight={600} variant="h1" color="#8faadc">Pet’s Profile</Typography>
+          <Typography fontWeight={600} variant="h1" color="#9188e5">Pet’s Profile</Typography>
           <Typography sx={{ width: '80%', color: 'gray' }} mt={5}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua.
