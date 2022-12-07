@@ -3,11 +3,9 @@ import { useRouter } from 'next/router';
 import styles from '../styles/Home.module.css';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
-import QueueRoundedIcon from '@mui/icons-material/QueueRounded';
 import ExploreRoundedIcon from '@mui/icons-material/ExploreRounded';
 import {
   Avatar,
-  Button,
   ClickAwayListener,
   Grow,
   MenuList,
@@ -20,6 +18,7 @@ import { useEffect, useRef, useState } from 'react';
 // import { useLocation } from 'react-router-dom'
 import LogoutIcon from '@mui/icons-material/Logout';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import HealthAndSafetyIcon from '@mui/icons-material/HealthAndSafety';
 
 function Navbar() {
   const router = useRouter();
@@ -104,7 +103,7 @@ function Navbar() {
             onClick={() => router.push('/service')}
           >
             <span className={styles.list_item_name}>Service</span>
-            <QueueRoundedIcon
+            <HealthAndSafetyIcon
               className={
                 router.pathname === '/service'
                   ? styles.icon_active

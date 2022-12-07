@@ -136,6 +136,12 @@
   background-color: rgb(75, 72, 102);
 }
 
+.shop_box:hover {
+  cursor: url(../image/paw_cursor.png), auto;
+  transform: scale(1.02);
+  transition: all 0.2s ease-in;
+}
+
 .shop_box img {
   border-radius: 12px;
 }

@@ -8,6 +8,7 @@
   width: 80%;
 }
 
+
 .top_icon_btn {
   display: flex;
   width: 100%;
@@ -169,15 +170,18 @@
   margin-top: 5px;
   text-align: center;
 }
+
 .petInfo_text p:nth-child(2) {
   font-weight: 700;
 }
+
 /* =========== User profile ============ */
 
 /* --- Pets */
 .profile_pets::-webkit-scrollbar {
   display: none;
 }
+
 /* ------------------------------------- */
 @media (max-width: 650px) {
   .pet_container {
@@ -193,6 +197,15 @@
   .top_button button {
     margin: 8px 0 8px 8px;
   }
+
+  .profile_info_btn>div {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .profile_info_btn p {
+    font-size: 12px;
+  }
 }
 
 @media (max-width: 415px) {
@@ -201,9 +214,11 @@
     width: 80px;
     height: 80px;
   }
+
   .petInfo_text p:nth-child(2) {
     font-size: 10px;
   }
+
   .paper img {
     width: 30px;
     height: 30px;

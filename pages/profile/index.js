@@ -17,6 +17,11 @@ import Pet from "../../component/profile/Pet";
 import Post from "../../component/profile/Post";
 import { useRouter } from "next/router";
 import { useAuth } from "../../providers";
+import PetsIcon from "@mui/icons-material/Pets";
+import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import InfoIcon from '@mui/icons-material/Info';
+
 
 const Profile = () => {
   const router = useRouter();
@@ -60,50 +65,31 @@ const Profile = () => {
         </Header>
         <AvatarContainer>
           <UserAvatar src={userData?.avatar} />
-          <Stack direction="row">
+          <Stack
+            direction="row"
+            mt={2}
+            sx={{
+              background: '#ff8164',
+              padding: '0 20px',
+              borderRadius: '15px'
+            }}>
             <Typography
               variant="h6"
-              mt={2}
-              sx={{ fontSize: "1.5rem", fontWeight: 700, color: "#696969" }}
+              sx={{ fontSize: "1.5rem", fontWeight: 700, color: "white" }}
             >
               {userData?.firstName}
             </Typography>
             <Typography
               variant="h6"
-              mt={2}
               ml={2}
-              sx={{ fontSize: "1.5rem", fontWeight: 700, color: "#696969" }}
+              sx={{ fontSize: "1.5rem", fontWeight: 700, color: "white" }}
             >
               {userData?.lastName}
             </Typography>
           </Stack>
         </AvatarContainer>
         <UserProfile style={{ marginTop: "100px" }}>
-          <Typography variant="body1" mt={5} mx={3}>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Velit
-            eaque nemo reprehenderit sint inventore obcaecati et eum maxime
-            consectetur illum?
-          </Typography>
-          <StyledTypography variant="body1" mt={5} mx={3}>
-            {userData?.cityName}
-          </StyledTypography>
-          <Stack direction="row" justifyContent="space-between" my={5} mx={5}>
-            <StyledTypography>{petData?.length} pets</StyledTypography>
-            {/* <StyledTypography>{userFollowers?.length} followers</StyledTypography> */}
-            <StyledTypography>2 following</StyledTypography>
-          </Stack>
-        </UserProfile>
-        <Divider sx={{ borderBottomWidth: 20, borderColor: '#f0f0f0', borderRadius: '10px', marginTop: '20px' }} />
-        <UserProfile>
-          <Typography
-            variant="h6"
-            mt={2}
-            ml={2}
-            sx={{ fontSize: "1.5rem", fontWeight: 700, color: "#696969" }}
-          >
-            About me
-          </Typography>
-          <Typography variant="body1" mt={2} mx={3}>
+          <Typography variant="body1" mt={4} mx={3}>
             Gender:
             <Box component="span" m={1} sx={{ fontWeight: 700 }}>
               {userData?.gender}
@@ -127,13 +113,50 @@ const Profile = () => {
               {userData?.phoneNumber}
             </Box>
           </Typography>
+          <Stack className={classes.profile_info_btn} direction="row" justifyContent="space-between" my={5} mx={5}>
+            <Box display='flex'>
+              <PetsIcon />
+              <StyledTypography ml={1}>{petData?.length} pets</StyledTypography>
+            </Box>
+            <Box display='flex'>
+              <LocationOnIcon />
+              <StyledTypography variant="body1">
+                {userData?.cityName}
+              </StyledTypography>
+            </Box>
+            <Box display='flex'>
+              <SupervisedUserCircleIcon />
+              <StyledTypography ml={1}>2 following</StyledTypography>
+            </Box>
+          </Stack>
+        </UserProfile>
+        <Divider sx={{ borderBottomWidth: 20, borderColor: '#f0f0f0', borderRadius: '10px', marginTop: '20px' }} />
+        <UserProfile>
+          <Typography
+            variant="h6"
+            width={180}
+            mt={2}
+            ml={2}
+            sx={{
+              fontSize: "1.5rem",
+              fontWeight: 700,
+              backgroundColor: "#abd5ab",
+              padding: "0 20px",
+              borderRadius: "15px",
+              color: "white",
+            }}
+          >
+            About me
+            <InfoIcon sx={{ padding: "8px 0 0 8px" }} />
+          </Typography>
+
           <Typography variant="body1" mt={5} mx={3}>
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Velit
             eaque nemo reprehenderit sint inventore obcaecati et eum maxime
             consectetur illum?
           </Typography>
         </UserProfile>
-        <Divider sx={{ borderBottomWidth: 20, borderColor: '#f0f0f0', borderRadius: '10px', marginTop: '100px' }} />
+        <Divider sx={{ borderBottomWidth: 20, borderColor: '#f0f0f0', borderRadius: '10px' }} />
         {/* CHILD COMPONENTS */}
         <Pet />
         <Post />

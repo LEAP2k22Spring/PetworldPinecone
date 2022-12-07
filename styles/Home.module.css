@@ -365,11 +365,12 @@
 
 .home_main_wrapp {
   display: flex;
-  width: 100%;  
+  width: 100%;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
+
 .category_wrapp {
   display: flex;
   align-items: flex-start;
@@ -377,6 +378,7 @@
   max-width: 1425px;
   width: 80%;
 }
+
 .categories {
   display: flex;
   flex-direction: column;
@@ -386,11 +388,13 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  
+
 }
+
 .home_card a {
   cursor: url(../image/paw_cursor.png), auto;
 }
+
 .home_card .home_img_wrapp {
   overflow: hidden;
   margin: auto;
@@ -408,6 +412,7 @@
   height: 60px;
   margin: 10px 0 40px 0;
 }
+
 /* .categories_buttons img {
   display: none;
 } */
@@ -420,7 +425,7 @@
 }
 
 .categories_buttons button {
-  display:inline-flex;
+  display: inline-flex;
   cursor: pointer;
   padding: 10px 20px;
   border: none;
@@ -518,6 +523,7 @@
   background-repeat: no-repeat;
   background-position: center;
 }
+
 /* ============== Explore page ============= */
 .comment_input input {
   border: none;
@@ -526,12 +532,15 @@
   font-size: 14px;
   border: 1px solid rgb(237, 237, 237);
 }
+
 .comment_history {
   position: relative;
 }
+
 .comment_history:hover .comment_userName {
   display: block;
 }
+
 .comment_userName {
   position: absolute;
   left: 15px;
@@ -543,6 +552,26 @@
   /* box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.1); */
   display: none;
 }
+
+.explore_top_btn {
+  position: relative;
+  width: 80%;
+  max-width: 1425px;
+}
+
+.explore_top_btn button {
+  border-radius: 15px;
+  padding: 5px 20px;
+  background: orange;
+  color: white;
+}
+
+.explore_top_btn button:hover {
+  background: #f88008;
+  color: white;
+}
+
+
 /* ============== Responsive =============== */
 @media (max-width: 1520px) {
   .landing_wrapp {
@@ -577,6 +606,7 @@
     flex-direction: column;
     align-items: center;
   }
+
   .categories_buttons p {
     display: none;
   }
@@ -703,11 +733,26 @@
   .landing_text_wrapp p {
     font-size: 13px;
   }
+
   .categories_buttons {
     width: 100%;
   }
+
   .categories_buttons button {
     padding: 11px;
+  }
+
+  .explore_top_btn {
+    margin-bottom: 50px;
+  }
+
+  .explore_top_btn button {
+    position: absolute;
+    top: 40px;
+  }
+
+  .explore_top_btn hr:nth-child(4) {
+    display: none;
   }
 }
 
@@ -771,6 +816,7 @@
     width: 190px;
     height: 250px;
   }
+
   .home_card {
     width: 320px;
   }

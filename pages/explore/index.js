@@ -12,29 +12,47 @@ import { useRouter } from 'next/router';
 import { useFirebase } from '../../firebase/useFirebase';
 import Post from '../../component/explorePost';
 import LoadingSpinner from '../../component/Spinner';
+import styles from '../../styles/Home.module.css'
 
 const ExplorePage = () => {
   const router = useRouter();
   const { data: postsData, loading } = useFirebase('Posts');
   const { data: userData } = useFirebase('Users');
   return (
-    <Box display='flex' flexDirection='column' gap={3} pt={6} pb={2}>
+    <Box
+      display='flex'
+      flexDirection='column'
+      alignItems='center'
+      gap={3}
+      pt={6}
+      pb={2}
+      width="100%"
+    >
       <LoadingSpinner open={loading} color='#000' />
       <Box textAlign='center' component='span'>
         <Typography fontWeight={800}>EXPLORE</Typography>
       </Box>
-      <Box display='flex' justifyContent='space-around' ml={6} mr={6} sx={{}}>
-        <GroupsOutlinedIcon />
-        <Typography>peoples</Typography>
+      <Box
+        className={styles.explore_top_btn}
+        display='flex'
+        justifyContent='space-around'
+        ml={6}
+        mr={6}
+      >
+        <Box display='flex' sx={{ cursor: 'pointer' }}>
+          <GroupsOutlinedIcon sx={{ color: 'orange' }} />
+          <Typography ml={1}>peoples</Typography>
+        </Box>
         <Divider orientation='vertical' flexItem />
-        <MapOutlinedIcon />
-        <Typography onClick={() => router.push('/explore/map')}>
-          maps
-        </Typography>
+        <Box display='flex' sx={{ cursor: 'pointer' }} onClick={() => router.push('/explore/map')}>
+          <MapOutlinedIcon sx={{ color: 'orange' }} />
+          <Typography ml={1} >
+            maps
+          </Typography>
+        </Box>
         <Divider orientation='vertical' flexItem />
         <Button
           size='small'
-          variant='contained'
           startIcon={<AddIcon />}
           onClick={() => router.push('/addpost')}
         >
