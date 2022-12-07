@@ -8,7 +8,6 @@ import {
   ArrowBackIosNewOutlined,
 } from "@mui/icons-material";
 import classes from "../../styles/profile.module.css";
-import styled from "styled-components";
 import PetInfo from "./PetInfo";
 import PetsIcon from "@mui/icons-material/Pets";
 import ChatIcon from "@mui/icons-material/Chat";
@@ -37,9 +36,9 @@ const PetProfile = ({ data }) => {
   };
   return (
     <Box className={classes.petProfile_wrapp}>
-      <Container className={classes.pet_container}>
+      <div className={classes.pet_container} style={{ position: "relative" }}>
         <LoadingSpinner open={isLoading} />
-        <Header className={classes.pet_header}>
+        <div style={{ height: "400px", background: "#d9d9d9" }}>
           <Box position="absolute" left={30} mt={1}>
             <IconButton
               sx={{ backgroundColor: "#f8aa08", color: "#fff" }}
@@ -67,8 +66,8 @@ const PetProfile = ({ data }) => {
             height={400}
             style={{ objectFit: "cover" }}
           />
-        </Header>
-        <AvatarContainer>
+        </div>
+        <div className={classes.petAvatarContainer}>
           <Box className={classes.petProfileBox}>
             <Stack
               direction="row"
@@ -115,8 +114,8 @@ const PetProfile = ({ data }) => {
               )}
             </Stack>
           </Box>
-        </AvatarContainer>
-        <UserProfile>
+        </div>
+        <Stack direction="column" sx={{ background: "#fff" }}>
           <Typography
             variant="h6"
             width={180}
@@ -137,7 +136,7 @@ const PetProfile = ({ data }) => {
           {/* =========================================== */}
           <PetInfo petData={data} />
           {/* =========================================== */}
-        </UserProfile>
+        </Stack>
         <Divider
           sx={{
             borderBottomWidth: 20,
@@ -145,7 +144,7 @@ const PetProfile = ({ data }) => {
             borderRadius: "10px",
           }}
         />
-        <UserProfile>
+        <Stack direction="column" sx={{ background: "#fff" }}>
           <Typography
             variant="h6"
             width={200}
@@ -166,7 +165,7 @@ const PetProfile = ({ data }) => {
           <Typography variant="body1" my={2} mx={3}>
             {data?.description}
           </Typography>
-        </UserProfile>
+        </Stack>
         <Divider
           sx={{
             borderBottomWidth: 20,
@@ -174,7 +173,7 @@ const PetProfile = ({ data }) => {
             borderRadius: "10px",
           }}
         />
-        <UserProfile>
+        <Stack direction="column" sx={{ background: "#fff" }}>
           <Typography
             variant="h6"
             width={190}
@@ -210,34 +209,9 @@ const PetProfile = ({ data }) => {
             />
           )}
           <Box sx={{ width: "100%", height: "100px" }}></Box>
-        </UserProfile>
-      </Container>
+        </Stack>
+      </div>
     </Box>
   );
 };
 export default PetProfile;
-const Container = styled.div`
-  position: relative;
-`;
-const Header = styled.div`
-  background-color: #d9d9d9;
-  height: 400px;
-`;
-
-const AvatarContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: absolute;
-  top: 350px;
-  left: 20px;
-`;
-
-const UserProfile = styled.div`
-  display: flex;
-  flex-direction: column;
-  background: white;
-`;
-// const PetName = styled.div`
-//   text-transform: uppercase
-// `;

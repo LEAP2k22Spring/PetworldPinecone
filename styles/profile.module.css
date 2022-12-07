@@ -7,13 +7,12 @@
 .pet_container,
 .user_container {
   width: 80%;
-  max-width: 1425px;
-}
-
-.pet_header,
-.user_header {
-  overflow: hidden;
-  border-radius: 0 0 15px 15px;
+  position: relative;
+  margin-bottom: 200px;
+  background: white;
+  position: relative;
+  margin-bottom: 120px;
+  margin-top: 10px;
 }
 
 .top_icon_btn {
@@ -108,6 +107,7 @@
   border-radius: 20px;
   margin: 20px;
   object-fit: cover;
+  cursor: pointer;
 }
 
 .postTogglerActive {
@@ -205,7 +205,7 @@
     margin: 8px 0 8px 8px;
   }
 
-  .profile_info_btn>div {
+  .profile_info_btn > div {
     flex-direction: column;
     align-items: center;
   }
@@ -234,4 +234,103 @@
   .paper p {
     margin: 0;
   }
+}
+
+/* ============USER PROFILE================ */
+.mainContainer {
+  position: relative;
+  margin-bottom: 120px;
+}
+
+.headerContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  height: auto;
+  margin: 20px;
+}
+.userProfileWrapper {
+  display: flex;
+  flex-direction: column;
+  background: white;
+}
+.avatarContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+}
+.petAvatarContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  top: 350px;
+  left: 20px;
+}
+.backIconContainer {
+  padding: 20px;
+  position: absolute;
+  left: 10px;
+}
+.userAvatarSmall {
+  width: 50px;
+  height: 50px;
+  margin: 10px;
+  border: 1px solid;
+}
+
+.userAvatar {
+  width: 100px;
+  height: 100px;
+}
+
+.addPetHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+}
+
+.imgUploadContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+}
+
+.titleTypography {
+  color: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  background: orange;
+  width: fit-content;
+  padding: 0 20px;
+  border-radius: 5px;
+}
+
+.label {
+  position: absolute;
+  top: 80px;
+  left: 70px;
+  width: 30px;
+  height: 30px;
+  border: 3px solid #fff;
+  background-color: #f5f5f7;
+  border-radius: 50%;
+}
+
+.labelImgModal {
+  position: absolute;
+  top: 230px;
+  left: 210px;
+  width: 30px;
+  height: 30px;
+  border: 3px solid #fff;
+  background-color: #f5f5f7;
+  border-radius: 50%;
 }

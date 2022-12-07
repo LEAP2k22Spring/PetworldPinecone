@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import { useState, useRef } from 'react';
 import { useRouter } from 'next/router';
 import classes from '../../styles/profile.module.css';
@@ -219,9 +218,9 @@ const AddPet = () => {
   };
   return (
     <Box className={classes.petProfile_wrapp}>
-      <Container className={classes.pet_container}>
+      <div className={classes.pet_container}>
         <LoadingSpinner open={isLoading} />
-        <Header>
+        <div className={classes.addPetHeader}>
           <Box className={classes.top_icon_btn}>
             <ArrowBackIosNewOutlined
               onClick={goBackHandler}
@@ -230,16 +229,21 @@ const AddPet = () => {
             />
             <SettingsOutlined className={classes.icon_btn} fontSize='large' />
           </Box>
-          <UserProfile>
+          <Stack direction='column' sx={{ background: '#fff' }}>
             <Typography variant='body1' mt={5} mx={3}>
               Lorem, ipsum dolor sit amet consectetur adipisicing elit. Velit
               eaque nemo reprehenderit sint inventore obcaecati et eum maxime
               consectetur illum?
             </Typography>{' '}
             {/* 1) ============================================= */}
-            <StyledTitleTypography variant='body1' mt={5} mx={3}>
+            <Typography
+              variant='body1'
+              mt={5}
+              mx={3}
+              className={classestitleTypography}
+            >
               Choose pet category
-            </StyledTitleTypography>
+            </Typography>
             <Box
               display='flex'
               justifyContent='center'
@@ -302,26 +306,39 @@ const AddPet = () => {
               </Stack>
             </Box>{' '}
             {/* 2) ============================================= */}
-            <StyledTitleTypography variant='body1' mt={5} mx={3}>
+            <Typography
+              variant='body1'
+              mt={5}
+              mx={3}
+              className={classes.titleTypography}
+            >
               Upload pet image
-            </StyledTitleTypography>
-            <UploadImageContainer>
+            </Typography>
+            <div className={classes.imgUploadContainer}>
               <div style={{ position: 'relative', margin: ' 10px' }}>
-                <UserAvatar src={imageData.url} />
-                <Label>
+                <Avatar
+                  src={imageData.url}
+                  sx={{ width: '100px', height: '100px' }}
+                />
+                <label className={classes.label}>
                   <Input
                     sx={{ display: 'none' }}
                     type='file'
                     onChange={imgUploadHandler}
                   />
                   <CameraAltOutlined />
-                </Label>
+                </label>
               </div>
-            </UploadImageContainer>
+            </div>
             {/* 3) ============================================= */}
-            <StyledTitleTypography variant='body1' mt={5} mx={3}>
+            <Typography
+              variant='body1'
+              mt={5}
+              mx={3}
+              className={classestitleTypography}
+            >
               Enter pet details
-            </StyledTitleTypography>
+            </Typography>
             <Stack
               direction='column'
               justifyContent='flex-start'
@@ -431,9 +448,14 @@ const AddPet = () => {
               </Stack>
             </Stack>
             {/* 4) ============================================= */}
-            <StyledTitleTypography variant='body1' mt={5} mx={3}>
+            <Typography
+              variant='body1'
+              mt={5}
+              mx={3}
+              className={classestitleTypography}
+            >
               Enter the description
-            </StyledTitleTypography>
+            </Typography>
             <Stack
               direction='column'
               justifyContent='center'
@@ -452,9 +474,14 @@ const AddPet = () => {
                 sx={{ m: 1, width: 280 }}
               />
             </Stack>
-            <StyledTitleTypography variant='body1' mt={5} mx={3}>
+            <Typography
+              variant='body1'
+              mt={5}
+              mx={3}
+              className={classestitleTypography}
+            >
               Care info:
-            </StyledTitleTypography>
+            </Typography>
             <Stack
               direction='row'
               justifyContent='center'
@@ -563,8 +590,8 @@ const AddPet = () => {
             <button className={classes.saveButton} onClick={onSave}>
               NEXT
             </button>
-          </UserProfile>
-        </Header>
+          </Stack>
+        </div>
 
         <Divider
           sx={{
@@ -573,75 +600,9 @@ const AddPet = () => {
             borderRadius: '10px',
           }}
         />
-      </Container>
+      </div>
     </Box>
   );
 };
 
 export default AddPet;
-
-const Container = styled.div`
-  background: white;
-  position: relative;
-  margin-bottom: 120px;
-  margin-top: 10px;
-`;
-const Header = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 10px;
-`;
-const SettingsIconContainer = styled.div`
-  padding: 20px;
-`;
-const BackIconContainer = styled.div`
-  padding: 20px;
-  position: absolute;
-  left: 10px;
-`;
-const UploadImageContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  margin: 10px;
-`;
-
-const StyledTitleTypography = styled(Typography)`
-  color: #fff;
-  font-weight: 700;
-  font-size: 1rem;
-  background: orange;
-  width: fit-content;
-  padding: 0 20px;
-  border-radius: 5px;
-`;
-
-const UserAvatar = styled(Avatar)`
-  width: 100px;
-  height: 100px;
-`;
-
-const Label = styled.label`
-  position: absolute;
-  top: 80px;
-  left: 70px;
-  width: 30px;
-  height: 30px;
-  border: 3px solid #fff;
-  background-color: #f5f5f7;
-  border-radius: 50%;
-`;
-const UserProfile = styled.div`
-  display: flex;
-  flex-direction: column;
-  background: white;
-`;
-
-const styledTextField = styled(TextField)`
-  .MuiInputBase-root {
-    background-color: ${({ theme, value }) =>
-      !value && theme.palette.background.grey01};
-  }
-`;

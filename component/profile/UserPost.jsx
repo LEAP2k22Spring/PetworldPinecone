@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import Image from 'next/image';
-import styled from 'styled-components';
 import {
   Typography,
   Stack,
@@ -18,10 +17,16 @@ import PopupState, { bindToggle, bindPopper } from 'material-ui-popup-state';
 import classes from '../../styles/profile.module.css';
 import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { auth, useCollection, useDocument, useFirebase, useSort, useSubCollection } from '../../firebase/useFirebase';
+import {
+  auth,
+  useCollection,
+  useDocument,
+  useFirebase,
+  useSort,
+  useSubCollection,
+} from '../../firebase/useFirebase';
 import { useRouter } from 'next/router';
 import LoadingSpinner from '../Spinner';
 import moment from 'moment';
@@ -29,10 +34,14 @@ import moment from 'moment';
 const UserPost = ({ postId }) => {
   const router = useRouter();
   const { deleteData } = useFirebase('Posts');
-  const { data: postData, updateData } = useCollection("Posts", postId)
-  const { data: userData } = useCollection("Users", postData?.userID)
-  const { data: likes } = useSubCollection("Posts", postId, "likes")
-  const { data: comments, deleteData: deleteComment, createData: createComment } = useSubCollection("Posts", postId, "comments")
+  const { data: postData, updateData } = useCollection('Posts', postId);
+  const { data: userData } = useCollection('Users', postData?.userID);
+  const { data: likes } = useSubCollection('Posts', postId, 'likes');
+  const {
+    data: comments,
+    deleteData: deleteComment,
+    createData: createComment,
+  } = useSubCollection('Posts', postId, 'comments');
   const { deleteData: deleteImage } = useSort();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -43,7 +52,6 @@ const UserPost = ({ postId }) => {
   const [desc, setDesc] = useState('');
   const [isReadMore, setIsReadMore] = useState(true);
 
-  console.log("ddd", postData?.image);
   const handleOpen = (e) => {
     if (e.target.id === 'delete') {
       setOpenModal(true);
@@ -85,13 +93,13 @@ const UserPost = ({ postId }) => {
       const postId = router.query.slug[1];
       try {
         await deleteData(postId);
-        deleteImage(postData?.image)
+        deleteImage(postData?.image);
         console.log();
         setOpenModal(false);
         setIsLoading(false);
         // alert('таны пост устлаа.');
         router.push('/profile');
-      } catch (error) { }
+      } catch (error) {}
     }
     setOpenModal(false);
   };
@@ -116,7 +124,7 @@ const UserPost = ({ postId }) => {
           setIsLoading(false);
           alert('doc updated!');
         }
-      } catch (error) { }
+      } catch (error) {}
     } else {
       setOpenEditModal(true);
       alert('nothing changed!');
@@ -125,32 +133,32 @@ const UserPost = ({ postId }) => {
 
   return (
     <>
-      <Container>
+      <div className={classes.mainContainer}>
         <LoadingSpinner open={isLoading} />
         {/* 1) ==============HEADER===================== */}
-        <Header>
-          <BackIconContainer onClick={goBackHandler}>
+        <div className={classes.headerContainer}>
+          <div className={classes.backIconContainer} onClick={goBackHandler}>
             <IconButton>
               <ArrowBackIcon fontSize='large' />
             </IconButton>
-          </BackIconContainer>
+          </div>
           <Typography variant='h6' sx={{ fontSize: '1.5rem', fontWeight: 700 }}>
             {auth?.currentUser?.uid === postData?.userID
               ? 'My posts'
               : `${userData?.firstName}'s posts`}
           </Typography>
-        </Header>
+        </div>
         <Divider sx={{ borderBottomWidth: 20, borderColor: '#d9d9d9' }} />
         {/* 2) =============USER SECTION================== */}
-        <UserProfile>
+        <div className={classes.userProfileWrapper}>
           {/* 2.1) =============USER AVATAR====================== */}
-          <AvatarContainer>
+          <div className={classes.avatarContainer}>
             <Stack
               direction='row'
               justifyContent='space-between'
               alignItems='center'
             >
-              <UserAvatar src={userData?.avatar} />
+              <Avatar src={userData?.avatar} className={classes.userAvatar} />
               <Typography
                 variant='h6'
                 ml={2}
@@ -195,9 +203,9 @@ const UserPost = ({ postId }) => {
                 )}
               </PopupState>
             )}
-          </AvatarContainer>
+          </div>
           {/* 2.2) ==========USER POST IMAGE========================= */}
-          <PostImage>
+          <Stack direction='row' justifyContent='center'>
             {postData ? (
               <Image
                 src={postData?.image}
@@ -215,7 +223,7 @@ const UserPost = ({ postId }) => {
                 className={classes.postImage}
               />
             )}
-          </PostImage>
+          </Stack>
           {/* 2.3) ==========USER LIKES========================= */}
           <Typography
             variant='h6'
@@ -247,8 +255,8 @@ const UserPost = ({ postId }) => {
                   {postData?.desc?.length < 100
                     ? ''
                     : isReadMore
-                      ? '...read more'
-                      : ' show less'}
+                    ? '...read more'
+                    : ' show less'}
                 </button>
                 {inputEditButton && (
                   <Button id='edit' onClick={handleOpen}>
@@ -267,7 +275,10 @@ const UserPost = ({ postId }) => {
                 return (
                   <>
                     <Stack direction='row' alignItems='center'>
-                      <UserAvatarSmall src={comment?.data().userAvatar} />
+                      <Avatar
+                        src={comment?.data().userAvatar}
+                        className={classes.userAvatarSmall}
+                      />
                       <Stack direction='column' sx={{ width: '100%' }}>
                         <Stack direction='row' alignItems='center'>
                           <Typography
@@ -310,7 +321,7 @@ const UserPost = ({ postId }) => {
               })}
             </div>
           </div>
-        </UserProfile>
+        </div>
         {/* 2.2) =========DELETE POST MODAL========================== */}
         <div>
           <Modal
@@ -394,12 +405,13 @@ const UserPost = ({ postId }) => {
             </Box>
           </Modal>
         </div>
-      </Container>
+      </div>
     </>
   );
 };
 
 export default UserPost;
+
 const style = {
   position: 'absolute',
   top: '50%',
@@ -410,51 +422,3 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-const Container = styled.div`
-  position: relative;
-  margin-bottom: 120px;
-`;
-const Header = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  height: auto;
-  margin: 20px;
-`;
-
-const BackIconContainer = styled.div`
-  padding: 20px;
-  position: absolute;
-  left: 10px;
-`;
-
-const AvatarContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20px;
-`;
-const UserAvatar = styled(Avatar)`
-  width: 100px;
-  height: 100px;
-`;
-const UserAvatarSmall = styled(Avatar)`
-  width: 50px;
-  height: 50px;
-  margin: 10px;
-  border: 1px solid;
-`;
-
-const UserProfile = styled.div`
-  display: flex;
-  flex-direction: column;
-  background: white;
-`;
-const PostImage = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-`;

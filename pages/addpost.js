@@ -1,11 +1,9 @@
 import { Button, Fab, Input, TextField, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { useRef, useState } from 'react';
-import styled from 'styled-components';
 import {
   auth,
   imageUploadToFirestore,
-  useCollection,
   useDocument,
 } from '../firebase/useFirebase';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -13,7 +11,6 @@ import { useRouter } from 'next/router';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import LoadingSpinner from '../component/Spinner';
 import { serverTimestamp } from 'firebase/firestore';
-import { useAuth } from '../providers';
 
 const AddPost = () => {
   const { createData: createPost } = useDocument({ path: 'Posts' });
@@ -26,12 +23,6 @@ const AddPost = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
-  const Label = styled.label``;
-  const Image = styled.img`
-    object-fit: contain;
-    width: 100% !important;
-    hieght: 300 !important;
-  `;
   // 2) Image picker handler
   const imgUploadHandler = (e) => {
     const file = e.target.files[0];
@@ -115,7 +106,16 @@ const AddPost = () => {
       </TextField>
       <Box>
         <Box>
-          <Image src={imageData.url} alt='' sizes='cover' />
+          <img
+            src={imageData.url}
+            alt=''
+            sizes='cover'
+            style={{
+              objectFit: 'contain',
+              width: '100% !important',
+              hieght: '300 !important',
+            }}
+          />
         </Box>
         <Box
           display='flex'
@@ -123,7 +123,7 @@ const AddPost = () => {
           p={2}
           justifyContent='space-between'
         >
-          <Label>
+          <div>
             <Input
               sx={{ display: 'none' }}
               type='file'
@@ -132,7 +132,7 @@ const AddPost = () => {
             <Fab component='span' size='small'>
               <AddPhotoAlternateIcon fontSize='small' />
             </Fab>
-          </Label>
+          </div>
           <Button variant='contained' onClick={onSave}>
             submit
           </Button>
