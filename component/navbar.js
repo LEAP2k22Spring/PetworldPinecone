@@ -148,7 +148,9 @@ function Navbar() {
                 // border: "1px solid black",
                 position: 'absolute',
               }}
-              className={styles.icon_active}
+              className={
+                router.pathname === '/profile' ? styles.icon_active : styles.icon
+              }
             />
             <Popper
               open={open}

@@ -93,7 +93,7 @@ const Profile = () => {
             <StyledTypography>2 following</StyledTypography>
           </Stack>
         </UserProfile>
-        <Divider sx={{ borderBottomWidth: 20, borderColor: '#f0f0f0', borderRadius: '10px', marginTop:'20px'}}/>
+        <Divider sx={{ borderBottomWidth: 20, borderColor: '#f0f0f0', borderRadius: '10px', marginTop: '20px' }} />
         <UserProfile>
           <Typography
             variant="h6"
@@ -115,13 +115,25 @@ const Profile = () => {
               {userData?.dateOfBirth}
             </Box>
           </Typography>
+          <Typography variant="body1" mt={2} mx={3}>
+            Email:
+            <Box component="span" m={1} sx={{ fontWeight: 700 }}>
+              {userData?.emailAddress}
+            </Box>
+          </Typography>
+          <Typography variant="body1" mt={2} mx={3}>
+            Phone number:
+            <Box component="span" m={1} sx={{ fontWeight: 700 }}>
+              {userData?.phoneNumber}
+            </Box>
+          </Typography>
           <Typography variant="body1" mt={5} mx={3}>
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Velit
             eaque nemo reprehenderit sint inventore obcaecati et eum maxime
             consectetur illum?
           </Typography>
         </UserProfile>
-        <Divider sx={{ borderBottomWidth: 20, borderColor: '#f0f0f0', borderRadius: '10px', marginTop:'50px'}}/>
+        <Divider sx={{ borderBottomWidth: 20, borderColor: '#f0f0f0', borderRadius: '10px', marginTop: '100px' }} />
         {/* CHILD COMPONENTS */}
         <Pet />
         <Post />

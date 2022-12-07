@@ -15,8 +15,11 @@ const Service = () => {
       className=""
       direction="column"
       justifyContent="center"
+      textAlign="center"
       alignItems={"center"}
-      m={5}
+      mb={15}
+      mx={5}
+      mt={3}
     >
       {/* TITLE */}
       <div className="">
