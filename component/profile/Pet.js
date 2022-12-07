@@ -48,7 +48,7 @@ const Pet = () => {
           mb={5}
         >
           {/* <PetAvatarContainer> */}
-          <Box display='flex'>
+          <Box display='flex' sx={{ cursor: 'pointer' }}>
             {petData &&
               petData?.map((pet, i) => (
                 <Avatar
@@ -62,7 +62,10 @@ const Pet = () => {
               ))}
           </Box>
           {/* </PetAvatarContainer> */}
-          <Avatar sx={{ margin: '0 10px' }} onClick={openAddPetHandler}>
+          <Avatar
+            sx={{ margin: '0 10px', cursor: 'pointer' }}
+            onClick={openAddPetHandler}
+          >
             <AddOutlinedIcon />
           </Avatar>
         </Stack>

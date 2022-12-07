@@ -1,9 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {
-  Button,
-  Divider,
-  Typography,
-} from '@mui/material';
+import { Button, Divider, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
 import MapOutlinedIcon from '@mui/icons-material/MapOutlined';
@@ -23,12 +19,22 @@ const ExplorePage = () => {
       <Box textAlign='center' component='span'>
         <Typography fontWeight={800}>EXPLORE</Typography>
       </Box>
-      <Box display='flex' justifyContent='space-around' ml={6} mr={6} sx={{}}>
+      <Box
+        display='flex'
+        justifyContent='space-around'
+        sx={{
+          marginLeft: { xs: '2rem', sm: '4rem', md: '10rem', lg: '20rem' },
+          marginRight: { xs: '2rem', sm: '4rem', md: '10rem', lg: '20rem' },
+        }}
+      >
         <GroupsOutlinedIcon />
         <Typography>peoples</Typography>
         <Divider orientation='vertical' flexItem />
         <MapOutlinedIcon />
-        <Typography onClick={() => router.push('/explore/map')}>
+        <Typography
+          onClick={() => router.push('/explore/map')}
+          sx={{ cursor: 'pointer' }}
+        >
           maps
         </Typography>
         <Divider orientation='vertical' flexItem />
@@ -38,7 +44,6 @@ const ExplorePage = () => {
           startIcon={<AddIcon />}
           onClick={() => router.push('/addpost')}
         >
-          {' '}
           Share post
         </Button>
       </Box>
