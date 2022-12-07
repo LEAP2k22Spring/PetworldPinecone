@@ -3,13 +3,13 @@ import { Box } from '@mui/system';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import CameraAltOutlined from '@mui/icons-material/CameraAltOutlined';
 import CheckIcon from '@mui/icons-material/Check';
-import styled from 'styled-components';
 import { useState } from 'react';
 import {
   imageUploadToFirestore,
   useCollection,
   useSort,
 } from '../../firebase/useFirebase';
+import classes from '../../styles/profile.module.css';
 
 const style = {
   position: 'fixed',
@@ -22,17 +22,6 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-
-const Label = styled.label`
-  position: absolute;
-  top: 230px;
-  left: 210px;
-  width: 30px;
-  height: 30px;
-  border: 3px solid #fff;
-  background-color: #f5f5f7;
-  border-radius: 50%;
-`;
 
 const ChangePetPictureModal = ({ openProfile, onClose, petId }) => {
   const { updateData } = useCollection('Pets', petId);
@@ -110,14 +99,14 @@ const ChangePetPictureModal = ({ openProfile, onClose, petId }) => {
               src={imageData.url ? imageData.url : petData?.image}
               sx={{ width: 106, height: 106 }}
             />
-            <Label>
+            <label className={classes.labelImgModal}>
               <Input
                 sx={{ display: 'none' }}
                 type='file'
                 onChange={imgUploadHandler}
               />
               <CameraAltOutlined />
-            </Label>
+            </label>
           </Box>
           <IconButton color='success' onClick={onSave}>
             <CheckIcon />

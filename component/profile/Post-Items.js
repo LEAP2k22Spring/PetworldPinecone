@@ -1,15 +1,13 @@
-import Image from "next/image";
-import { Stack } from "@mui/material";
-import styled from "styled-components";
-import classes from "../../styles/profile.module.css";
-import { useRouter } from "next/router";
-import { useGetPostsDataContext } from "../../context/PostsDataContext";
-import { useAuth } from "../../providers";
-import { auth } from "../../firebase/useFirebase";
+import Image from 'next/image';
+import { Stack } from '@mui/material';
+import classes from '../../styles/profile.module.css';
+import { useRouter } from 'next/router';
+import { useGetPostsDataContext } from '../../context/PostsDataContext';
+import { useAuth } from '../../providers';
+import { auth } from '../../firebase/useFirebase';
 
 const PostItems = ({ postData }) => {
   const { setPostOwner } = useGetPostsDataContext();
-  // const { getUsersData } = useGetUsersDataContext();
   const { userData } = useAuth();
   const router = useRouter();
 
@@ -23,15 +21,15 @@ const PostItems = ({ postData }) => {
   };
   return (
     <div>
-      <Container>
-        <Stack direction="row" justifyContent="center" flexWrap="wrap">
+      <Stack direction='row' sx={{ background: '#fff' }}>
+        <Stack direction='row' justifyContent='center' flexWrap='wrap'>
           {postData?.map((post, i) => {
             return (
               <Image
                 onClick={() => openAddPetHandler(post.docId)}
                 key={i}
                 src={post?.data?.image}
-                alt="Picture of the author"
+                alt='Picture of the author'
                 width={150}
                 height={150}
                 className={classes.image}
@@ -39,13 +37,9 @@ const PostItems = ({ postData }) => {
             );
           })}
         </Stack>
-      </Container>
+      </Stack>
     </div>
   );
 };
 
 export default PostItems;
-const Container = styled.div`
-  display: flex;
-  background: white;
-`;
