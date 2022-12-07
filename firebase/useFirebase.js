@@ -38,7 +38,7 @@ import {
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const auth = getAuth();
-const storage = getStorage(app);
+export const storage = getStorage(app);
 
 export const useFirebase = (path) => {
   const [data, setData] = useState();
@@ -73,6 +73,16 @@ export const useFirebase = (path) => {
     })();
   }, [path]);
 
+  const createDataWithoutSpecificID = async (data) => {
+    try {
+      await addDoc(collection(db, path), data);
+      return true;
+    } catch (error) {
+      console.log(error.message);
+      return false;
+    }
+  };
+
   //4) Update document
   const updateData = async (data, id) => {
     const docRef = doc(db, path, id);
@@ -104,6 +114,7 @@ export const useFirebase = (path) => {
     data,
     loading,
     imageUploadToFirestore,
+    createDataWithoutSpecificID,
     updateData,
     deleteData,
   };
@@ -167,7 +178,8 @@ export const useCollection = (collectionName, docId) => {
 
   const createData = (userId, data) =>
     setDoc(doc(db, collectionName, userId), data);
-  // const updateData = (data) => updateDoc(doc(db, collectionName, docId), data);
+
+  const updateData = (data) => updateDoc(doc(db, collectionName, docId), data);
 
   const createUserData = async (userId, data) => {
     try {
@@ -203,7 +215,7 @@ export const useCollection = (collectionName, docId) => {
     createUserData,
     createUser,
     createData,
-    // updateData,
+    updateData,
   };
 };
 

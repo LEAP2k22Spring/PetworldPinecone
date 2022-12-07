@@ -1,18 +1,9 @@
 import React, { useState, useRef } from "react";
 import LoadingSpinner from "../../../component/Spinner";
-import { useCollection } from "../../../firebase/useFirebase";
-import {
-  MapContainer,
-  Marker,
-  Popup,
-  TileLayer,
-  Tooltip,
-  useMapEvents,
-  Circle,
-} from "react-leaflet";
+import { auth, useCollection } from "../../../firebase/useFirebase";
+import { MapContainer, Marker, Popup, TileLayer, Tooltip } from "react-leaflet";
 import { useRouter } from "next/router";
 import classes from "../../../styles/map.module.css";
-import styled from "styled-components";
 import "leaflet/dist/leaflet.css";
 import L, { icon } from "leaflet";
 import { Box, Divider, Typography, Button, Stack, Modal } from "@mui/material";
@@ -50,7 +41,7 @@ const Map = () => {
 
   useEffect(() => {
     (async () => {
-      const result = await getData(userData?.userId);
+      const result = await getData(auth?.currentUser?.uid);
 
       // 1) Check if user has no location info, then ask for permission to get location
       if (result === undefined) {
@@ -118,7 +109,7 @@ const Map = () => {
   //====================FINAL STEP======================
   const onSave = async () => {
     setIsLoading(true);
-    await createUserData(userData?.userId, {
+    await createUserData(auth?.currentUser?.uid, {
       latitude: coordinates.lat,
       longitude: coordinates.lng,
       name: userData?.firstName,
