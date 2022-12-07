@@ -11,19 +11,12 @@ import {
 // import { useState } from "react";
 import LoadingSpinner from "../../component/Spinner";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutlined";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-
+import classes from '../../styles/profile.module.css';
 import Pet from "../../component/profile/Pet";
 import Post from "../../component/profile/Post";
 import { useRouter } from "next/router";
 import { useAuth } from "../../providers";
-import {
-  auth,
-  useDocument,
-  useSort,
-  useSubCollection,
-} from "../../firebase/useFirebase";
 
 const Profile = () => {
   const router = useRouter();
@@ -33,9 +26,9 @@ const Profile = () => {
   };
 
   return (
-    <>
+    <Box className={classes.petProfile_wrapp}>
       {loading && <LoadingSpinner open={loading} />}
-      <Container>
+      <Container className={classes.pet_container}>
         <Header>
           <Box position="absolute" left={30} mt={1}>
             <IconButton
@@ -100,7 +93,7 @@ const Profile = () => {
             <StyledTypography>2 following</StyledTypography>
           </Stack>
         </UserProfile>
-        <Divider sx={{ borderBottomWidth: 20, borderColor: "#d9d9d9" }} />
+        <Divider sx={{ borderBottomWidth: 20, borderColor: '#f0f0f0', borderRadius: '10px', marginTop:'20px'}}/>
         <UserProfile>
           <Typography
             variant="h6"
@@ -128,12 +121,12 @@ const Profile = () => {
             consectetur illum?
           </Typography>
         </UserProfile>
-        <Divider sx={{ borderBottomWidth: 20, borderColor: "#d9d9d9" }} />
+        <Divider sx={{ borderBottomWidth: 20, borderColor: '#f0f0f0', borderRadius: '10px', marginTop:'50px'}}/>
         {/* CHILD COMPONENTS */}
         <Pet />
         <Post />
       </Container>
-    </>
+    </Box>
   );
 };
 
