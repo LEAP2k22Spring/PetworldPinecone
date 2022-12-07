@@ -39,7 +39,7 @@ const PetProfile = ({ data }) => {
     <Box className={classes.petProfile_wrapp}>
       <Container className={classes.pet_container}>
         <LoadingSpinner open={isLoading} />
-        <Header>
+        <Header className={classes.pet_header}>
           <Box position="absolute" left={30} mt={1}>
             <IconButton
               sx={{ backgroundColor: "#f8aa08", color: "#fff" }}

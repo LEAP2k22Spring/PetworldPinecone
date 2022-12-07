@@ -4,10 +4,17 @@
   width: 100%;
 }
 
-.pet_container {
+.pet_container,
+.user_container {
   width: 80%;
+  max-width: 1425px;
 }
 
+.pet_header,
+.user_header {
+  overflow: hidden;
+  border-radius: 0 0 15px 15px;
+}
 
 .top_icon_btn {
   display: flex;

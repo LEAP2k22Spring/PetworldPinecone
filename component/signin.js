@@ -1,11 +1,10 @@
-import { Button, InputBase, Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth, userSignIn } from "../firebase/useFirebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Box } from "@mui/system";
 import { useEffect, useRef, useState } from "react";
 import { LogoSignIn } from "./svg/LogoSignIn";
-import { useCollection } from "../firebase/useFirebase";
 import styles from "../styles/login.module.css";
 
 const margintop = {
@@ -32,7 +31,7 @@ const Login = () => {
   const login = async () => {
     const result = await signInWithPopup(auth, googleAuth);
   };
-  useEffect(() => {}, [user]);
+  useEffect(() => { }, [user]);
 
   return !isClicked ? (
     <Box className={styles.login_wrapper}>
@@ -66,7 +65,7 @@ const Login = () => {
               />
               <label htmlFor="password">Password</label>
             </span>
-            <button style={{ background: "orange" }} onClick={handleSignIn}>
+            <button className={styles.login_btn} onClick={handleSignIn}>
               Login
             </button>
             <Typography className={styles.text_google}>
@@ -91,11 +90,11 @@ const Login = () => {
             }}
           >
             Need an account?{" "}
-            <Button onClick={() => setIsClicked(!isClicked)}>SignUp</Button>
+            <Button sx={{ color: '#9188e5' }} onClick={() => setIsClicked(!isClicked)}>SignUp</Button>
           </Typography>
         </Box>
       </Box>
-    </Box>
+    </Box >
   ) : (
     <SignUp />
   );

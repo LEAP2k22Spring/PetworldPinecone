@@ -1,7 +1,4 @@
 /* ================== Landing page ======== */
-/* .search_box {
-  z-index: 9;
-} */
 
 .landing_page {
   display: flex;
@@ -23,9 +20,14 @@
 }
 
 .landing_text_wrapp button {
-  background-image: linear-gradient(to right top, #f7ac08, #f89c00, #f98b00, #f97900, #f86608);
+  background: #ffc024;
+  color: white;
   border-radius: 11px;
   padding: 8px 35px;
+}
+
+.landing_text_wrapp button:hover {
+  background: #ed7d31;
 }
 
 .background_wrapp {
@@ -306,7 +308,7 @@
 .icon_active {
   opacity: 1;
   position: absolute;
-  color: #4689fd;
+  color: #9188e5;
   transform: translate(0, -20px);
   transform: translateY(-25px);
   /* transition: transform 0.5s ease, opacity 0.2s ease; */
@@ -327,7 +329,7 @@
   align-items: center;
   position: relative;
   transform: translateY(-2px);
-  color: #4689fd;
+  color: #9188e5;
 }
 
 .list_item_name {
@@ -336,7 +338,7 @@
 
 .list_item:hover {
   transform: translateY(-2px);
-  color: #4689fd;
+  color: #9188e5;
 }
 
 .list_item:hover .icon {
@@ -434,7 +436,7 @@
 }
 
 .categories_buttons button:hover {
-  background: #4689FD;
+  background: #9188e5;
   color: white;
   transition: all .2s ease-in-out;
 }
@@ -511,6 +513,7 @@
 
 /* =================== Banner ============== */
 .banner1 {
+  cursor: url(../image/paw_cursor.png), auto;
   background-image: url(https://firebasestorage.googleapis.com/v0/b/petworldpinecone.appspot.com/o/banner%20image%2Fbanne1.jpeg?alt=media&token=f5a2b434-0c9a-45fe-a587-12eb3f52137b);
   background-size: cover;
   background-repeat: no-repeat;
@@ -518,6 +521,7 @@
 }
 
 .banner2 {
+  cursor: url(../image/paw_cursor.png), auto;
   background-image: url(https://firebasestorage.googleapis.com/v0/b/petworldpinecone.appspot.com/o/banner%20image%2Fbanner3.jpeg?alt=media&token=3ae43ef2-964f-4501-82c2-133b7f43d8c2);
   background-size: cover;
   background-repeat: no-repeat;
@@ -562,13 +566,14 @@
 .explore_top_btn button {
   border-radius: 15px;
   padding: 5px 20px;
-  background: orange;
+  background: #ffc024;
   color: white;
 }
 
 .explore_top_btn button:hover {
-  background: #f88008;
+  background: #ed7d31;
   color: white;
+
 }
 
 

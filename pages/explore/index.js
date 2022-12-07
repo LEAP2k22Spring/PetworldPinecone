@@ -40,12 +40,12 @@ const ExplorePage = () => {
         mr={6}
       >
         <Box display='flex' sx={{ cursor: 'pointer' }}>
-          <GroupsOutlinedIcon sx={{ color: 'orange' }} />
+          <GroupsOutlinedIcon sx={{ color: '#ffc024' }} />
           <Typography ml={1}>peoples</Typography>
         </Box>
         <Divider orientation='vertical' flexItem />
         <Box display='flex' sx={{ cursor: 'pointer' }} onClick={() => router.push('/explore/map')}>
-          <MapOutlinedIcon sx={{ color: 'orange' }} />
+          <MapOutlinedIcon sx={{ color: '#ffc024' }} />
           <Typography ml={1} >
             maps
           </Typography>

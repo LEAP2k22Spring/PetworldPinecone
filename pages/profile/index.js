@@ -33,8 +33,8 @@ const Profile = () => {
   return (
     <Box className={classes.petProfile_wrapp}>
       {loading && <LoadingSpinner open={loading} />}
-      <Container className={classes.pet_container}>
-        <Header>
+      <Container className={classes.user_container}>
+        <Header className={classes.user_header}>
           <Box position="absolute" left={30} mt={1}>
             <IconButton
               sx={{ backgroundColor: "#f8aa08", color: "#fff" }}
@@ -161,7 +161,7 @@ const Profile = () => {
         <Pet />
         <Post />
       </Container>
-    </Box>
+    </Box >
   );
 };
 

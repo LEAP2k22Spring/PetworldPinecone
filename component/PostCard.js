@@ -16,15 +16,12 @@ import { useState } from "react";
 import { useFirebase } from "../firebase/useFirebase";
 import LoadingSpinner from "./Spinner";
 import styles from "../styles/Home.module.css";
-import Stack from "@mui/material/Stack";
 import { FemaleOutlined, MaleOutlined } from "@mui/icons-material";
 import { useRouter } from "next/router";
 import Image from "next/image";
 
 export default function RecipeReviewCard() {
-  const { getMultipleData } = useFirebase("Pets");
   const { data: petData, loading } = useFirebase("Pets");
-  const { data: userData } = useFirebase("Users");
   const router = useRouter();
 
   const petHandleClick = (id) => {
@@ -209,7 +206,7 @@ export default function RecipeReviewCard() {
                   />
 
                   <CardActions sx={{ justifyContent: "space-between" }}>
-                    <ColorLensIcon sx={{ color: "gray", ml: 1 }} />
+                    <ColorLensIcon sx={{ color: "#9188e5", ml: 1 }} />
                     <Typography
                       sx={{
                         fontWeight: "400",
@@ -272,10 +269,10 @@ export default function RecipeReviewCard() {
                         margin: "0 5px 5px 0",
                         fontSize: "16px",
                         borderRadius: "15px",
-                        bgcolor: "rgb(255, 217, 0)",
+                        bgcolor: "#ffc024",
                         color: "white",
                         "&:hover": {
-                          backgroundColor: "orange",
+                          backgroundColor: "#ed7d31",
                         },
                       }}
                     >

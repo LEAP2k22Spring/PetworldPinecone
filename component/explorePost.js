@@ -168,10 +168,10 @@ const Post = ({ id, userAvatar, createdAt, desc, userName, image, userID }) => {
                 padding: "5px 10px",
                 gap: "5px",
                 borderRadius: "11px",
-                bgcolor: "rgb(96 165 250)",
+                bgcolor: "#9188e5",
                 color: "white",
                 "&:hover": {
-                  backgroundColor: "rgb(0, 87, 194)",
+                  backgroundColor: "#6860b5",
                 },
               }}
             >
@@ -251,15 +251,15 @@ const Post = ({ id, userAvatar, createdAt, desc, userName, image, userID }) => {
           ></TextField>
           <IconButton
             onClick={sendComment}
-            sx={{ background: "orange", borderRadius: "11px" }}
+            sx={{
+              background: "#ffc024", borderRadius: "11px",
+              "&:hover": {
+                background: "#ed7d31",
+              },
+            }}
           >
             <TelegramIcon
-              sx={{
-                color: "white",
-                "&:hover": {
-                  color: "rgb(96 165 250)",
-                },
-              }}
+              sx={{ color: "white", }}
             />
           </IconButton>
         </CardActions>

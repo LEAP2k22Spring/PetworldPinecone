@@ -17,26 +17,33 @@ export default function LimitTags() {
         options={Pets}
         getOptionLabel={(option) => option.breed}
         renderInput={(params) => (
-          <TextField {...params} label="Search Pets" placeholder="Search.." />
+          <TextField color='warning' {...params} label="Search Pets" placeholder="Search.." />
         )}
         sx={{ width: '500px' }}
       />
-      <Button sx={{height: "55px"}} variant="contained"><PetsIcon/></Button>
+      <Button sx={{
+        height: "55px",
+        background: '#ed7d31',
+        color: 'white',
+        ':hover': {
+          background: '#ffc024',
+        },
+      }}><PetsIcon /></Button>
     </Stack>
   );
 }
 
 const Pets = [
-  { breed: "Golden Retrievers"},
-  { breed: "Boston Terriers"},
-  { breed: "Labrador Retrievers"},
-  { breed: "Poodles"},
-  { breed: "Border Collie"},
-  { breed: "Beagle"},
-  { breed: "Irish Setter"},
-  { breed: "Akita"},
-  { breed: "Spaniel"},
-  { breed: "Cockapoo"},
-  { breed: "Boxer"},
-  { breed: "French Bulldog"},
+  { breed: "Golden Retrievers" },
+  { breed: "Boston Terriers" },
+  { breed: "Labrador Retrievers" },
+  { breed: "Poodles" },
+  { breed: "Border Collie" },
+  { breed: "Beagle" },
+  { breed: "Irish Setter" },
+  { breed: "Akita" },
+  { breed: "Spaniel" },
+  { breed: "Cockapoo" },
+  { breed: "Boxer" },
+  { breed: "French Bulldog" },
 ]

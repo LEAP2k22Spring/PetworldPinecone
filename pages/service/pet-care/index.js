@@ -204,6 +204,7 @@ const PetCare = () => {
           <Stack direction='row' justifyContent={'center'}>
             <Box
               mt={5}
+              mb={6}
               sx={{
                 width: { xs: '20rem', sm: '30rem', md: '30rem' },
                 height: { xs: '2rem', sm: '2.5rem', md: '3rem' },
