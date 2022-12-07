@@ -16,7 +16,6 @@ import {
 } from '@mui/material';
 import PopupState, { bindToggle, bindPopper } from 'material-ui-popup-state';
 import classes from '../../styles/profile.module.css';
-import { useGetPostsDataContext } from '../../context/PostsDataContext';
 import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
@@ -27,17 +26,14 @@ import { useRouter } from 'next/router';
 import LoadingSpinner from '../Spinner';
 import moment from 'moment';
 
-//pages/profile/[...slug].js-ees duudagdagj bga.
 const UserPost = ({ postId }) => {
   const router = useRouter();
-  // const { getUsersData } = useGetUsersDataContext();
   const { deleteData } = useFirebase('Posts');
   const { data: postData, updateData } = useCollection("Posts", postId)
   const { data: userData } = useCollection("Users", postData?.userID)
   const { data: likes } = useSubCollection("Posts", postId, "likes")
   const { data: comments, deleteData: deleteComment, createData: createComment } = useSubCollection("Posts", postId, "comments")
   const { deleteData: deleteImage } = useSort();
-  // const { data: follows, deleteData: unfollow, updateData: updateFollow } = useSubCollection("Users", userID, "follows")
 
   const [isLoading, setIsLoading] = useState(false);
   const [openModal, setOpenModal] = useState(false);
@@ -119,7 +115,6 @@ const UserPost = ({ postId }) => {
           setInputEditButton(false);
           setIsLoading(false);
           alert('doc updated!');
-          // router.refresh();
         }
       } catch (error) { }
     } else {

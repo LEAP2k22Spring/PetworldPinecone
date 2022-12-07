@@ -24,7 +24,6 @@ import { useRouter } from "next/router";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { useGetPostsDataContext } from "../context/PostsDataContext";
 import { useAuth } from "../providers";
-import RecommendIcon from "@mui/icons-material/Recommend";
 import TelegramIcon from "@mui/icons-material/Telegram";
 import styles from "../styles/Home.module.css";
 

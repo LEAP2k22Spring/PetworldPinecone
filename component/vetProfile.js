@@ -1,17 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 import Image from "next/image";
 import { useRouter } from "next/router";
-import {
-  SettingsOutlined,
-  FemaleOutlined,
-  MaleOutlined,
-  ArrowBackIosNewOutlined,
-} from "@mui/icons-material";
+import { ArrowBackIosNewOutlined } from "@mui/icons-material";
 import PhoneIcon from "@mui/icons-material/Phone";
 import classes from "../styles/profile.module.css";
 import styled from "styled-components";
 import PetsIcon from "@mui/icons-material/Pets";
-import ChatIcon from "@mui/icons-material/Chat";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import { Typography, Stack, Divider, Box, IconButton } from "@mui/material";
 import { useState, useEffect } from "react";

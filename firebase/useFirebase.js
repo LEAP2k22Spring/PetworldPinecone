@@ -3,17 +3,12 @@ import {
   createUserWithEmailAndPassword,
   getAuth,
   signInWithEmailAndPassword,
-  signInWithPopup,
-  GoogleAuthProvider,
 } from "firebase/auth";
-import { useGetUsersDataContext } from "../context/UsersDataContext";
-import { useGetPostsDataContext } from "../context/PostsDataContext";
 import { useEffect, useState } from "react";
 import { firebaseConfig } from "./firebaseKeyAdminPage";
 import {
   doc,
   getDoc,
-  serverTimestamp,
   addDoc,
   collection,
   query,
@@ -23,7 +18,6 @@ import {
   getFirestore,
   setDoc,
   onSnapshot,
-  limit,
   updateDoc,
   deleteDoc,
 } from "firebase/firestore";

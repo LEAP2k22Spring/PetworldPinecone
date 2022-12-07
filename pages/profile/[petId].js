@@ -1,6 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
-import { useCollection, useFirebase } from "../../firebase/useFirebase";
-import LoadingSpinner from "../../component/Spinner";
+import { useCollection } from "../../firebase/useFirebase";
 import { useRouter } from "next/router";
 import PetProfile from "../../component/pet/petProfile";
 
