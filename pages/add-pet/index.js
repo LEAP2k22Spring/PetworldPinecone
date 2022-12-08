@@ -239,7 +239,7 @@ const AddPet = () => {
               variant="body1"
               mt={5}
               mx={3}
-              className={classestitleTypography}
+              className={classes.titleTypography}
             >
               Choose pet category
             </Typography>
@@ -334,7 +334,7 @@ const AddPet = () => {
               variant="body1"
               mt={5}
               mx={3}
-              className={classestitleTypography}
+              className={classes.titleTypography}
             >
               Enter pet details
             </Typography>
@@ -451,7 +451,7 @@ const AddPet = () => {
               variant="body1"
               mt={5}
               mx={3}
-              className={classestitleTypography}
+              className={classes.titleTypography}
             >
               Enter the description
             </Typography>
@@ -477,7 +477,7 @@ const AddPet = () => {
               variant="body1"
               mt={5}
               mx={3}
-              className={classestitleTypography}
+              className={classes.titleTypography}
             >
               Care info:
             </Typography>
