@@ -39,7 +39,7 @@ export const PetProfile = ({ data }) => {
     <Box className={classes.petProfile_wrapp}>
       <div className={classes.pet_container} style={{ position: "relative" }}>
         <LoadingSpinner open={isLoading} />
-        <div style={{ height: "400px", background: "#d9d9d9" }}>
+        <div style={{ height: "400px", background: "#d9d9d9", borderRadius: '0 0 20px 20px', overflow: 'hidden' }}>
           <Box position="absolute" left={30} mt={1}>
             <IconButton
               sx={{ backgroundColor: "#f8aa08", color: "#fff" }}

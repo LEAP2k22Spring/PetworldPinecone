@@ -4,15 +4,27 @@
   width: 100%;
 }
 
-.pet_container,
-.user_container {
+.addPet_container {
   width: 80%;
   position: relative;
-  margin-bottom: 200px;
   background: white;
   position: relative;
   margin-bottom: 120px;
   margin-top: 10px;
+}
+
+.user_container,
+.pet_container {
+  width: 80%;
+  position: relative;
+  background: white;
+  position: relative;
+  margin-bottom: 120px;
+}
+
+.userProfile_img {
+  border-radius: 20px;
+  overflow: hidden;
 }
 
 .top_icon_btn {
@@ -63,9 +75,6 @@
   color: #000;
 }
 
-.label {
-  margin: 0 10px;
-}
 
 .saveButton {
   cursor: pointer;
@@ -205,7 +214,7 @@
     margin: 8px 0 8px 8px;
   }
 
-  .profile_info_btn > div {
+  .profile_info_btn>div {
     flex-direction: column;
     align-items: center;
   }
@@ -251,18 +260,22 @@
   height: auto;
   margin: 20px;
 }
+
 .userProfileWrapper {
   display: flex;
   flex-direction: column;
   background: white;
 }
+
 .avatarContainer {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 20px;
+  position: relative;
+  padding-left: 5px;
 }
+
 .petAvatarContainer {
   display: flex;
   flex-direction: column;
@@ -271,11 +284,13 @@
   top: 350px;
   left: 20px;
 }
+
 .backIconContainer {
   padding: 20px;
   position: absolute;
   left: 10px;
 }
+
 .userAvatarSmall {
   width: 50px;
   height: 50px;
@@ -286,6 +301,9 @@
 .userAvatar {
   width: 100px;
   height: 100px;
+  position: absolute;
+  top: -60px;
+  left: 30px;
 }
 
 .addPetHeader {

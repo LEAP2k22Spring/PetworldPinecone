@@ -217,7 +217,7 @@ const AddPet = () => {
   };
   return (
     <Box className={classes.petProfile_wrapp}>
-      <div className={classes.pet_container}>
+      <div className={classes.addPet_container}>
         <LoadingSpinner open={isLoading} />
         <div className={classes.addPetHeader}>
           <Box className={classes.top_icon_btn}>
@@ -374,7 +374,7 @@ const AddPet = () => {
                 inputRef={petNameRef}
                 onBlur={handleChange}
 
-                // helperText='Incorrect entry.'
+              // helperText='Incorrect entry.'
               />
               <TextField
                 sx={{ width: "223px" }}
@@ -470,7 +470,7 @@ const AddPet = () => {
                 variant="outlined"
                 inputRef={descriptionRef}
                 onBlur={handleChange}
-                sx={{ m: 1, width: 280 }}
+                sx={{ m: 1, width: 315 }}
               />
             </Stack>
             <Typography
@@ -492,13 +492,15 @@ const AddPet = () => {
                 direction="column"
                 justifyContent="center"
                 alignItems="flex-end"
+                position="relative"
+
               >
                 <Stack
                   direction="row"
                   justifyContent="space-between"
                   alignItems="center"
                 >
-                  <label className={classes.label}>Microchipped?</label>
+                  <label style={{ marginRight: '15px' }}>Microchipped?</label>
                   <button
                     variant="outlined"
                     className={
@@ -529,7 +531,7 @@ const AddPet = () => {
                   justifyContent="center"
                   alignItems="center"
                 >
-                  <label className={classes.label}>Vaccinated?</label>
+                  <label style={{ marginRight: '15px' }}>Vaccinated?</label>
                   <button
                     variant="outlined"
                     className={
@@ -560,7 +562,7 @@ const AddPet = () => {
                   justifyContent="center"
                   alignItems="center"
                 >
-                  <label className={classes.label}>Sprayed?</label>
+                  <label style={{ marginRight: '15px' }}>Sprayed?</label>
                   <button
                     variant="outlined"
                     className={sprayed ? classes.buttonActive : classes.button}

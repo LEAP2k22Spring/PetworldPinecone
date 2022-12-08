@@ -27,8 +27,8 @@ const Profile = () => {
   return (
     <Box className={classes.petProfile_wrapp}>
       {loading && <LoadingSpinner open={loading} />}
-      <div className={classes.pet_container}>
-        <div style={{ backgroundColor: '#d9d9d9', height: '300px' }}>
+      <div className={classes.user_container}>
+        <div style={{ backgroundColor: '#d9d9d9', height: '300px', borderRadius: '0 0 20px 20px', overflow: 'hidden' }}>
           <Box position='absolute' left={30} mt={1}>
             <IconButton
               sx={{ backgroundColor: '#f8aa08', color: '#fff' }}
@@ -59,19 +59,17 @@ const Profile = () => {
         </div>
         <div className={classes.avatarContainer}>
           <Avatar src={userData?.avatar} className={classes.userAvatar} />
-          <Stack direction='row'>
+          <Stack mt={6} direction='row' sx={{ background: '#ed7d31', padding: '0 20px', borderRadius: '12px' }}>
             <Typography
               variant='h6'
-              mt={2}
-              sx={{ fontSize: '1.5rem', fontWeight: 700, color: '#696969' }}
+              sx={{ fontSize: '1.5rem', fontWeight: 700, color: '#fff' }}
             >
               {userData?.firstName}
             </Typography>
             <Typography
               variant='h6'
-              mt={2}
               ml={2}
-              sx={{ fontSize: '1.5rem', fontWeight: 700, color: '#696969' }}
+              sx={{ fontSize: '1.5rem', fontWeight: 700, color: '#fff' }}
             >
               {userData?.lastName}
             </Typography>
@@ -79,69 +77,12 @@ const Profile = () => {
         </div>
         <div
           style={{
-            marginTop: '100px',
             display: 'flex',
             flexDirection: 'column',
             height: '260px',
             background: 'white',
           }}
         >
-          <Typography
-            variant='body1'
-            mt={5}
-            mx={3}
-            sx={{ color: '#696969', fontWeight: 700, fontSize: '1rem' }}
-          >
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Velit
-            eaque nemo reprehenderit sint inventore obcaecati et eum maxime
-            consectetur illum?
-          </Typography>
-          <Typography
-            variant='body1'
-            mt={5}
-            mx={3}
-            sx={{ color: '#696969', fontWeight: 700, fontSize: '1rem' }}
-          >
-            {userData?.cityName}
-          </Typography>
-          <Stack direction='row' justifyContent='space-between' my={5} mx={5}>
-            <Typography
-              sx={{ color: '#696969', fontWeight: 700, fontSize: '1rem' }}
-            >
-              {petData?.length} pets
-            </Typography>
-
-            <Typography
-              sx={{ color: '#696969', fontWeight: 700, fontSize: '1rem' }}
-            >
-              2 following
-            </Typography>
-          </Stack>
-        </div>
-        <Divider
-          sx={{
-            borderBottomWidth: 20,
-            borderColor: '#f0f0f0',
-            borderRadius: '10px',
-            marginTop: '20px',
-          }}
-        />
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            height: '260px',
-            background: 'white',
-          }}
-        >
-          <Typography
-            variant='h6'
-            mt={2}
-            ml={2}
-            sx={{ fontSize: '1.5rem', fontWeight: 700, color: '#696969' }}
-          >
-            About me
-          </Typography>
           <Typography variant='body1' mt={2} mx={3}>
             Gender:
             <Box component='span' m={1} sx={{ fontWeight: 700 }}>
@@ -166,6 +107,50 @@ const Profile = () => {
               {userData?.phoneNumber}
             </Box>
           </Typography>
+
+          <Stack direction='row' justifyContent='space-between' my={5} mx={5}>
+            <Typography
+              sx={{ color: '#696969', fontWeight: 700, fontSize: '1rem' }}
+            >
+              {petData?.length} pets
+            </Typography>
+            <Typography
+              sx={{ color: '#696969', fontWeight: 700, fontSize: '1rem' }}
+            >
+              {userData?.cityName}
+            </Typography>
+            <Typography
+              sx={{ color: '#696969', fontWeight: 700, fontSize: '1rem' }}
+            >
+              2 following
+            </Typography>
+          </Stack>
+        </div>
+        <Divider
+          sx={{
+            borderBottomWidth: 20,
+            borderColor: '#f0f0f0',
+            borderRadius: '10px',
+            marginTop: '20px',
+          }}
+        />
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            height: '150px',
+            background: 'white',
+          }}
+        >
+          <Typography
+            variant='h6'
+            mt={2}
+            ml={2}
+            sx={{ fontSize: '1.5rem', fontWeight: 700, color: '#696969' }}
+          >
+            About me
+          </Typography>
+
           <Typography variant='body1' mt={5} mx={3}>
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Velit
             eaque nemo reprehenderit sint inventore obcaecati et eum maxime
