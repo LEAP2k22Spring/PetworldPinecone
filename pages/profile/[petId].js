@@ -1,6 +1,6 @@
 import { useCollection } from "../../firebase/useFirebase";
 import { useRouter } from "next/router";
-import PetProfile from "../../component/pet/petProfile";
+import { PetProfile } from "../../component/pet";
 
 const Pet = () => {
   const router = useRouter();

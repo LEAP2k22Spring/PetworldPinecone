@@ -16,7 +16,7 @@ import { Typography, Stack, Divider, Box, IconButton } from "@mui/material";
 import { useState, useEffect } from "react";
 import LoadingSpinner from "../Spinner";
 
-const PetProfile = ({ data }) => {
+export const PetProfile = ({ data }) => {
   const router = useRouter();
   const petId = router.query.petId;
   const [isLoading, setIsLoading] = useState(false);
@@ -214,4 +214,3 @@ const PetProfile = ({ data }) => {
     </Box>
   );
 };
-export default PetProfile;
