@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { doc, onSnapshot } from "firebase/firestore";
 import React, { useContext, useEffect, useState } from "react";
 import { useAuth } from "../../providers/AuthProvider";
@@ -11,7 +12,6 @@ const Chats = () => {
   const { dispatch } = useContext(ChatContext);
 
   useEffect(() => {
-    console.log(currentUser);
     let unsub = () => {};
     if (currentUser) {
       unsub = onSnapshot(doc(db, "UserChats", currentUser.uid), (doc) => {

@@ -20,6 +20,7 @@ export const PetProfile = ({ data }) => {
   const router = useRouter();
   const petId = router.query.petId;
   const [isLoading, setIsLoading] = useState(false);
+  console.log(data)
   useEffect(() => {
     if (data) {
       setIsLoading(false);
