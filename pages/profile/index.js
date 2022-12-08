@@ -66,7 +66,7 @@ const Profile = () => {
             className={classes.userAvatar}
             sx={{ width: '100px', height: '100px' }}
           />
-          <Stack mt={6} direction='row' sx={{ background: '#ed7d31', padding: '0 20px', borderRadius: '12px', width: 'fit-content' }}>
+          <Stack mt={3} direction='row' sx={{ background: '#ed7d31', padding: '0 20px', borderRadius: '12px', width: 'fit-content' }}>
             <Typography
               variant='h6'
               sx={{ fontSize: '1.5rem', fontWeight: 700, color: '#fff' }}
