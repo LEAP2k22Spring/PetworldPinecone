@@ -714,6 +714,10 @@
   .landing_text_wrapp h1 {
     font-size: 60px
   }
+
+  .explore_top_btn {
+    gap: 20px;
+  }
 }
 
 @media (max-width: 550px) {

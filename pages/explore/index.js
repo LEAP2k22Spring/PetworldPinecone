@@ -29,23 +29,25 @@ const ExplorePage = () => {
         <Typography fontWeight={800}>EXPLORE</Typography>
       </Box>
       <Box
+        className={styles.explore_top_btn}
         display="flex"
-        justifyContent="space-around"
-        sx={{
-          marginLeft: { xs: "2rem", sm: "4rem", md: "10rem", lg: "20rem" },
-          marginRight: { xs: "2rem", sm: "4rem", md: "10rem", lg: "20rem" },
-        }}
+        justifyContent="center"
+        gap={5}
       >
-        <GroupsOutlinedIcon />
-        <Typography>peoples</Typography>
+        <Box display="flex">
+          <GroupsOutlinedIcon />
+          <Typography>peoples</Typography>
+        </Box>
         <Divider orientation="vertical" flexItem />
-        <MapOutlinedIcon />
-        <Typography
-          onClick={() => router.push("/explore/map")}
-          sx={{ cursor: "pointer" }}
-        >
-          maps
-        </Typography>
+        <Box display="flex">
+          <MapOutlinedIcon />
+          <Typography
+            onClick={() => router.push("/explore/map")}
+            sx={{ cursor: "pointer" }}
+          >
+            maps
+          </Typography>
+        </Box>
         <Divider orientation="vertical" flexItem />
         <Button
           size="small"
