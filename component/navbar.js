@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/role-supports-aria-props */
 import Box from '@mui/material/Box';
 import { useRouter } from 'next/router';
 import styles from '../styles/Home.module.css';
@@ -127,7 +128,11 @@ function Navbar() {
             />
           </li>
           <li
-            className={styles.list_item}
+            className={
+              router.pathname === '/profile'
+                ? styles.list_item_active
+                : styles.list_item
+            }
             ref={anchorRef}
             id='composition-button'
             aria-controls={open ? 'composition-menu' : undefined}
@@ -144,11 +149,10 @@ function Navbar() {
                 height: '22px',
                 marginTop: '1px',
                 fontSize: '12px',
-                // border: "1px solid black",
                 position: 'absolute',
               }}
               className={
-                router.pathname === '/profile' ? styles.icon_active : styles.icon
+                styles.icon_active
               }
             />
             <Popper
