@@ -74,7 +74,7 @@
 .home {
   height: calc(100vh - 100px);
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
 }
 
@@ -83,10 +83,11 @@
   border-radius: 10px;
   width: 80%;
   max-width: 1425px;
-  height: 80%;
+  height: 75%;
   display: flex;
   overflow: scroll;
-  margin-bottom: 50px;
+  margin-bottom: 100px;
+  margin-top: 20px;
 }
 
 .home .container::-webkit-scrollbar {
