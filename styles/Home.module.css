@@ -373,6 +373,12 @@
   justify-content: center;
 }
 
+.banner_wrapp {
+  width: 80%;
+  max-width: 1425px;
+  margin: 20px 0;
+}
+
 .category_wrapp {
   display: flex;
   align-items: flex-start;

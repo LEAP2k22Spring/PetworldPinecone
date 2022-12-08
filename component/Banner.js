@@ -11,7 +11,7 @@ export default function ColumnsGrid() {
   return (
     <Box
       className={styles.banner_wrapp}
-      sx={{ flexGrow: 1, width: '80%', maxWidth: '1425px', margin: '20px 0' }}
+      sx={{ flexGrow: 1 }}
     >
       <Grid container spacing={2} columns={{ xs: 12, sm: 12, md: 12 }}>
         <Grid xs={12} sm={12} md={6}>

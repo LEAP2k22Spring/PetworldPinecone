@@ -42,7 +42,7 @@ export const PetProfile = ({ data }) => {
         <div style={{ height: "400px", background: "#d9d9d9", borderRadius: '0 0 20px 20px', overflow: 'hidden' }}>
           <Box position="absolute" left={30} mt={1}>
             <IconButton
-              sx={{ backgroundColor: "#f8aa08", color: "#fff" }}
+              sx={{ backgroundColor: "#f8aa08", color: "#fff", width: '40px', height: '40px' }}
               onClick={goBackHandler}
             >
               <ArrowBackIosNewOutlined fontSize="large" />
@@ -50,7 +50,7 @@ export const PetProfile = ({ data }) => {
           </Box>
           <Box position="absolute" right={30} mt={1}>
             <IconButton
-              sx={{ backgroundColor: "#f8aa08", color: "#fff" }}
+              sx={{ backgroundColor: "#f8aa08", color: "#fff", width: '40px', height: '40px' }}
               onClick={() => editPetHandler(petId)}
             >
               <SettingsOutlined fontSize="large" />

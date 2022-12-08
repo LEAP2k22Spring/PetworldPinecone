@@ -16,6 +16,9 @@ import Pet from '../../component/profile/Pet';
 import Post from '../../component/profile/Post';
 import { useRouter } from 'next/router';
 import { useAuth } from '../../providers';
+import PetsIcon from '@mui/icons-material/Pets';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 
 const Profile = () => {
   const router = useRouter();
@@ -31,7 +34,7 @@ const Profile = () => {
         <div style={{ backgroundColor: '#d9d9d9', height: '300px', borderRadius: '0 0 20px 20px', overflow: 'hidden' }}>
           <Box position='absolute' left={30} mt={1}>
             <IconButton
-              sx={{ backgroundColor: '#f8aa08', color: '#fff' }}
+              sx={{ backgroundColor: '#f8aa08', color: '#fff', width: '40px', height: '40px' }}
               onClick={goBackHandler}
             >
               <ArrowBackIcon fontSize='large' />
@@ -39,7 +42,7 @@ const Profile = () => {
           </Box>
           <Box position='absolute' right={30} mt={1}>
             <IconButton
-              sx={{ backgroundColor: '#f8aa08', color: '#fff' }}
+              sx={{ backgroundColor: '#f8aa08', color: '#fff', width: '40px', height: '40px' }}
               onClick={() => router.push('/editprofile')}
             >
               <SettingsOutlinedIcon fontSize='large' />
@@ -58,7 +61,11 @@ const Profile = () => {
           />
         </div>
         <div className={classes.avatarContainer}>
-          <Avatar src={userData?.avatar} className={classes.userAvatar} />
+          <Avatar
+            src={userData?.avatar}
+            className={classes.userAvatar}
+            sx={{ width: '100px', height: '100px' }}
+          />
           <Stack mt={6} direction='row' sx={{ background: '#ed7d31', padding: '0 20px', borderRadius: '12px' }}>
             <Typography
               variant='h6'
@@ -109,21 +116,30 @@ const Profile = () => {
           </Typography>
 
           <Stack direction='row' justifyContent='space-between' my={5} mx={5}>
-            <Typography
-              sx={{ color: '#696969', fontWeight: 700, fontSize: '1rem' }}
-            >
-              {petData?.length} pets
-            </Typography>
-            <Typography
-              sx={{ color: '#696969', fontWeight: 700, fontSize: '1rem' }}
-            >
-              {userData?.cityName}
-            </Typography>
-            <Typography
-              sx={{ color: '#696969', fontWeight: 700, fontSize: '1rem' }}
-            >
-              2 following
-            </Typography>
+            <Box className={classes.iconText}>
+              <PetsIcon sx={{ padding: '3px', mr: 1, color: '#9188e5' }} />
+              <Typography
+                sx={{ color: '#696969', fontWeight: 700, fontSize: '1rem' }}
+              >
+                {petData?.length} pets
+              </Typography>
+            </Box>
+            <Box className={classes.iconText}>
+              <LocationOnIcon sx={{ padding: '3px', mr: 1, color: '#9188e5' }} />
+              <Typography
+                sx={{ color: '#696969', fontWeight: 700, fontSize: '1rem' }}
+              >
+                {userData?.cityName}
+              </Typography>
+            </Box>
+            <Box className={classes.iconText}>
+              <SupervisedUserCircleIcon sx={{ padding: '3px', mr: 1, color: '#9188e5' }} />
+              <Typography
+                sx={{ color: '#696969', fontWeight: 700, fontSize: '1rem' }}
+              >
+                2 following
+              </Typography>
+            </Box>
           </Stack>
         </div>
         <Divider
@@ -146,7 +162,7 @@ const Profile = () => {
             variant='h6'
             mt={2}
             ml={2}
-            sx={{ fontSize: '1.5rem', fontWeight: 700, color: '#696969' }}
+            sx={{ fontSize: '1.5rem', fontWeight: 700, color: '#fff', background: '#ffc024', padding: '0 20px', borderRadius: '12px', width: 'fit-content' }}
           >
             About me
           </Typography>
