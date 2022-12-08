@@ -27,7 +27,7 @@ const Profile = () => {
   return (
     <Box className={classes.petProfile_wrapp}>
       {loading && <LoadingSpinner open={loading} />}
-      <div className={classes.user_container}>
+      <div className={classes.pet_container}>
         <div style={{ backgroundColor: '#d9d9d9', height: '300px', borderRadius: '0 0 20px 20px', overflow: 'hidden' }}>
           <Box position='absolute' left={30} mt={1}>
             <IconButton
