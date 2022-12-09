@@ -43,7 +43,7 @@ const Profile = () => {
           <Box position='absolute' right={30} mt={1}>
             <IconButton
               sx={{ backgroundColor: '#f8aa08', color: '#fff', width: '40px', height: '40px' }}
-              onClick={() => router.push('/editprofile')}
+              onClick={() => router.push('/editprofilepage')}
             >
               <SettingsOutlinedIcon fontSize='large' />
             </IconButton>
