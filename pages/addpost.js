@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { Button, Fab, Input, TextField, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { useRef, useState } from 'react';
@@ -25,6 +26,8 @@ const AddPost = () => {
 
   // 2) Image picker handler
   const imgUploadHandler = (e) => {
+    console.log("first")
+
     const file = e.target.files[0];
     const fileName = `${file.name}`;
     const reader = new FileReader();
@@ -39,6 +42,7 @@ const AddPost = () => {
     reader.readAsDataURL(file);
   };
   const onSave = async () => {
+
     // Validation - 1;
     if (imageData.url === "") {
       alert("Please upload your image");
@@ -123,16 +127,19 @@ const AddPost = () => {
           p={2}
           justifyContent='space-between'
         >
-          <div>
+          <label  >
+         
+        
+        
             <Input
               sx={{ display: 'none' }}
               type='file'
               onChange={imgUploadHandler}
             />
-            <Fab component='span' size='small'>
+                <Fab component='span' size='small'>
               <AddPhotoAlternateIcon fontSize='small' />
             </Fab>
-          </div>
+          </label>
           <Button variant='contained' onClick={onSave}>
             submit
           </Button>
